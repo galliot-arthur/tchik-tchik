@@ -1,5 +1,3 @@
-import { Pokemon } from "@/libs/entities/pokemon";
-import { getData } from "../libs/api/fetch";
 import {
   Button,
   Card,
@@ -10,7 +8,6 @@ import {
 import Image from "next/image";
 
 export default async function Home() {
-  const data = await getData<Pokemon[]>();
   const isFollowed = false;
   return (
     <>
@@ -56,7 +53,7 @@ export default async function Home() {
           </p>
         </section>
         <section className="ms-4 sm:w-1/4 py-4">
-          {data?.map((item) => (
+          {[{ id: "1", name: "A", description: "A" }]?.map((item) => (
             <Card
               key={item.id}
               isFooterBlurred
