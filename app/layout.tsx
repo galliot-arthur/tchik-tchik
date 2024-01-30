@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { i18n } from "@/libs/i18n/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} max-w-[1200px] m-auto`}>
+        <header className="fixed max-w-[1200px] flex justify-between items-center px-4 min-h-[5rem] sm:min-h-[4rem] w-screen bg-white/70 sm:bg-white/40 z-10 backdrop-blur">
+          <Link
+            href="/"
+            className="font-bold hover-underline text-2xl text-salmon"
+          >
+            {i18n.website}
+          </Link>
+          <ul>
+            <li>
+              <Link href="/" className="hover-underline">
+                {i18n.menu.homepage}
+              </Link>
+              <Link href="/contact" className="hover-underline ml-2">
+                {i18n.menu.contact}
+              </Link>
+            </li>
+          </ul>
+        </header>
+        {children}
+        <footer className="max-w-[1200px] px-4 relative top-[3rem]">
+          <div className="border-t-2 border-black py-4 flex justify-between">
+            <div>on verra plus tard mais en gros là un footer</div>
+            <Link href="/" className="font-bold hover-underline text-salmon">
+              {i18n.website}
+            </Link>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }

@@ -4,11 +4,7 @@ export async function getData<T>(): Promise<T | undefined> {
   });
 
   if (!res.ok) {
-<<<<<<< HEAD
-    throw new Error("Failed to fetch data");
-=======
     console.error();
->>>>>>> 5cba027 (first-comit)
   }
 
   return res.json();

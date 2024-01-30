@@ -25,3 +25,15 @@ body {
     text-wrap: balance;
   }
 }
+
+.hover-underline {
+  background-size: 0% 2px;
+}
+
+.hover-underline:hover {
+  background-image: linear-gradient(black, rgba(0, 0, 0, 0.438));
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease 0s;
+  background-size: 100% 2px;
+}
