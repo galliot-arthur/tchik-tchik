@@ -6,10 +6,11 @@ export default function LeftSection({
   className,
 }: ComponentProps<{}>) {
   return (
-    <section className={classNames("sm:w-1/2 p-[1rem] ", className)}>
-      <div className="px-0 sm:pr-3 py-2 border-t-2 border-gray-500">
-        {children}
-      </div>
+    <section
+      className={classNames(className, "grow-0 w-full md:w-[calc(50%-1rem)]")}
+    >
+      <div className="px-0 pt-2 border-t-2 border-gray-500">{children}</div>
     </section>
   );
 }
+// w-full sm:

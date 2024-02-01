@@ -1,47 +1,59 @@
 import prisma from "@/libs/database/prisma";
-import { MovieType } from "@/libs/entities/movie";
-import { UserType } from "@/libs/entities/user";
+import { MovieType } from "@/libs/domain/type/movie";
 import { i18n } from "@/libs/i18n/i18n";
+import TchikLink from "@/libs/ui/atoms/TchikLink";
 import Typography from "@/libs/ui/atoms/Typography";
+import ContentContainer from "@/libs/ui/molecule/ContentContainer";
 import LeftSection from "@/libs/ui/molecule/LeftSection";
+import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
+import RightSection from "@/libs/ui/molecule/RightSection";
 import TchikCard from "@/libs/ui/organism/TchikCard";
-import Link from "next/link";
+import { Photogram } from "@/libs/ui/template/Photogram";
 
 export default async function Home() {
-  const users: UserType[] | undefined = await prisma.user.findMany();
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
 
   return (
-    <main className="flex relative top-[3rem] flex-col sm:flex-row">
+    <MainContainer>
       <LeftSection>
         <Typography variant="h1">{i18n.menu.homepage}</Typography>
-        <Typography variant="p2">{i18n.bio}</Typography>
+        <ContentContainer>
+          <Typography variant="tiny-bold" className="mb-2">
+            {i18n.bio.label}
+          </Typography>
+          <Typography variant="p">{i18n.bio.bio}</Typography>
+        </ContentContainer>
       </LeftSection>
       <MiddleSection>
-        <Typography variant="h2">{i18n.homepage.films}</Typography>
-        {movies?.map((item) => (
-          <TchikCard
-            key={item.id}
-            img={{ alt: item.name, src: "/quittez-chouchou.jpg" }}
-            title={item.name}
-            subtitle={item.director}
-            caption={new Date(item.releasedAt).toLocaleDateString("fr-FR")}
-            href={item.id}
-          />
-        ))}
+        <Typography variant="h2" className="text-end md:hidden block">
+          {i18n.homepage.newsletters}
+        </Typography>
+        <TchikCard
+          key={movies?.at(0)?.id}
+          img={{ alt: movies?.at(0)?.name ?? "", src: "/quittez-chouchou.jpg" }}
+          title={movies?.at(0)?.name ?? ""}
+          subtitle={movies?.at(0)?.director ?? ""}
+          caption={new Date(movies?.at(0)?.releasedAt ?? "").toLocaleDateString(
+            "fr-FR"
+          )}
+          href={`/films/${movies?.at(0)?.id}`}
+        />
+        <Typography variant="h2" className="text-end hidden md:block">
+          {i18n.homepage.newsletters}
+        </Typography>
       </MiddleSection>
-      <section className="hidden sm:block sm:w-1/4 text-end p-[1rem]">
-        <ul className="pl-3 py-2 border-t-2 border-gray-500">
-          {movies?.map((movie) => (
-            <li key={movie.id}>
-              <Link href={movie.name} className="hover-underline">
-                {movie.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </main>
+      <RightSection hideOnPhone>
+        {movies?.map((movie) => (
+          <li key={movie.id}>
+            <TchikLink href={`/films/${movie.id}`} variant="red">
+              {movie.name}
+            </TchikLink>
+          </li>
+        ))}
+      </RightSection>
+      <Typography variant="h2">{i18n.homepage.films}</Typography>
+      <Photogram movies={movies ?? []} />
+    </MainContainer>
   );
 }

@@ -21,7 +21,7 @@ export default function TchikLink({
       className={classNames(
         "hover-underline",
         className,
-        variant === "red" && "text-red"
+        variant === "red" ? "text-gray-500" : "font-bold"
       )}
     >
       {children}

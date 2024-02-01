@@ -9,8 +9,9 @@ export default function MiddleSection({
   return (
     <section
       className={classNames(
-        "mx-4 py-4 flex flex-col gap-6",
-        fullwidth ? "sm:w-1/2" : "sm:w-1/4",
+        "grow-0 w-full",
+        fullwidth ? "md:w-1/2" : "md:w-1/4",
+        "flex flex-col gap-4",
         className
       )}
     >

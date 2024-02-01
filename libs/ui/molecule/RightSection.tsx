@@ -4,11 +4,14 @@ import classNames from "classnames";
 export default function RightSection({
   children,
   className,
-}: ComponentProps<{}>) {
+  hideOnPhone = false,
+}: ComponentProps<{ hideOnPhone?: boolean }>) {
   return (
     <section
       className={classNames(
-        "hidden sm:block sm:w-1/4 text-end p-[1rem]",
+        "w-full md:w-[calc(25%-1rem)]",
+        hideOnPhone && "hidden md:block",
+        "text-end",
         className
       )}
     >

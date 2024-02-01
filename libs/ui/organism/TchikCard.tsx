@@ -22,7 +22,7 @@ export default function TchikCard({
     isPressable: true,
     disableRipple: true,
     as: Link,
-    href: `/films/${href}`,
+    href: href,
   };
   return (
     <Card

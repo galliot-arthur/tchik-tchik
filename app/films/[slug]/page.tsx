@@ -1,7 +1,9 @@
 import prisma from "@/libs/database/prisma";
-import { MovieType } from "@/libs/entities/movie";
+import { MovieType } from "@/libs/domain/type/movie";
 import Typography from "@/libs/ui/atoms/Typography";
+import ContentContainer from "@/libs/ui/molecule/ContentContainer";
 import LeftSection from "@/libs/ui/molecule/LeftSection";
+import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import TchikCardHeader from "@/libs/ui/molecule/TchikCardHeader";
 import { Image } from "@nextui-org/react";
@@ -56,15 +58,17 @@ export default async function Film({ params: { slug } }: Props) {
   }
 
   return (
-    <main className="flex relative top-[3rem] flex-col sm:flex-row">
+    <MainContainer>
       <LeftSection>
         <Typography variant="h1">{movie.name}</Typography>
         <TchikCardHeader
           title={movie.director}
           subtitle={movie.duration}
-          caption={new Date(movie.releasedAt).toLocaleDateString("fr-FR")}
+          caption={String(new Date(movie.releasedAt).getFullYear())}
         />
-        <p>{movie.bio}</p>
+        <ContentContainer>
+          <p>{movie.bio}</p>
+        </ContentContainer>
       </LeftSection>
       <MiddleSection fullwidth>
         <div className="relative h-full aspect-[1080/1349]">
@@ -76,6 +80,6 @@ export default async function Film({ params: { slug } }: Props) {
           />
         </div>
       </MiddleSection>
-    </main>
+    </MainContainer>
   );
 }
