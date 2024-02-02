@@ -42,7 +42,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
           )}
         >
           <TchikCardHeader
-            {...headerAdapter(movie)}
+            {...headerAdapter(movie, true)}
             className="bg-white/80 px-3 py-2"
           />
         </div>
@@ -58,7 +58,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
         />
       </div>
       <TchikCardHeader
-        {...headerAdapter(movie)}
+        {...headerAdapter(movie, true)}
         className="bg-white/80 px-3 py-2 block md:hidden"
       />
     </Link>

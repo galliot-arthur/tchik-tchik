@@ -26,7 +26,9 @@ export default function TchikCardHeader({
     >
       <div className="flex justify-between w-full">
         <div className="pb-1 text-start max-w-80">
-          <h4 className="font-bold text-large">{title}</h4>
+          <h4 className="font-bold text-large leading-none my-[0.30rem]">
+            {title}
+          </h4>
           <p className="text-tiny uppercase font-bold">{subtitle}</p>
           {subtitle2 && (
             <p className="text-tiny uppercase font-bold">{subtitle2}</p>
@@ -35,7 +37,10 @@ export default function TchikCardHeader({
             <p className="text-tiny uppercase font-bold">{subtitle3}</p>
           )}
         </div>
-        <div style={{ lineHeight: "1.15" }}>
+        <div
+          style={{ lineHeight: "1.15", whiteSpace: "nowrap" }}
+          className="text-end ml-4 text-no-wrap mt-1"
+        >
           {caption && <small className="text-default-500">{caption}</small>}
           {caption2 && (
             <>
@@ -45,11 +50,6 @@ export default function TchikCardHeader({
           )}
         </div>
       </div>
-      {/* {seeMore && (
-      <Button color="default" radius="full" size="sm" variant="light">
-        {seeMore}
-      </Button>
-    )} */}
     </div>
   );
 }

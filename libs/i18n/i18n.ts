@@ -15,6 +15,9 @@ export const i18n = {
     films: "Nos films",
     newsletters: "À la une !",
   },
+  movies: {
+    bio: "En bref :",
+  },
   contact: {
     links: {
       title: "Liens",
