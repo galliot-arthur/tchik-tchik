@@ -21,23 +21,23 @@ model User {
 
 model Movie {
     id           String   @id @default(cuid())
-    name         String   @db.VarChar
-    slug         String   @unique @db.VarChar
+    name         String
+    slug         String   @unique
     createdAt    DateTime @default(now()) @map(name: "created_at")
     updatedAt    DateTime @updatedAt @map(name: "updated_at")
-    director     String   @db.VarChar
-    writtenBy    String   @map(name: "written_by")
-    duration     String   @db.VarChar
-    kind         String   @db.VarChar
-    releasedAt   DateTime @map(name: "released_at")
-    bio          String   @db.Text
-    staff        Json     @db.Json
-    coproducedBy String   @db.VarChar
-    sponsor      String   @db.VarChar
-    diffusion    String   @db.Text
-    festivals    String   @db.Text
-    press        Json     @db.Json
-    spoiler      String   @db.VarChar
+    director     String
+    writtenBy    String?  @default("") @map(name: "written_by")
+    duration     String
+    kind         String
+    releaseYear  Int      @map(name: "released_year")
+    bio          String
+    staff        Json
+    coproducedBy String?  @default("") @map(name: "coproduced_by")
+    sponsor      String?  @default("")
+    diffusion    Json
+    festivals    String?  @default("")
+    press        Json
+    spoiler      String?  @default("")
 
     @@map(name: "movies")
 }

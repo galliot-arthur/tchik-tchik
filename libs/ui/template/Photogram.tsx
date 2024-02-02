@@ -5,6 +5,7 @@ import { useState } from "react";
 import TchikCardHeader from "../molecule/TchikCardHeader";
 import Link from "next/link";
 import { MovieType } from "@/libs/domain/type/movie";
+import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 
 export function Photogram({ movies }: { movies: MovieType[] }) {
   return (
@@ -22,7 +23,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
     <Link
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      href={`/films/${movie.id}`}
+      href={`/films/${movie.slug}`}
       className="w-full md:w-1/2"
     >
       <div
@@ -41,9 +42,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
           )}
         >
           <TchikCardHeader
-            title={movie.name}
-            subtitle={movie.director}
-            caption={String(new Date(movie.releasedAt).getFullYear())}
+            {...headerAdapter(movie)}
             className="bg-white/80 px-3 py-2"
           />
         </div>
@@ -59,9 +58,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
         />
       </div>
       <TchikCardHeader
-        title={movie.name}
-        subtitle={movie.director}
-        caption={String(new Date(movie.releasedAt).getFullYear())}
+        {...headerAdapter(movie)}
         className="bg-white/80 px-3 py-2 block md:hidden"
       />
     </Link>

@@ -1,23 +1,27 @@
 export type BaseType = {
   id: string;
-  name: string;
   slug: string;
   createdAt: string;
   updatedAt: string;
 };
 
-export type MovieType = BaseType & {
+export type SimpleRefCode = { label: string; value: string };
+
+export type MovieBaseTye = {
+  name: string;
   director: string;
-  writtenBy: string;
+  writtenBy?: string;
   duration: string;
   kind: "Documentaire" | "Fiction" | "Film d'atelier";
-  releasedAt: Date;
+  releaseYear: number;
   bio: string;
-  staff: { label: string; content: string }[];
+  staff: SimpleRefCode[];
   coproducedBy?: string;
   sponsor?: string;
-  diffusion?: string;
+  diffusion: SimpleRefCode[];
   festivals?: string;
-  press: { label: string; content: string }[];
+  press: SimpleRefCode[];
   spoiler?: string;
 };
+
+export type MovieType = BaseType & MovieBaseTye;

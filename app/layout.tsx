@@ -75,7 +75,7 @@ export default function RootLayout({
                 href="/"
                 className="font-bold hover-underline text-salmon text-right"
               >
-                {i18n.website}
+                {`${i18n.website} © ${new Date().getFullYear()}`}
               </Link>
             </div>
           </div>

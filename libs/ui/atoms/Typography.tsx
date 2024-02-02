@@ -41,7 +41,7 @@ export default function Typography({
     case "h2":
       return (
         <h2
-          className={classNames(className, "text-2xl font-black text-gray-500")}
+          className={classNames(className, "text-xl font-black text-gray-500")}
         >
           {children}
         </h2>

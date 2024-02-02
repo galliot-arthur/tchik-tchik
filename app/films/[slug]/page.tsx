@@ -1,4 +1,5 @@
 import prisma from "@/libs/database/prisma";
+import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 import { MovieType } from "@/libs/domain/type/movie";
 import Typography from "@/libs/ui/atoms/Typography";
 import ContentContainer from "@/libs/ui/molecule/ContentContainer";
@@ -6,16 +7,18 @@ import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import TchikCardHeader from "@/libs/ui/molecule/TchikCardHeader";
+import SimpleRefCodeDisplayer from "@/libs/ui/template/SimpleRefCodeDisplayer";
 import { Image } from "@nextui-org/react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
 
 export async function generateStaticParams() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
   if (!movies) {
     return notFound();
   }
-  return movies.map((movie) => movie.id);
+  return movies.map((movie) => movie.slug);
 }
 
 type Props = {
@@ -26,10 +29,10 @@ export async function generateMetadata({
   params: { slug },
 }: Props): Promise<Metadata> {
   const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { id: slug },
+    where: { slug: slug },
   });
 
-  if (movie === undefined) {
+  if (!movie) {
     return notFound();
   }
 
@@ -50,10 +53,10 @@ export async function generateMetadata({
 
 export default async function Film({ params: { slug } }: Props) {
   const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { id: slug },
+    where: { slug: slug },
   });
 
-  if (movie === undefined) {
+  if (!movie) {
     return notFound();
   }
 
@@ -62,12 +65,46 @@ export default async function Film({ params: { slug } }: Props) {
       <LeftSection>
         <Typography variant="h1">{movie.name}</Typography>
         <TchikCardHeader
-          title={movie.director}
-          subtitle={movie.duration}
-          caption={String(new Date(movie.releasedAt).getFullYear())}
+          {...headerAdapter(movie)}
+          subtitle2={
+            movie.coproducedBy
+              ? `Une coproduction ${movie.coproducedBy}`
+              : undefined
+          }
         />
+
         <ContentContainer>
-          <p>{movie.bio}</p>
+          <Typography className="italic text-gray-500">{movie.bio}</Typography>
+        </ContentContainer>
+        <ContentContainer>
+          {movie.writtenBy && (
+            <Typography className="text-tiny uppercase font-bold">
+              {movie.writtenBy}
+            </Typography>
+          )}
+          <SimpleRefCodeDisplayer refCode={movie.staff} label="Staff" />
+          <SimpleRefCodeDisplayer
+            refCode={movie.diffusion}
+            label="Diffusion"
+            linkList
+          />
+          {movie.festivals && (
+            <>
+              <Typography variant="h2" className="mt-4">
+                {"Participation à des festivals"}
+              </Typography>
+              {movie.festivals.split("\\n").map((f) => (
+                <Typography key={f} className="text-small">
+                  <MDXRemote source={f} />
+                </Typography>
+              ))}
+            </>
+          )}
+          <SimpleRefCodeDisplayer
+            refCode={movie.press}
+            label="Presse"
+            linkList
+          />
         </ContentContainer>
       </LeftSection>
       <MiddleSection fullwidth>

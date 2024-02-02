@@ -1,4 +1,6 @@
 import prisma from "@/libs/database/prisma";
+import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
+import { movieMock } from "@/libs/domain/mock/movies";
 import { MovieType } from "@/libs/domain/type/movie";
 import { i18n } from "@/libs/i18n/i18n";
 import TchikLink from "@/libs/ui/atoms/TchikLink";
@@ -32,12 +34,8 @@ export default async function Home() {
         <TchikCard
           key={movies?.at(0)?.id}
           img={{ alt: movies?.at(0)?.name ?? "", src: "/quittez-chouchou.jpg" }}
-          title={movies?.at(0)?.name ?? ""}
-          subtitle={movies?.at(0)?.director ?? ""}
-          caption={new Date(movies?.at(0)?.releasedAt ?? "").toLocaleDateString(
-            "fr-FR"
-          )}
-          href={`/films/${movies?.at(0)?.id}`}
+          href={`/films/${movies?.at(0)?.slug}`}
+          {...headerAdapter(movies?.at(0))}
         />
         <Typography variant="h2" className="text-end hidden md:block">
           {i18n.homepage.newsletters}
@@ -46,7 +44,7 @@ export default async function Home() {
       <RightSection hideOnPhone>
         {movies?.map((movie) => (
           <li key={movie.id}>
-            <TchikLink href={`/films/${movie.id}`} variant="red">
+            <TchikLink href={`/films/${movie.slug}`} variant="red">
               {movie.name}
             </TchikLink>
           </li>
