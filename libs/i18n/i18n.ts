@@ -1,3 +1,5 @@
+import { EnvelopeAt, Geo, InfoCircle } from "react-bootstrap-icons";
+
 export const i18n = {
   website: "Tchik-Tchik Production",
   bio: {
@@ -8,8 +10,8 @@ export const i18n = {
     base: "On verra plus tard mais en gros là, un bas de page.",
   },
   menu: {
-    homepage: "Production",
-    contact: "Contact",
+    homepage: { label: "Production", url: "/" },
+    contact: { label: "Contact", url: "/contact" },
   },
   homepage: {
     films: "Nos films",
@@ -19,6 +21,7 @@ export const i18n = {
     bio: "En bref :",
   },
   contact: {
+    portrait: { title: "On tient la boutique :" },
     links: {
       title: "Liens",
       instagram: {
@@ -29,6 +32,7 @@ export const i18n = {
     address: [
       {
         title: "Adresse",
+        icon: Geo,
         content: [
           "Tchik Tchik Productions",
           "51 grand rue, Couhé 86700 Valence en Poitou",
@@ -36,10 +40,12 @@ export const i18n = {
       },
       {
         title: "Nous contacter",
+        icon: EnvelopeAt,
         content: ["tchiktchikproductions@gmail.com"],
       },
       {
         title: "Raisons sociales",
+        icon: InfoCircle,
         content: [
           "Tchik Tchik Productions",
           "51 Grand rue, Couhé 86700 Valence en Poitou",

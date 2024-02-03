@@ -38,6 +38,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
             "top-[50%] left-[50%]",
             "translate-x-[-50%]",
             "translate-y-[-50%]",
+            "hidden md:block",
             hover ? "opacity-100" : "opacity-0"
           )}
         >
@@ -51,7 +52,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
           fill
           className={classNames(
             "object-cover",
-            " hover:blur-sm hover:scale-105 hover:opacity-95",
+            "md:hover:blur-sm hover:scale-105 hover:opacity-95",
             "transition ease-in-out duration-300"
           )}
           alt="tap"

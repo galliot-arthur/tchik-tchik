@@ -1,5 +1,6 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
 import classNames from "classnames";
+import Typography from "../atoms/Typography";
 
 export default function TchikCardHeader({
   title,
@@ -29,12 +30,18 @@ export default function TchikCardHeader({
           <h4 className="font-bold text-large leading-none my-[0.30rem]">
             {title}
           </h4>
-          <p className="text-tiny uppercase font-bold">{subtitle}</p>
+          <Typography variant="tiny-bold" color="black">
+            {subtitle}
+          </Typography>
           {subtitle2 && (
-            <p className="text-tiny uppercase font-bold">{subtitle2}</p>
+            <Typography variant="tiny-bold" color="black">
+              {subtitle2}
+            </Typography>
           )}
           {subtitle3 && (
-            <p className="text-tiny uppercase font-bold">{subtitle3}</p>
+            <Typography variant="tiny-bold" color="black">
+              {subtitle3}
+            </Typography>
           )}
         </div>
         <div

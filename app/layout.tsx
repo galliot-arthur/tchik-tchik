@@ -32,17 +32,25 @@ export default function RootLayout({
         >
           <Link
             href="/"
-            className="font-bold hover-underline text-2xl text-salmon"
+            className="font-bold hover-underline text-xl sm:text-2xl text-salmon font-hira"
           >
             {i18n.website}
           </Link>
-          <ul>
+          <ul className="flex flex-col sm:flex-row items-end">
             <li>
-              <TchikLink href="/" className="hover-underline">
-                {i18n.menu.homepage}
+              <TchikLink
+                href={i18n.menu.homepage.url}
+                className="hover-underline"
+              >
+                {i18n.menu.homepage.label}
               </TchikLink>
-              <TchikLink href="/contact" className="hover-underline ml-2">
-                {i18n.menu.contact}
+            </li>
+            <li>
+              <TchikLink
+                href={i18n.menu.contact.url}
+                className="hover-underline ml-2"
+              >
+                {i18n.menu.contact.label}
               </TchikLink>
             </li>
           </ul>
@@ -54,12 +62,13 @@ export default function RootLayout({
             "px-4 pt-4 sm:pt-0"
           )}
         >
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col md:flex-row">
             <div
               className={classNames(
                 "grow-0 w-full md:w-[calc(50%-1rem)]",
                 "min-h-[5rem] sm:min-h-[4rem]",
-                "flex flex-row justify-start items-center"
+                "flex flex-row justify-start items-center",
+                "text-tiny text-gray-500"
               )}
             >
               {i18n.footer.base}
@@ -73,7 +82,7 @@ export default function RootLayout({
             >
               <Link
                 href="/"
-                className="font-bold hover-underline text-salmon text-right"
+                className="font-bold hover-underline text-salmon text-right my-4"
               >
                 {`${i18n.website} © ${new Date().getFullYear()}`}
               </Link>

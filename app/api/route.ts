@@ -9,7 +9,7 @@ export async function GET() {
   });
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(_: NextRequest) {
   const formatedMovieMock = movieMock.map((movie) => ({
     ...movie,
     slug: slugify(movie.name, { lower: true }),

@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <MainContainer>
       <LeftSection>
-        <Typography variant="h1">{i18n.menu.homepage}</Typography>
+        <Typography variant="h1">{i18n.menu.homepage.label}</Typography>
         <ContentContainer>
           <Typography variant="tiny-bold" className="mb-2">
             {i18n.bio.label}
@@ -41,7 +41,7 @@ export default async function Home() {
           {i18n.homepage.newsletters}
         </Typography>
       </MiddleSection>
-      <RightSection hideOnPhone>
+      <RightSection hideOnPhone className="max-h-[16rem] overflow-auto">
         {movies?.map((movie) => (
           <li key={movie.id}>
             <TchikLink href={`/films/${movie.slug}`} variant="red">

@@ -1,25 +1,43 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
 import classNames from "classnames";
 type Variant = "p" | "p2" | "span" | "h1" | "h2" | "h3" | "h4" | "tiny-bold";
-
+type Color = "black" | "salmon" | "gray-500";
 export default function Typography({
   children,
   className,
   variant = "p",
-}: ComponentProps<{ variant?: Variant }>) {
+  color,
+}: ComponentProps<{ variant?: Variant; color?: Color }>) {
   switch (variant) {
     case "p":
-      return <p className={classNames(className, "text-black")}>{children}</p>;
+      return (
+        <p
+          className={classNames(
+            className,
+            color ? `text-${color}` : "text-black"
+          )}
+        >
+          {children}
+        </p>
+      );
     case "p2":
       return (
-        <p className={classNames(className, "text-gray-500")}>{children}</p>
+        <p
+          className={classNames(
+            className,
+            color ? `text-${color}` : "text-gray-500"
+          )}
+        >
+          {children}
+        </p>
       );
     case "tiny-bold":
       return (
         <p
           className={classNames(
-            className,
-            "text-tiny uppercase font-bold text-salmon"
+            "text-tiny uppercase font-bold",
+            color ? `text-${color}` : "text-salmon",
+            className
           )}
         >
           {children}
@@ -31,7 +49,8 @@ export default function Typography({
       return (
         <h1
           className={classNames(
-            "font-black text-[4rem] leading-[3.65rem] -ml-[3px] text-black",
+            "font-black text-[2rem] sm:text-[4rem] sm:leading-[3.65rem] sm:-ml-[3px]",
+            color ? `text-${color}` : "text-black",
             className
           )}
         >
@@ -41,26 +60,49 @@ export default function Typography({
     case "h2":
       return (
         <h2
-          className={classNames(className, "text-xl font-black text-gray-500")}
+          className={classNames(
+            className,
+            "text-xl font-black",
+            color ? `text-${color}` : "text-gray-500"
+          )}
         >
           {children}
         </h2>
       );
     case "h3":
       return (
-        <h3 className={classNames(className, "text-lg text-black")}>
+        <h3
+          className={classNames(
+            className,
+            "text-lg",
+            color ? `text-${color}` : "text-black"
+          )}
+        >
           {children}
         </h3>
       );
     case "h4":
       return (
         <h4
-          className={classNames(className, "font-bold text-large text-black")}
+          className={classNames(
+            className,
+            "font-bold text-large",
+            color ? `text-${color}` : "text-black"
+          )}
         >
           {children}
         </h4>
       );
     default:
-      return <p className={classNames(className, "text-black")}>{children}</p>;
+      return (
+        <p
+          className={classNames(
+            className,
+            color ? `text-${color}` : "text-black"
+          )}
+        >
+          {children}
+        </p>
+      );
   }
 }

@@ -13,7 +13,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { i18n } from "@/libs/i18n/i18n";
-import ShareButton from "@/libs/ui/template/ShareButton";
 
 export async function generateStaticParams() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
@@ -122,7 +121,6 @@ export default async function Film({ params: { slug } }: Props) {
             className="object-cover"
             src={"/quittez-chouchou.jpg"}
           />
-          <ShareButton />
         </div>
       </MiddleSection>
     </MainContainer>

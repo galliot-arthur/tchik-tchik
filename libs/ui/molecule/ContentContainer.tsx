@@ -9,7 +9,7 @@ export default function ContentContainer({
     <main
       className={classNames(
         className,
-        "mt-4 pt-4",
+        "mt-2 md:mt-4 pt-4",
         "border-t-2 border-gray-500"
       )}
     >
