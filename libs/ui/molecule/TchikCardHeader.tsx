@@ -27,9 +27,7 @@ export default function TchikCardHeader({
     >
       <div className="flex justify-between w-full">
         <div className="pb-1 text-start max-w-80">
-          <h4 className="font-bold text-large leading-none my-[0.30rem]">
-            {title}
-          </h4>
+          <Typography variant="h4">{title}</Typography>
           <Typography variant="tiny-bold" color="black">
             {subtitle}
           </Typography>

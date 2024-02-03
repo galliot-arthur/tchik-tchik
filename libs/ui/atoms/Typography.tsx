@@ -86,7 +86,7 @@ export default function Typography({
         <h4
           className={classNames(
             className,
-            "font-bold text-large",
+            "font-bold text-large leading-none my-[0.30rem]",
             color ? `text-${color}` : "text-black"
           )}
         >

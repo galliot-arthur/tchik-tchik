@@ -18,28 +18,12 @@ const config: Config = {
       },
       colors: {
         salmon: "#F86868",
+        black: "#212121",
+        white: "#FAFAFA",
+        "gray-500": "#545454",
       },
     },
   },
-  plugins: [
-    nextui({
-      themes: {
-        dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#000",
-            },
-          },
-        },
-        light: {
-          colors: {
-            primary: {
-              DEFAULT: "#000",
-            },
-          },
-        },
-      },
-    }),
-  ],
+  plugins: [nextui()],
 };
 export default config;

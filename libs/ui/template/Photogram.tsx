@@ -9,7 +9,7 @@ import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 
 export function Photogram({ movies }: { movies: MovieType[] }) {
   return (
-    <div className={classNames("flex flex-row flex-wrap", "w-full")}>
+    <div className={classNames("flex flex-row flex-wrap", "w-full mb-4")}>
       {movies.map((movie, index) => (
         <Item key={movie.id} movie={movie} index={index} />
       ))}

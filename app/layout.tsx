@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className="bg-white">
       <body className={`${inter.className} max-w-[1200px] m-auto`}>
         <header
           className={classNames(
