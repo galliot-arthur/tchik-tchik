@@ -1,5 +1,4 @@
 import prisma from "@/libs/database/prisma";
-import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 import { MovieType } from "@/libs/domain/type/movie";
 import { i18n } from "@/libs/i18n/i18n";
 import TchikLink from "@/libs/ui/atoms/TchikLink";
@@ -9,7 +8,6 @@ import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
-import TchikCard from "@/libs/ui/organism/TchikCard";
 import { Photogram } from "@/libs/ui/template/Photogram";
 
 export default async function Home() {
