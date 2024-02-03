@@ -9,7 +9,7 @@ export default function Typography({
 }: ComponentProps<{ variant?: Variant }>) {
   switch (variant) {
     case "p":
-      return <p className={classNames(className)}>{children}</p>;
+      return <p className={classNames(className, "text-black")}>{children}</p>;
     case "p2":
       return (
         <p className={classNames(className, "text-gray-500")}>{children}</p>
@@ -31,7 +31,7 @@ export default function Typography({
       return (
         <h1
           className={classNames(
-            "font-black text-[4rem] leading-[3.65rem] -ml-[3px]",
+            "font-black text-[4rem] leading-[3.65rem] -ml-[3px] text-black",
             className
           )}
         >
@@ -47,14 +47,20 @@ export default function Typography({
         </h2>
       );
     case "h3":
-      return <h3 className={classNames(className, "text-lg")}>{children}</h3>;
+      return (
+        <h3 className={classNames(className, "text-lg text-black")}>
+          {children}
+        </h3>
+      );
     case "h4":
       return (
-        <h4 className={classNames(className, "font-bold text-large")}>
+        <h4
+          className={classNames(className, "font-bold text-large text-black")}
+        >
           {children}
         </h4>
       );
     default:
-      return <p className={classNames(className)}>{children}</p>;
+      return <p className={classNames(className, "text-black")}>{children}</p>;
   }
 }
