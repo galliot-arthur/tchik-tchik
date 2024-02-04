@@ -11,8 +11,8 @@ import RightSection from "@/libs/ui/molecule/RightSection";
 import { Photogram } from "@/libs/ui/template/Photogram";
 
 export default async function Home() {
-  const movies: MovieType[] | undefined = await prisma.movie.findMany();
-
+  const data: MovieType[] | undefined = await prisma.movie.findMany();
+  const movies = data?.concat(data).concat(data);
   return (
     <MainContainer>
       <LeftSection>

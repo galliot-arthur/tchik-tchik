@@ -46,3 +46,10 @@ body {
   transition: background-size 0.3s ease 0s;
   background-size: 100% 2px;
 }
+
+.photogram > #title {
+  opacity: 0;
+}
+.photogram:hover > #title {
+  opacity: 1;
+}

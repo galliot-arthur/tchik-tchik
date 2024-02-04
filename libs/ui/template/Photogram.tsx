@@ -1,7 +1,5 @@
-"use client";
 import classNames from "classnames";
 import Image from "next/image";
-import { useState } from "react";
 import TchikCardHeader from "../molecule/TchikCardHeader";
 import Link from "next/link";
 import { MovieType } from "@/libs/domain/type/movie";
@@ -18,28 +16,22 @@ export function Photogram({ movies }: { movies: MovieType[] }) {
 }
 
 function Item({ movie, index }: { movie: MovieType; index: number }) {
-  const [hover, setHover] = useState(false);
   return (
-    <Link
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      href={`/films/${movie.slug}`}
-      className="w-full md:w-1/2"
-    >
+    <Link href={`/films/${movie.slug}`} className="w-full md:w-1/2">
       <div
         className={classNames(
           "relative aspect-[16/9]",
-          "w-full overflow-hidden"
+          "w-full overflow-hidden photogram"
         )}
       >
         <div
+          id="title"
           className={classNames(
             "absolute z-20 transition pointer-events-none",
             "top-[50%] left-[50%]",
             "translate-x-[-50%]",
             "translate-y-[-50%]",
-            "hidden md:block",
-            hover ? "opacity-100" : "opacity-0"
+            "hidden md:block"
           )}
         >
           <TchikCardHeader

@@ -7,6 +7,7 @@ import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
+import { Instagram } from "react-bootstrap-icons";
 
 export default async function Contact() {
   return (
@@ -21,9 +22,7 @@ export default async function Contact() {
                 {item.title}
               </Typography>
               {item.content.map((c) => (
-                <Typography key={c} variant="tiny-bold" color="black">
-                  {c}
-                </Typography>
+                <Typography key={c}>{c}</Typography>
               ))}
             </div>
           ))}
@@ -51,7 +50,9 @@ export default async function Contact() {
             href={i18n.contact.links.instagram.url}
             variant="red"
             target="_blank"
+            className="inline-flex flex-row justify-end text-salmon"
           >
+            <Instagram size="1rem" className="mr-1.5 mt-1" />
             {i18n.contact.links.instagram.label}
           </TchikLink>
         </li>
