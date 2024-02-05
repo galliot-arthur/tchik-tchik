@@ -1,21 +1,26 @@
 import { SimpleRefCode } from "@/libs/domain/type/movie";
 import Typography from "../atoms/Typography";
 import TchikLink from "../atoms/TchikLink";
+import { ComponentProps } from "@/libs/domain/type/ui";
+import classNames from "classnames";
 
 export default function SimpleRefCodeDisplayer({
   refCode,
   label,
   linkList,
-}: {
+  className,
+}: ComponentProps<{
   refCode: SimpleRefCode[];
   label: string;
   linkList?: boolean;
-}) {
+}>) {
   if (refCode.length === 0) {
     return <></>;
   }
   return (
-    <>
+    <div
+      className={classNames(className, linkList ? "text-start" : "text-center")}
+    >
       <Typography variant="h2" className="mt-4">
         {label}
       </Typography>
@@ -31,14 +36,16 @@ export default function SimpleRefCodeDisplayer({
                 {ref.label}
               </TchikLink>
             ) : (
-              <Typography>
-                <small className="text-default-500">{ref.label} : </small>
-                <span>{ref.value}</span>
-              </Typography>
+              <div className="my-1">
+                <Typography color="gray-500" className="text-tiny">
+                  {ref.label} :
+                </Typography>
+                <Typography>{ref.value}</Typography>
+              </div>
             )}
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

@@ -19,6 +19,11 @@ export const i18n = {
   },
   movies: {
     bio: "En bref :",
+    coproduced: (coproduced?: string) =>
+      coproduced ? `Une coproduction ${coproduced}` : undefined,
+    diffusion: "Diffusion",
+    press: "Presse",
+    festivals: "Participation à des festivals :",
   },
   contact: {
     portrait: { title: "On tient la boutique :" },

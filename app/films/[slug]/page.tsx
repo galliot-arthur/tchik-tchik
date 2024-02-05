@@ -13,6 +13,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { i18n } from "@/libs/i18n/i18n";
+import PhotoSwiper from "@/libs/ui/template/PhotoSwiper";
 
 export async function generateStaticParams() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
@@ -67,37 +68,40 @@ export default async function Film({ params: { slug } }: Props) {
         <Typography variant="h1">{movie.name}</Typography>
         <TchikCardHeader
           {...headerAdapter(movie)}
-          subtitle2={
-            movie.coproducedBy
-              ? `Une coproduction ${movie.coproducedBy}`
-              : undefined
-          }
+          subtitle2={i18n.movies.coproduced(movie.coproducedBy)}
         />
 
-        <ContentContainer>
-          <Typography variant="tiny-bold" className="mb-2">
-            {i18n.movies.bio}
-          </Typography>
+        <ContentContainer className="px-4">
+          <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
           <Typography variant="p" className="indent-4">
             {movie.bio}
           </Typography>
         </ContentContainer>
-        <ContentContainer>
+        <ContentContainer className="pr-8">
           {movie.writtenBy && (
             <Typography className="text-tiny uppercase font-bold">
               {movie.writtenBy}
             </Typography>
           )}
           <SimpleRefCodeDisplayer refCode={movie.staff} label="Staff" />
-          <SimpleRefCodeDisplayer
-            refCode={movie.diffusion}
-            label="Diffusion"
-            linkList
-          />
+          <div className="flex flex-row gap-4 mt-4 mb-8">
+            <SimpleRefCodeDisplayer
+              refCode={movie.diffusion}
+              label={i18n.movies.diffusion}
+              linkList
+              className="w-1/2"
+            />
+            <SimpleRefCodeDisplayer
+              refCode={movie.press}
+              label={i18n.movies.press}
+              linkList
+              className="w-1/2"
+            />
+          </div>
           {movie.festivals && (
             <>
-              <Typography variant="h2" className="mt-4">
-                {"Participation à des festivals"}
+              <Typography variant="h2" className="mt-4 mb-1">
+                {i18n.movies.festivals}
               </Typography>
               {movie.festivals.split("\\n").map((f) => (
                 <Typography key={f} className="text-small">
@@ -106,21 +110,19 @@ export default async function Film({ params: { slug } }: Props) {
               ))}
             </>
           )}
-          <SimpleRefCodeDisplayer
-            refCode={movie.press}
-            label="Presse"
-            linkList
-          />
         </ContentContainer>
       </LeftSection>
       <MiddleSection fullwidth>
-        <div className="relative h-full aspect-[1080/1349]">
+        <div className="relative w-full aspect-[1080/1349]">
           <Image
             radius="none"
             alt={movie.name}
             className="object-cover"
             src={"/quittez-chouchou.jpg"}
           />
+        </div>
+        <div className="max-w-full">
+          <PhotoSwiper />
         </div>
       </MiddleSection>
     </MainContainer>

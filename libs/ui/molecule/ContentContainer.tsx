@@ -6,7 +6,7 @@ export default function ContentContainer({
   className,
 }: ComponentProps<{}>) {
   return (
-    <main
+    <div
       className={classNames(
         className,
         "mt-2 md:mt-4 pt-4",
@@ -14,6 +14,6 @@ export default function ContentContainer({
       )}
     >
       {children}
-    </main>
+    </div>
   );
 }
