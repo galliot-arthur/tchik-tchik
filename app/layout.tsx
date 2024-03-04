@@ -5,6 +5,7 @@ import Link from "next/link";
 import { i18n } from "@/libs/i18n/i18n";
 import TchikLink from "@/libs/ui/atoms/TchikLink";
 import classNames from "classnames";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,76 +21,80 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className="bg-white">
-      <body className={`${inter.className} max-w-[1200px] m-auto`}>
-        <header
-          className={classNames(
-            "fixed max-w-[1200px]",
-            "flex justify-between items-center",
-            "min-h-[5rem] sm:min-h-[4rem] w-screen",
-            "px-4",
-            "bg-white/85 z-30 backdrop-blur-sm"
-          )}
-        >
-          <Link
-            href="/"
-            className="font-bold hover-underline text-xl sm:text-2xl text-salmon font-hira"
+      <UserProvider>
+        <body className={`${inter.className} max-w-[1200px] m-auto`}>
+          <header
+            className={classNames(
+              "fixed max-w-[1200px]",
+              "flex justify-between items-center",
+              "min-h-[5rem] sm:min-h-[4rem] w-screen",
+              "px-4",
+              "bg-white/85 z-30 backdrop-blur-sm"
+            )}
           >
-            {i18n.website}
-          </Link>
-          <ul className="flex flex-col sm:flex-row items-end">
-            <li>
-              <TchikLink
-                href={i18n.menu.homepage.url}
-                className="hover-underline"
-              >
-                {i18n.menu.homepage.label}
-              </TchikLink>
-            </li>
-            <li>
-              <TchikLink
-                href={i18n.menu.contact.url}
-                className="hover-underline ml-2"
-              >
-                {i18n.menu.contact.label}
-              </TchikLink>
-            </li>
-          </ul>
-        </header>
-        {children}
-        <footer
-          className={classNames(
-            "max-w-[1200px] relative top-[3rem]",
-            "px-4 pt-4 sm:pt-0"
-          )}
-        >
-          <div className="flex justify-between flex-col md:flex-row">
-            <div
-              className={classNames(
-                "grow-0 w-full md:w-[calc(50%-1rem)]",
-                "min-h-[5rem] sm:min-h-[4rem]",
-                "flex flex-row justify-start items-center",
-                "text-tiny text-gray-500"
-              )}
+            <Link
+              href="/"
+              className="font-bold hover-underline text-xl sm:text-2xl text-salmon font-hira"
             >
-              {i18n.footer.base}
-            </div>
-            <div
-              className={classNames(
-                "grow-0 w-full md:w-1/2",
-                "border-t-2 border-gray-500",
-                "flex flex-row justify-end items-center"
-              )}
-            >
-              <Link
-                href="/"
-                className="font-bold hover-underline text-salmon text-right my-4"
+              {i18n.website}
+            </Link>
+            <ul className="flex flex-col sm:flex-row items-end">
+              <li>
+                <TchikLink
+                  href={i18n.menu.homepage.url}
+                  className="hover-underline"
+                >
+                  {i18n.menu.homepage.label}
+                </TchikLink>
+              </li>
+              <li>
+                <TchikLink
+                  href={i18n.menu.contact.url}
+                  className="hover-underline ml-2"
+                >
+                  {i18n.menu.contact.label}
+                </TchikLink>
+              </li>
+            </ul>
+          </header>
+          {children}
+          <footer
+            className={classNames(
+              "max-w-[1200px] relative top-[3rem]",
+              "px-4 pt-4 sm:pt-0"
+            )}
+          >
+            <div className="flex justify-between flex-col md:flex-row">
+              <div
+                className={classNames(
+                  "grow-0 w-full md:w-[calc(50%-1rem)]",
+                  "min-h-[5rem] sm:min-h-[4rem]",
+                  "flex flex-row justify-start items-center",
+                  "text-tiny text-gray-500"
+                )}
               >
-                {`${i18n.website} © ${new Date().getFullYear()}`}
-              </Link>
+                <TchikLink href={i18n.menu.admin.url}>
+                  {i18n.menu.admin.label}
+                </TchikLink>
+              </div>
+              <div
+                className={classNames(
+                  "grow-0 w-full md:w-1/2",
+                  "border-t-2 border-gray-500",
+                  "flex flex-row justify-end items-center"
+                )}
+              >
+                <Link
+                  href="/"
+                  className="font-bold hover-underline text-salmon text-right my-4"
+                >
+                  {`${i18n.website} © ${new Date().getFullYear()}`}
+                </Link>
+              </div>
             </div>
-          </div>
-        </footer>
-      </body>
+          </footer>
+        </body>
+      </UserProvider>
     </html>
   );
 }

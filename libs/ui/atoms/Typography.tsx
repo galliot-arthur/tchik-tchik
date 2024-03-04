@@ -63,7 +63,7 @@ export default function Typography({
           className={classNames(
             className,
             "text-xl font-black",
-            color ? `text-${color}` : "text-gray-500"
+            color ? `text-${color}` : "text-black"
           )}
         >
           {children}

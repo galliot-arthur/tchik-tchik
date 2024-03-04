@@ -12,6 +12,7 @@ export const i18n = {
   menu: {
     homepage: { label: "Production", url: "/" },
     contact: { label: "Contact", url: "/contact" },
+    admin: { label: "Admin", url: "/admin" },
   },
   homepage: {
     films: "Nos films",
@@ -19,7 +20,7 @@ export const i18n = {
   },
   movies: {
     bio: "En bref :",
-    coproduced: (coproduced?: string) =>
+    coproduced: (coproduced?: string | null) =>
       coproduced ? `Une coproduction ${coproduced}` : undefined,
     diffusion: "Diffusion",
     press: "Presse",
@@ -59,5 +60,10 @@ export const i18n = {
         ],
       },
     ],
+  },
+  admin: {
+    homePage: {
+      welcome: (name: string) => `Bienvenue ${name}`,
+    },
   },
 };
