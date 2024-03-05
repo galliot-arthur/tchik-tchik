@@ -16,29 +16,33 @@ export default async function Contact() {
         <Typography variant="h1">{i18n.menu.contact.label}</Typography>
         <ContentContainer>
           {i18n.contact.address.map((item) => (
-            <div key={item.title} className="mb-4">
+            <div key={item.title} className="mb-4 flex items-center gap-4">
               <item.icon size="1.5rem" />
-              <Typography variant="tiny-bold" className="my-2">
-                {item.title}
-              </Typography>
-              {item.content.map((c) => (
-                <Typography key={c}>{c}</Typography>
-              ))}
+              <div>
+                <Typography variant="tiny-bold" className="my-2">
+                  {item.title}
+                </Typography>
+                {item.content.map((c) => (
+                  <Typography key={c}>{c}</Typography>
+                ))}
+              </div>
             </div>
           ))}
         </ContentContainer>
       </LeftSection>
       <MiddleSection>
-        <Typography variant="h2">{i18n.contact.portrait.title}</Typography>
+        <Typography variant="h2" className="mb-2">
+          {i18n.contact.portrait.title}
+        </Typography>
         <Portrait
           name="Adèle Galliot"
           imgsrc="/adele.jpg"
-          subTitle="Jeune cadre dynamique"
+          subTitle="Productrice"
         />
         <Portrait
           name="Florian Séjourné"
           imgsrc="/florian.jpg"
-          subTitle="Jeune cadre dynamique"
+          subTitle="Producteur"
         />
       </MiddleSection>
       <RightSection>

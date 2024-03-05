@@ -1,7 +1,7 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
 import classNames from "classnames";
 type Variant = "p" | "p2" | "span" | "h1" | "h2" | "h3" | "h4" | "tiny-bold";
-type Color = "black" | "salmon" | "gray-500";
+type Color = "black" | "salmon" | "gray-500" | "white";
 export default function Typography({
   children,
   className,

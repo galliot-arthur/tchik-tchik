@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +13,7 @@ import {
 } from "react-bootstrap-icons";
 import { useState } from "react";
 import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { i18n } from "@/libs/i18n/i18n";
 
 const array: string[] = new Array(8).fill(String(Math.random()) + "A");
 
@@ -51,7 +51,7 @@ export default function PhotoSwiper() {
   return (
     <div>
       <Typography variant="h2" className="mb-4">
-        Quelques photos :
+        {i18n.movies.photogram}
       </Typography>
       <Slider
         infinite

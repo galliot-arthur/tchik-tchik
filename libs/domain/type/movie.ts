@@ -1,15 +1,5 @@
 import { z } from "zod";
-
-export type BaseType = {
-  id: string;
-  slug: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export const simpleRefCode = z.object({ label: z.string(), value: z.string() });
-
-export type SimpleRefCode = z.infer<typeof simpleRefCode>;
+import { BaseType, simpleRefCode } from "./ressources";
 
 export const movieKind = ["Documentaire", "Fiction", "Film d'atelier"] as const;
 
@@ -28,8 +18,10 @@ export const movieType = z.object({
   festivals: z.string().optional().nullable(),
   press: z.array(simpleRefCode),
   spoiler: z.string().optional().nullable(),
+  cover: z.string().optional().nullable(),
+  pictures: z.string().optional().nullable(),
 });
 
-export type MovieBaseTye = z.infer<typeof movieType>;
+export type MovieBaseType = z.infer<typeof movieType>;
 
-export type MovieType = BaseType & MovieBaseTye;
+export type MovieType = BaseType & MovieBaseType;

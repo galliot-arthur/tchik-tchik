@@ -6,14 +6,18 @@ import TchikCardHeader from "../molecule/TchikCardHeader";
 export default function TchikCard({
   title,
   subtitle,
+  subtitle2,
   caption,
+  caption2,
   hoverText,
   img,
   href,
 }: ComponentProps<{
   title: string;
   subtitle: string;
+  subtitle2?: string;
   caption?: string;
+  caption2?: string;
   hoverText?: string;
   img?: { src: string; alt: string };
   href?: string;
@@ -44,7 +48,13 @@ export default function TchikCard({
           </div>
         )}
       </CardBody>
-      <TchikCardHeader title={title} subtitle={subtitle} caption={caption} />
+      <TchikCardHeader
+        title={title}
+        subtitle={subtitle}
+        subtitle2={subtitle2}
+        caption={caption}
+        caption2={caption2}
+      />
       {hoverText && (
         <CardFooter className="opacity-0 justify-between overflow-hidden py-1 px-2 absolute bottom-1 z-10 bg-white/50">
           <p className="">{hoverText}</p>

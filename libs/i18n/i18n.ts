@@ -1,30 +1,35 @@
 import { EnvelopeAt, Geo, InfoCircle } from "react-bootstrap-icons";
 
 export const i18n = {
-  website: "Tchik-Tchik Production",
+  website: "Tchik Tchik Productions",
   bio: {
     label: "Qui sommes nous ?",
-    bio: " Fondée par Adèle Galliot et Florian Séjourné, deux ancien.ne.s élèves de la CinéFabrique de Lyon, Tchik Tchik Productions est une société de productions de cinéma basée en Nouvelle Aquitaine. Nous accompagnons des films de fiction et documentaires de jeunes auteurices.",
+    bio: " Fondée par Adèle Galliot et Florian Séjourné, deux ancien.ne.s élèves de la CinéFabrique de Lyon, Tchik Tchik Production est une société de productions de cinéma basée en Nouvelle Aquitaine. Nous accompagnons des films de fiction et documentaires de jeunes auteurices.",
   },
   footer: {
     base: "On verra plus tard mais en gros là, un bas de page.",
   },
   menu: {
-    homepage: { label: "Production", url: "/" },
+    homepage: { label: "Accueil", url: "/" },
+    catalog: { label: "Catalogue", url: "/catalogue" },
     contact: { label: "Contact", url: "/contact" },
     admin: { label: "Admin", url: "/admin" },
   },
   homepage: {
     films: "Nos films",
-    newsletters: "À la une !",
+    newsletters: "Les dernières nouvelles :",
+    important: "À la une !",
   },
   movies: {
-    bio: "En bref :",
+    bio: "Synopsis :",
     coproduced: (coproduced?: string | null) =>
       coproduced ? `Une coproduction ${coproduced}` : undefined,
     diffusion: "Diffusion",
     press: "Presse",
     festivals: "Participation à des festivals :",
+    photogram: "Photogrammes",
+    writtenBy: (author?: string | null) =>
+      author ? `Écrit par : ${author}` : undefined,
   },
   contact: {
     portrait: { title: "On tient la boutique :" },
@@ -64,6 +69,7 @@ export const i18n = {
   admin: {
     homePage: {
       welcome: (name: string) => `Bienvenue ${name}`,
+      logout: "Déconnexion",
     },
   },
 };

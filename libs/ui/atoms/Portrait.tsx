@@ -8,8 +8,8 @@ export default function Portrait({
   subTitle,
 }: ComponentProps<{ name: string; subTitle?: string; imgsrc: string }>) {
   return (
-    <div className="flex flex-row-reverse md:flex-row">
-      <div className="relative overflow-hidden aspect-square w-full rounded-full w-1/3 md:w-1/2 max-w-[120px]">
+    <div className="flex flex-row-reverse md:flex-row w-full mb-4 md:mb-0">
+      <div className="relative overflow-hidden rounded-full aspect-square w-1/3 md:w-1/2 max-w-[120px]">
         <Image
           src={imgsrc}
           alt={`${name} - ${subTitle ?? ""}`}
@@ -17,7 +17,7 @@ export default function Portrait({
           className="object-cover"
         />
       </div>
-      <div className="text-end md:ml-4 mr-4 md:mr-0">
+      <div className="text-end md:ml-4 mr-4 md:mr-0 w-2/3 md:w-1/2">
         <Typography className="font-bold text-large leading-none my-[0.30rem]">
           {name}
         </Typography>

@@ -15,7 +15,16 @@ type Props<T extends FieldValues> = {
   label: string;
   required?: boolean;
   className?: string;
+  type: "simple" | "complex";
 };
+
+const simpleInput = [commands.bold, commands.italic];
+const newsletterInput = [
+  commands.bold,
+  commands.italic,
+  commands.link,
+  commands.unorderedListCommand,
+];
 
 export default function ControlledTipTap<T extends {}>({
   control,
@@ -34,16 +43,18 @@ export default function ControlledTipTap<T extends {}>({
 function TipTapInput<T extends {}>({
   value,
   onChange,
+  type = "simple",
 }: ControllerRenderProps & Omit<Props<T>, "name" | "control">) {
   return (
     <div className="w-full">
       <MDEditor
         value={value}
+        defaultValue={value}
         onChange={onChange}
         previewOptions={{
           rehypePlugins: [[rehypeSanitize]],
         }}
-        commands={[commands.bold, commands.italic]}
+        commands={type === "simple" ? simpleInput : newsletterInput}
       />
     </div>
   );

@@ -1,6 +1,5 @@
 "use client";
-
-import { SimpleRefCode } from "@/libs/domain/type/movie";
+import { SimpleRefCode } from "@/libs/domain/type/ressources";
 import { Select, SelectItem } from "@nextui-org/react";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 

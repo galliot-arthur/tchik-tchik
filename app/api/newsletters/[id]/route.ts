@@ -4,7 +4,7 @@ import {
   notFoundError,
 } from "@/libs/api/error";
 import prisma from "@/libs/database/prisma";
-import { movieType } from "@/libs/domain/type/movie";
+import { newsletterType } from "@/libs/domain/type/newsletter";
 import { ressources } from "@/libs/domain/type/ressources";
 import { Session, getSession } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,27 +16,23 @@ export async function PUT(
   const session = await getSession();
 
   if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
+    return forbiddenError(ressources.newsletters);
   }
 
-  const item = await prisma.movie.findUnique({ where: { id } });
+  const item = await prisma.newsLetter.findUnique({ where: { id } });
 
   if (item === undefined) {
-    return notFoundError(ressources.movies);
+    return notFoundError(ressources.newsletters);
   }
 
   try {
     const body = await request.json();
 
-    const parsedData = movieType.parse(body);
+    const parsedData = newsletterType.parse(body);
 
-    const data = await prisma.movie.update({
+    const data = await prisma.newsLetter.update({
       where: { id },
-      data: {
-        ...parsedData,
-        cover: parsedData.cover ?? "",
-        pictures: parsedData.pictures ?? "",
-      },
+      data: parsedData,
     });
 
     return NextResponse.json(data, {
@@ -56,17 +52,17 @@ export async function DELETE(
   const session = await getSession();
 
   if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
+    return forbiddenError(ressources.newsletters);
   }
 
-  const item = await prisma.movie.findUnique({ where: { id } });
+  const item = await prisma.newsLetter.findUnique({ where: { id } });
 
   if (item === undefined) {
-    return notFoundError(ressources.movies);
+    return notFoundError(ressources.newsletters);
   }
 
   try {
-    const data = await prisma.movie.delete({
+    const data = await prisma.newsLetter.delete({
       where: { id },
     });
 
@@ -76,6 +72,6 @@ export async function DELETE(
     });
   } catch (error) {
     console.error(error);
-    return badRequestError(ressources.movies);
+    return badRequestError(ressources.newsletters);
   }
 }

@@ -1,6 +1,6 @@
-import { MovieBaseTye } from "../type/movie";
+import { MovieBaseType } from "../type/movie";
 
-export const movieMock: MovieBaseTye[] = [
+export const movieMock: MovieBaseType[] = [
   {
     name: "Quitter Chouchou",
     director: "Lucie Demange",

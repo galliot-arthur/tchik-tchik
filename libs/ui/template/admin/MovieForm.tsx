@@ -11,16 +11,22 @@ import Typography from "../../atoms/Typography";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { post, put } from "@/libs/api/fetch";
-import ressources from "@/libs/domain/type/ressources";
 import ControlledTipTap from "./components/inputs/ControlledTipTap";
+import { ressources } from "@/libs/domain/type/ressources";
+import { useState } from "react";
 
 type Props = {
   defaultValues?: MovieType;
 };
 
 export default function MovieForm({ defaultValues }: Props) {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { control, getValues } = useForm<MovieType>({
+  const {
+    control,
+    getValues,
+    formState: { isValid },
+  } = useForm<MovieType>({
     resolver: zodResolver(movieType),
     defaultValues: defaultValues,
     reValidateMode: "onBlur",
@@ -33,6 +39,7 @@ export default function MovieForm({ defaultValues }: Props) {
         className="rounded-lg py-4 px-6 flex flex-row flex-wrap gap-4"
         onSubmit={async (e) => {
           e.preventDefault();
+          setIsLoading(true);
           const data = getValues();
 
           if (data === undefined) {
@@ -42,11 +49,12 @@ export default function MovieForm({ defaultValues }: Props) {
             ? await put(data, defaultValues.id, ressources.movies)
             : await post(data, ressources.movies);
 
-          if (response?.name !== undefined) {
+          if ("id" in response) {
             return router.push("/admin");
           }
 
           console.error(response);
+          setIsLoading(false);
         }}
       >
         <Typography variant="h2" className="w-full">
@@ -70,6 +78,12 @@ export default function MovieForm({ defaultValues }: Props) {
           label="Ecrit par"
           control={control}
           name="writtenBy"
+          className="w-[calc(50%-0.5rem)]"
+        />
+        <ControlledInput
+          label="Cooproduit par"
+          control={control}
+          name="coproducedBy"
           className="w-[calc(50%-0.5rem)]"
         />
         <ControlledInput
@@ -126,11 +140,11 @@ export default function MovieForm({ defaultValues }: Props) {
           label="Festivals"
           control={control}
           name="festivals"
+          type="simple"
         />
 
         <ControlledInput
-          label="Spoiler"
-          //type="url"
+          label="Bande annonce"
           control={control}
           name="spoiler"
         />
@@ -142,7 +156,12 @@ export default function MovieForm({ defaultValues }: Props) {
           >
             Annuler
           </Button>
-          <Button type="submit" color="primary">
+          <Button
+            type="submit"
+            color={isValid ? "primary" : "default"}
+            isLoading={isLoading}
+            disabled={!isValid}
+          >
             Valider
           </Button>
         </div>

@@ -4,6 +4,7 @@ import TchikCardHeader from "../molecule/TchikCardHeader";
 import Link from "next/link";
 import { MovieType } from "@/libs/domain/type/movie";
 import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
+import { i18n } from "@/libs/i18n/i18n";
 
 export function Photogram({ movies }: { movies: MovieType[] }) {
   return (
@@ -17,7 +18,10 @@ export function Photogram({ movies }: { movies: MovieType[] }) {
 
 function Item({ movie, index }: { movie: MovieType; index: number }) {
   return (
-    <Link href={`/films/${movie.slug}`} className="w-full md:w-1/2">
+    <Link
+      href={`${i18n.menu.catalog.url}/${movie.slug}`}
+      className="w-full md:w-1/2"
+    >
       <div
         className={classNames(
           "relative aspect-[16/9]",

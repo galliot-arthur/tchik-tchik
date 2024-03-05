@@ -8,23 +8,23 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-  User,
 } from "@nextui-org/react";
-import { MovieType } from "@/libs/domain/type/movie";
+
 import { Pencil } from "react-bootstrap-icons";
 import Link from "next/link";
 import DeleteButton from "./components/buttons/DeleteButton";
 import { ressources } from "@/libs/domain/type/ressources";
+import { NewsletterType } from "@/libs/domain/type/newsletter";
 import RessourceTableHeader from "./components/alt/RessourceTableHeader";
 
-type Props = { movies: MovieType[] };
+type Props = { newsletters: NewsletterType[] };
 
-export default function MovieTable({ movies }: Props) {
+export default function NewsletterTable({ newsletters }: Props) {
   return (
     <div>
       <RessourceTableHeader
-        ressource={ressources.movies}
-        addLabel="Ajouter un nouveau film"
+        ressource={ressources.newsletters}
+        addLabel="Ajouter une newsletter"
       />
       <Table
         aria-label="Example static collection table"
@@ -32,33 +32,27 @@ export default function MovieTable({ movies }: Props) {
         shadow="none"
       >
         <TableHeader>
-          <TableColumn>Film</TableColumn>
+          <TableColumn>Titre</TableColumn>
           <TableColumn>Crée le</TableColumn>
           <TableColumn>Modifé le</TableColumn>
           <TableColumn>Actions</TableColumn>
         </TableHeader>
         <TableBody>
-          {movies.map((movie) => (
-            <TableRow key={movie.id}>
+          {newsletters.map((newsletter) => (
+            <TableRow key={newsletter.id}>
               <TableCell>
                 <Link
-                  href={`/admin/${ressources.movies}/${movie.id}`}
+                  href={`/admin/${ressources.newsletters}/${newsletter.id}`}
                   className="hover:opacity-50"
                 >
-                  <User
-                    avatarProps={{ radius: "lg", src: "/quittez-chouchou.jpg" }}
-                    name={movie.name}
-                    description={movie.director}
-                  >
-                    {movie.name}
-                  </User>
+                  {newsletter.title}
                 </Link>
               </TableCell>
               <TableCell>
-                {new Date(movie.createdAt).toLocaleDateString("fr-FR")}
+                {new Date(newsletter.createdAt).toLocaleDateString("fr-FR")}
               </TableCell>
               <TableCell>
-                {new Date(movie.updatedAt).toLocaleDateString("fr-FR")}
+                {new Date(newsletter.updatedAt).toLocaleDateString("fr-FR")}
               </TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-0">
@@ -67,16 +61,16 @@ export default function MovieTable({ movies }: Props) {
                       isIconOnly
                       variant="light"
                       as={Link}
-                      href={`/admin/${ressources.movies}/${movie.id}`}
+                      href={`/admin/${ressources.newsletters}/${newsletter.id}`}
                       className="text-lg text-black cursor-pointer active:opacity-50"
                     >
                       <Pencil />
                     </Button>
                   </Tooltip>
                   <DeleteButton
-                    ressource={ressources.movies}
-                    id={movie.id}
-                    title={movie.name}
+                    ressource={ressources.newsletters}
+                    id={newsletter.id}
+                    title={newsletter.title}
                   />
                 </div>
               </TableCell>

@@ -38,6 +38,13 @@ body {
 .hover-underline {
   background-size: 0% 2px;
 }
+.active-underline {
+  color: #f86868;
+}
+.active-underline:hover {
+  background-size: 0px 0px !important;
+  cursor: default;
+}
 
 .hover-underline:hover {
   background-image: linear-gradient(black, rgba(0, 0, 0, 0.438));
@@ -52,4 +59,11 @@ body {
 }
 .photogram:hover > #title {
   opacity: 1;
+}
+
+.mdstyle > p > em {
+  color: #71717a;
+}
+.mdstyle > p > a {
+  color: #f86868;
 }

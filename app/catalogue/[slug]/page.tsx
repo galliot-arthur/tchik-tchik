@@ -41,9 +41,9 @@ export async function generateMetadata({
   return {
     title: movie.name,
     description: movie.bio,
-    /* robots: {
-        index: titre === 'La Nostalgie Des Blattes',
-      }, */
+    robots: {
+      index: true,
+    },
     openGraph: {
       title: movie.name,
       description: movie.bio,
@@ -69,21 +69,28 @@ export default async function Film({ params: { slug } }: Props) {
         <TchikCardHeader
           {...headerAdapter(movie)}
           subtitle2={i18n.movies.coproduced(movie.coproducedBy)}
+          subtitle3={i18n.movies.writtenBy(movie.writtenBy)}
         />
 
-        <ContentContainer className="px-4">
-          <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
-          <Typography variant="p" className="indent-4">
-            {movie.bio}
-          </Typography>
-        </ContentContainer>
-        <ContentContainer className="pr-8">
-          {movie.writtenBy && (
-            <Typography className="text-tiny uppercase font-bold">
-              {movie.writtenBy}
+        <ContentContainer>
+          <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
+            <Image
+              radius="none"
+              alt={movie.name}
+              className="object-cover"
+              src={"/quittez-chouchou.jpg"}
+            />
+          </div>
+          <div className="px-4">
+            <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
+            <Typography variant="p" className="indent-4">
+              {movie.bio}
             </Typography>
-          )}
-          <SimpleRefCodeDisplayer refCode={movie.staff} label="Staff" />
+          </div>
+        </ContentContainer>
+
+        <ContentContainer className="pr-8">
+          <SimpleRefCodeDisplayer refCode={movie.staff} />
           <div className="flex flex-row gap-4 mt-4 mb-8">
             <SimpleRefCodeDisplayer
               refCode={movie.diffusion}
@@ -103,17 +110,15 @@ export default async function Film({ params: { slug } }: Props) {
               <Typography variant="h2" className="mt-4 mb-1">
                 {i18n.movies.festivals}
               </Typography>
-              {movie.festivals.split("\\n").map((f) => (
-                <Typography key={f} className="text-small">
-                  <MDXRemote source={f} />
-                </Typography>
-              ))}
+              <Typography className="text-small mdstyle">
+                <MDXRemote source={movie.festivals} />
+              </Typography>
             </>
           )}
         </ContentContainer>
       </LeftSection>
       <MiddleSection fullwidth>
-        <div className="relative w-full aspect-[1080/1349]">
+        <div className="relative w-full aspect-[1080/1349] hidden md:block">
           <Image
             radius="none"
             alt={movie.name}
@@ -121,7 +126,7 @@ export default async function Film({ params: { slug } }: Props) {
             src={"/quittez-chouchou.jpg"}
           />
         </div>
-        <div className="max-w-full">
+        <div className="max-w-full pb-2">
           <PhotoSwiper />
         </div>
       </MiddleSection>

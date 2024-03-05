@@ -9,6 +9,10 @@ import { notFound, redirect } from "next/navigation";
 import MovieTable from "../../libs/ui/template/admin/MovieTable";
 import prisma from "@/libs/database/prisma";
 import AdminTitleContainer from "@/libs/ui/molecule/AdminTitleContainer";
+import NewsletterTable from "@/libs/ui/template/admin/NewsletterTable";
+import { NewsletterType } from "@/libs/domain/type/newsletter";
+import TabDisplayer from "@/libs/ui/atoms/TabDisplayer";
+import TchikLink from "@/libs/ui/atoms/TchikLink";
 
 export default async function Admin() {
   const session = await getSession();
@@ -17,11 +21,15 @@ export default async function Admin() {
     return redirect("/api/auth/login");
   }
 
-  const data: MovieType[] | undefined = await prisma.movie.findMany({
+  const movies: MovieType[] | undefined = await prisma.movie.findMany({
     orderBy: { createdAt: "desc" },
   });
+  const newsletters: NewsletterType[] | undefined =
+    await prisma.newsLetter.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
-  if (data === undefined) {
+  if (movies === undefined || newsletters === undefined) {
     return notFound();
   }
 
@@ -32,13 +40,20 @@ export default async function Admin() {
         <Typography variant="tiny-bold">
           {i18n.admin.homePage.welcome(session.user.name)}
         </Typography>
+        <TchikLink href="/api/auth/logout">
+          {i18n.admin.homePage.logout}
+        </TchikLink>
       </AdminTitleContainer>
       <ContentContainer>
-        <div className="flex flex-col gap-4">
-          <div className="w-full">
-            <MovieTable movies={data} />
-          </div>
-        </div>
+        <TabDisplayer
+          items={[
+            { title: "Films", children: <MovieTable movies={movies} /> },
+            {
+              title: "Newsletter",
+              children: <NewsletterTable newsletters={newsletters} />,
+            },
+          ]}
+        />
       </ContentContainer>
     </main>
   );

@@ -3,9 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { i18n } from "@/libs/i18n/i18n";
-import TchikLink from "@/libs/ui/atoms/TchikLink";
 import classNames from "classnames";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import HeaderLinks from "@/libs/ui/template/HeaderLinks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,24 +38,7 @@ export default function RootLayout({
             >
               {i18n.website}
             </Link>
-            <ul className="flex flex-col sm:flex-row items-end">
-              <li>
-                <TchikLink
-                  href={i18n.menu.homepage.url}
-                  className="hover-underline"
-                >
-                  {i18n.menu.homepage.label}
-                </TchikLink>
-              </li>
-              <li>
-                <TchikLink
-                  href={i18n.menu.contact.url}
-                  className="hover-underline ml-2"
-                >
-                  {i18n.menu.contact.label}
-                </TchikLink>
-              </li>
-            </ul>
+            <HeaderLinks />
           </header>
           {children}
           <footer
@@ -68,15 +51,11 @@ export default function RootLayout({
               <div
                 className={classNames(
                   "grow-0 w-full md:w-[calc(50%-1rem)]",
-                  "min-h-[5rem] sm:min-h-[4rem]",
+                  //"min-h-[5rem] sm:min-h-[4rem]",
                   "flex flex-row justify-start items-center",
                   "text-tiny text-gray-500"
                 )}
-              >
-                <TchikLink href={i18n.menu.admin.url}>
-                  {i18n.menu.admin.label}
-                </TchikLink>
-              </div>
+              ></div>
               <div
                 className={classNames(
                   "grow-0 w-full md:w-1/2",
@@ -86,9 +65,12 @@ export default function RootLayout({
               >
                 <Link
                   href="/"
-                  className="font-bold hover-underline text-salmon text-right my-4"
+                  className="font-bold hover-underline text-salmon text-right my-4 text-small"
                 >
-                  {`${i18n.website} © ${new Date().getFullYear()}`}
+                  <div className="flex flex-col md:flex-row">
+                    <p>{i18n.website}</p>
+                    <p className="md:ml-1">{`© 2023 - ${new Date().getFullYear()}`}</p>
+                  </div>
                 </Link>
               </div>
             </div>

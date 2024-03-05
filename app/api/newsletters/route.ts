@@ -3,9 +3,8 @@ import {
   forbiddenError,
   notFoundError,
 } from "@/libs/api/error";
-import { getSlug } from "@/libs/api/utils";
 import prisma from "@/libs/database/prisma";
-import { movieType, MovieType } from "@/libs/domain/type/movie";
+import { newsletterType, NewsletterType } from "@/libs/domain/type/newsletter";
 import { ressources } from "@/libs/domain/type/ressources";
 
 import { getSession, Session } from "@auth0/nextjs-auth0";
@@ -16,16 +15,17 @@ export async function GET() {
   const session = await getSession();
 
   if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
+    return forbiddenError(ressources.newsletters);
   }
 
-  const movies: MovieType[] | undefined = await prisma.movie.findMany();
+  const newsLetters: NewsletterType[] | undefined =
+    await prisma.newsLetter.findMany();
 
-  if (movies === undefined) {
-    return notFoundError(ressources.movies);
+  if (newsLetters === undefined) {
+    return notFoundError(ressources.newsletters);
   }
 
-  return NextResponse.json(JSON.stringify(movies), {
+  return NextResponse.json(JSON.stringify(newsLetters), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
@@ -35,22 +35,17 @@ export async function POST(request: NextRequest) {
   const session = await getSession();
 
   if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
+    return forbiddenError(ressources.newsletters);
   }
 
   try {
     const body = await request.json();
 
-    const parsedData = movieType.parse(body);
+    const parsedData = newsletterType.parse(body);
 
-    const slug = getSlug(parsedData.name);
-
-    const data = await prisma.movie.create({
+    const data = await prisma.newsLetter.create({
       data: {
         ...parsedData,
-        slug,
-        cover: parsedData.cover ?? "",
-        pictures: parsedData.pictures ?? "",
       },
     });
 
@@ -60,6 +55,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error(error);
-    return badRequestError(ressources.movies);
+    return badRequestError(ressources.newsletters);
   }
 }

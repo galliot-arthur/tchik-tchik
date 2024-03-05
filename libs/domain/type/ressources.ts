@@ -1,42 +1,21 @@
-import { Infer, array, date, enums, object, string } from "superstruct";
+import { z } from "zod";
 
-export const ressourceStruct = enums(["user", "movies", "newsletter"]);
-export type Ressources = Infer<typeof ressourceStruct>;
+export const ressourceStruct = z.enum(["user", "movies", "newsletters"]);
+export type Ressources = z.infer<typeof ressourceStruct>;
 
-const ressources: Record<Ressources, Ressources> = {
+export const ressources: Record<Ressources, Ressources> = {
   user: "user",
   movies: "movies",
-  newsletter: "newsletter",
+  newsletters: "newsletters",
 };
 
-export const revalidateRessourceBody = object({
-  ressources: array(ressourceStruct),
-});
+export type BaseType = {
+  id: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
-export type RevalidateRessourcesBody = Infer<typeof revalidateRessourceBody>;
+export const simpleRefCode = z.object({ label: z.string(), value: z.string() });
 
-export default ressources;
-
-export const commonRessourceStruct = object({
-  id: string(),
-  updatedAt: date(),
-  createdAt: date(),
-  titre: string(),
-  slug: string(),
-});
-
-export type CommonRessourceType = Infer<typeof commonRessourceStruct>;
-
-export const commonRessourceUpdate = object({
-  id: string(),
-  updatedAt: string(),
-  createdAt: string(),
-  titre: string(),
-  slug: string(),
-});
-
-export type CommonRessourceUpdate = Infer<typeof commonRessourceUpdate>;
-
-export const commonRessourcePost = object({
-  titre: string(),
-});
+export type SimpleRefCode = z.infer<typeof simpleRefCode>;

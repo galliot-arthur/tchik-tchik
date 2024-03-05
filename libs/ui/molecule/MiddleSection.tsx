@@ -11,7 +11,7 @@ export default function MiddleSection({
       className={classNames(
         "w-full",
         fullwidth ? "md:w-1/2" : "md:w-1/4",
-        "flex flex-col items-start gap-4",
+        "flex flex-col items-start md:gap-4",
         className
       )}
     >

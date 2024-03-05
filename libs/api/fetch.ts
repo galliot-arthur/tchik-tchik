@@ -1,5 +1,7 @@
 import { Ressources } from "../domain/type/ressources";
 
+type Error = { message: string };
+
 export async function getData<T>(): Promise<T | undefined> {
   const res = await fetch("http://localhost:3312/api", {
     cache: "force-cache",
@@ -15,14 +17,14 @@ export async function getData<T>(): Promise<T | undefined> {
 export async function post<T extends {}>(
   data: T,
   ressource: Ressources
-): Promise<T | undefined> {
+): Promise<T | Error> {
   const res = await fetch(`http://localhost:3312/api/${ressource}`, {
     method: "POST",
     body: JSON.stringify(data),
   });
 
   if (!res.ok) {
-    throw new Error("Failed to post data");
+    return { message: `Erreur lors de la création de : ${ressource}` };
   }
 
   return res.json();
@@ -32,14 +34,14 @@ export async function put<T extends {}>(
   data: T,
   id: string,
   ressource: Ressources
-): Promise<T | undefined> {
+): Promise<T | Error> {
   const res = await fetch(`http://localhost:3312/api/${ressource}/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   });
 
   if (!res.ok) {
-    throw new Error("Failed to update data");
+    return { message: `Erreur lors de la création de : ${ressource}` };
   }
 
   return res.json();
@@ -48,13 +50,13 @@ export async function put<T extends {}>(
 export async function remove<T extends {}>(
   id: string,
   ressource: Ressources
-): Promise<T | undefined> {
+): Promise<T | Error> {
   const res = await fetch(`http://localhost:3312/api/${ressource}/${id}`, {
     method: "DELETE",
   });
 
   if (!res.ok) {
-    throw new Error("Failed to update data");
+    return { message: `Erreur lors de la suppression de : ${ressource}` };
   }
 
   return res.json();
