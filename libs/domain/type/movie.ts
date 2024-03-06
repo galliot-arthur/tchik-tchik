@@ -20,6 +20,7 @@ export const movieType = z.object({
   spoiler: z.string().optional().nullable(),
   cover: z.string().optional().nullable(),
   pictures: z.string().optional().nullable(),
+  status: z.string().optional().nullable(),
 });
 
 export type MovieBaseType = z.infer<typeof movieType>;

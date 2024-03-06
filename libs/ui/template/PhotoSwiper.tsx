@@ -50,7 +50,7 @@ export default function PhotoSwiper() {
 
   return (
     <div>
-      <Typography variant="h2" className="mb-4">
+      <Typography variant="h2" className="mb-2 md:mb-4">
         {i18n.movies.photogram}
       </Typography>
       <Slider

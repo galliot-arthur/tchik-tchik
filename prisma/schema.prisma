@@ -39,6 +39,7 @@ model Movie {
     spoiler      String?  @default("")
     cover        String
     pictures     Json
+    status       String   @default("")
 
     @@map(name: "movies")
 }

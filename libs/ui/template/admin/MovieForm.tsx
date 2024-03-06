@@ -101,6 +101,12 @@ export default function MovieForm({ defaultValues }: Props) {
           name="releaseYear"
           className="w-[calc(50%-0.5rem)]"
         />
+        <ControlledInput
+          label="Statut"
+          control={control}
+          name="status"
+          className="w-[calc(50%-0.5rem)]"
+        />
         <ControlledSelect
           label="Type"
           required

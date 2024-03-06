@@ -30,6 +30,7 @@ export const i18n = {
     photogram: "Photogrammes",
     writtenBy: (author?: string | null) =>
       author ? `Écrit par : ${author}` : undefined,
+    spoiler: "Bande d'Annonce :",
   },
   contact: {
     portrait: { title: "On tient la boutique :" },

@@ -11,7 +11,6 @@ import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
 import TchikCard from "@/libs/ui/organism/TchikCard";
 import NewsLetterDisplayer from "@/libs/ui/template/NewsLetterDisplayer";
-
 import { notFound } from "next/navigation";
 
 export default async function Home() {
@@ -34,7 +33,6 @@ export default async function Home() {
     <MainContainer>
       <LeftSection>
         <Typography variant="h1">{i18n.menu.homepage.label}</Typography>
-
         <ContentContainer borderTop={false}>
           <Typography variant="tiny-bold" className="mb-2">
             {i18n.bio.label}

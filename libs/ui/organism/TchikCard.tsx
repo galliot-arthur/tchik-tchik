@@ -33,7 +33,7 @@ export default function TchikCard({
       isFooterBlurred
       fullWidth
       shadow="none"
-      className="rounded-none"
+      className="rounded-none bg-transparent"
       {...(href ? maybeLink : {})}
     >
       <CardBody className="overflow-hidden p-0">

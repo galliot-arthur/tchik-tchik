@@ -49,7 +49,7 @@ export default function Typography({
       return (
         <h1
           className={classNames(
-            "font-black text-[2rem] sm:text-[4rem] sm:leading-[3.65rem] sm:-ml-[3px]",
+            "font-black text-[2rem] sm:text-[4rem] leading-[2rem] sm:leading-[3.65rem] sm:-ml-[3px]",
             color ? `text-${color}` : "text-black",
             className
           )}

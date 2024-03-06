@@ -8,7 +8,7 @@ import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import TchikCardHeader from "@/libs/ui/molecule/TchikCardHeader";
 import SimpleRefCodeDisplayer from "@/libs/ui/template/SimpleRefCodeDisplayer";
-import { Image } from "@nextui-org/react";
+import { Chip, Image } from "@nextui-org/react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -66,6 +66,11 @@ export default async function Film({ params: { slug } }: Props) {
     <MainContainer>
       <LeftSection>
         <Typography variant="h1">{movie.name}</Typography>
+        {movie.status && (
+          <Chip size="sm" className="mt-1">
+            {movie.status}
+          </Chip>
+        )}
         <TchikCardHeader
           {...headerAdapter(movie)}
           subtitle2={i18n.movies.coproduced(movie.coproducedBy)}
@@ -116,6 +121,22 @@ export default async function Film({ params: { slug } }: Props) {
             </>
           )}
         </ContentContainer>
+        {movie.spoiler && (
+          <div>
+            <Typography variant="h2" className="mt-4 mb-2 md:mb-0">
+              {i18n.movies.spoiler}
+            </Typography>
+            <div className="relative w-full aspect-[16/9]">
+              <iframe
+                src={movie.spoiler}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full"
+              />
+            </div>
+          </div>
+        )}
       </LeftSection>
       <MiddleSection fullwidth>
         <div className="relative w-full aspect-[1080/1349] hidden md:block">
