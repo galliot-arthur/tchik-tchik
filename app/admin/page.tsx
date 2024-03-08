@@ -13,6 +13,8 @@ import NewsletterTable from "@/libs/ui/template/admin/NewsletterTable";
 import { NewsletterType } from "@/libs/domain/type/newsletter";
 import TabDisplayer from "@/libs/ui/atoms/TabDisplayer";
 import TchikLink from "@/libs/ui/atoms/TchikLink";
+import Showed from "@/libs/ui/template/admin/Showed";
+import { ShowedType } from "@/libs/domain/type/showed";
 
 export default async function Admin() {
   const session = await getSession();
@@ -24,18 +26,28 @@ export default async function Admin() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany({
     orderBy: { createdAt: "desc" },
   });
+
+  const showed: ShowedType | undefined = await prisma.showed.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 1,
+  });
+
   const newsletters: NewsletterType[] | undefined =
     await prisma.newsLetter.findMany({
       orderBy: { createdAt: "desc" },
     });
 
-  if (movies === undefined || newsletters === undefined) {
+  if (
+    movies === undefined ||
+    newsletters === undefined ||
+    showed === undefined
+  ) {
     return notFound();
   }
 
   return (
     <main className="relative top-16 mb-8">
-      <AdminTitleContainer>
+      <AdminTitleContainer hideGoback>
         <Typography variant="h1">{i18n.menu.admin.label}</Typography>
         <Typography variant="tiny-bold">
           {i18n.admin.homePage.welcome(session.user.name)}
@@ -51,6 +63,10 @@ export default async function Admin() {
             {
               title: "Newsletter",
               children: <NewsletterTable newsletters={newsletters} />,
+            },
+            {
+              title: "A la une",
+              children: <Showed movies={movies} defaultValues={showed} />,
             },
           ]}
         />

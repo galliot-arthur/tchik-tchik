@@ -9,7 +9,7 @@ export default function LeftSection({
     <section
       className={classNames(className, "grow-0 w-full md:w-[calc(50%-1rem)]")}
     >
-      <div className="px-0 pt-2 border-t-2 border-gray-500">{children}</div>
+      <div className="px-0 pt-2 border-t-2 border-bl">{children}</div>
     </section>
   );
 }

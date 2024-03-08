@@ -5,6 +5,7 @@ export const ressourceStruct = z.enum([
   "movies",
   "newsletters",
   "files",
+  "showed",
 ]);
 export type Ressources = z.infer<typeof ressourceStruct>;
 
@@ -13,6 +14,7 @@ export const ressources: Record<Ressources, Ressources> = {
   movies: "movies",
   newsletters: "newsletters",
   files: "files",
+  showed: "showed",
 };
 
 export type BaseType = {

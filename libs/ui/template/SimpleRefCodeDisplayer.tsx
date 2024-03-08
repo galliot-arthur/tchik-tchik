@@ -19,7 +19,7 @@ export default function SimpleRefCodeDisplayer({
   }
   return (
     <div
-      className={classNames(className, linkList ? "text-start" : "text-center")}
+      className={classNames(className, linkList ? "text-start" : "text-start")}
     >
       {label && (
         <Typography variant="h2" className="mt-4">
@@ -38,11 +38,11 @@ export default function SimpleRefCodeDisplayer({
                 {ref.label}
               </TchikLink>
             ) : (
-              <div className="my-1">
+              <div className="flex flex-row gap-1 items-end">
                 <Typography color="gray-500" className="text-tiny">
                   {ref.label} :
                 </Typography>
-                <Typography>{ref.value}</Typography>
+                <Typography className="text-sm">{ref.value}</Typography>
               </div>
             )}
           </li>

@@ -59,7 +59,7 @@ export default function RootLayout({
               <div
                 className={classNames(
                   "grow-0 w-full md:w-1/2",
-                  "border-t-2 border-gray-500",
+                  "border-t-2 border-bl",
                   "flex flex-row justify-end items-center"
                 )}
               >

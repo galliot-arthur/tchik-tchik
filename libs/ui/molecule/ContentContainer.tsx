@@ -10,9 +10,9 @@ export default function ContentContainer({
     <div
       className={classNames(
         className,
-        "mt-2 md:mt-4",
-        borderTop ? "pt-4" : "pt-3",
-        borderTop && "border-t-2 border-gray-500"
+        borderTop && "mt-2 md:mt-4",
+        borderTop ? "pt-4" : "pt-0",
+        borderTop && "border-t-2 border-bl"
       )}
     >
       {children}

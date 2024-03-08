@@ -14,6 +14,7 @@ model NewsLetter {
     content   String
     createdAt DateTime @default(now()) @map(name: "created_at")
     updatedAt DateTime @updatedAt @map(name: "updated_at")
+    coverId   String?
 
     @@map(name: "users")
 }
@@ -37,9 +38,17 @@ model Movie {
     festivals    String?  @default("")
     press        Json
     spoiler      String?  @default("")
-    cover        String
+    cover        String?
     pictures     Json
-    status       String   @default("")
+    status       String?  @default("")
 
     @@map(name: "movies")
+}
+
+model Showed {
+    id        String   @id @default(cuid())
+    showedId  String
+    createdAt DateTime @default(now()) @map(name: "created_at")
+
+    @@map(name: "showed")
 }

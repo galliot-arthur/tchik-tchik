@@ -1,31 +1,31 @@
 "use client";
-
+import { MovieType } from "@/libs/domain/type/movie";
+import ControlledSelect from "./components/inputs/ControlledSelect";
 import { Button } from "@nextui-org/react";
-import { Controller, useForm } from "react-hook-form";
-import ControlledInput from "./components/inputs/ControlledInput";
-import Typography from "../../atoms/Typography";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { post, put } from "@/libs/api/fetch";
-import ControlledTipTap from "./components/inputs/ControlledTipTap";
-import { ressources } from "@/libs/domain/type/ressources";
-import { NewsletterType, newsletterType } from "@/libs/domain/type/newsletter";
 import { useState } from "react";
-import UploadFile from "./UploadFile";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { post } from "@/libs/api/fetch";
+import { ShowedType, showed } from "@/libs/domain/type/showed";
+import { ressources } from "@/libs/domain/type/ressources";
 
-type Props = {
-  defaultValues?: NewsletterType;
-};
-
-export default function NewsletterForm({ defaultValues }: Props) {
+export default function Showed({
+  movies,
+  defaultValues,
+}: {
+  movies: MovieType[];
+  defaultValues: ShowedType;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   const {
     control,
     getValues,
     formState: { isValid },
-  } = useForm<NewsletterType>({
-    resolver: zodResolver(newsletterType),
+  } = useForm<ShowedType>({
+    resolver: zodResolver(showed),
     defaultValues: defaultValues,
     reValidateMode: "onBlur",
     mode: "onBlur",
@@ -43,11 +43,9 @@ export default function NewsletterForm({ defaultValues }: Props) {
           if (data === undefined) {
             return;
           }
-          const response = defaultValues?.id
-            ? await put(data, defaultValues.id, ressources.newsletters)
-            : await post(data, ressources.newsletters);
+          const response = await post(data, ressources.showed);
 
-          if ("id" in response) {
+          if ("showedId" in response) {
             return router.push("/admin");
           }
 
@@ -55,32 +53,14 @@ export default function NewsletterForm({ defaultValues }: Props) {
           setIsLoading(false);
         }}
       >
-        <Typography variant="h2" className="w-full">
-          Info générales
-        </Typography>
-        <ControlledInput
-          label="Titre"
+        <ControlledSelect
+          label="Type"
           required
           control={control}
-          name="title"
+          name="showedId"
+          options={movies.map((k) => ({ value: k.id, label: k.name }))}
           className="w-[calc(50%-0.5rem)]"
         />
-
-        <ControlledTipTap
-          label="Contenu"
-          control={control}
-          name="content"
-          type="complex"
-        />
-
-        <div className="w-[calc(50%-0.5rem)]">
-          <Typography variant="h2">Visuel</Typography>
-          <Controller
-            control={control}
-            name="coverId"
-            render={({ field }) => <UploadFile {...field} />}
-          />
-        </div>
 
         <div className="flex w-full justify-end gap-2">
           <Button

@@ -15,7 +15,7 @@ export default function RightSection({
         className
       )}
     >
-      <ul className="pl-3 py-2 border-t-2 border-gray-500 flex flex-col">
+      <ul className="-mt-2 md:mt-0 md:py-4 md:border-t-2 border-bl flex flex-col">
         {children}
       </ul>
     </section>

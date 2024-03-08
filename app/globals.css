@@ -29,6 +29,36 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+.bg-gradient {
+  background: linear-gradient(
+    -45deg,
+    #f9c78420,
+    #e7e7e720,
+    #48569620,
+    #fc7a1e20
+  );
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+
+.tchik-shadow {
+  box-shadow: 1px 2px 8px -4px #48569630, -1px -2px 4px -2px #e7e7e750;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

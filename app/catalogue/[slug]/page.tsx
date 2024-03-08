@@ -15,6 +15,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { i18n } from "@/libs/i18n/i18n";
 import PhotoSwiper from "@/libs/ui/template/PhotoSwiper";
 import { getPicture } from "@/libs/domain/type/file";
+import Card from "@/libs/ui/atoms/Card";
 
 export async function generateStaticParams() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
@@ -66,38 +67,36 @@ export default async function Film({ params: { slug } }: Props) {
   return (
     <MainContainer>
       <LeftSection>
-        <Typography variant="h1">{movie.name}</Typography>
-        {movie.status && (
-          <Chip size="sm" className="mt-1">
-            {movie.status}
-          </Chip>
+        {movie.cover && (
+          <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
+            <Image
+              radius="none"
+              alt={movie.name}
+              className="object-cover"
+              src={getPicture(movie.cover)}
+            />
+          </div>
         )}
-        <TchikCardHeader
-          {...headerAdapter(movie)}
-          subtitle2={i18n.movies.coproduced(movie.coproducedBy)}
-          subtitle3={i18n.movies.writtenBy(movie.writtenBy)}
-        />
-
-        <ContentContainer>
-          {movie.cover && (
-            <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
-              <Image
-                radius="none"
-                alt={movie.name}
-                className="object-cover"
-                src={getPicture(movie.cover)}
-              />
-            </div>
+        <Card>
+          <Typography variant="h1">{movie.name}</Typography>
+          {movie.status && (
+            <Chip size="sm" className="mt-1">
+              {movie.status}
+            </Chip>
           )}
+          <TchikCardHeader
+            {...headerAdapter(movie)}
+            subtitle2={i18n.movies.coproduced(movie.coproducedBy)}
+            subtitle3={i18n.movies.writtenBy(movie.writtenBy)}
+          />
+        </Card>
+        <ContentContainer borderTop={false} className="pt-4">
           <div className="px-4">
             <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
-            <Typography variant="p" className="indent-4">
-              {movie.bio}
-            </Typography>
+            <Typography variant="p">{movie.bio}</Typography>
           </div>
         </ContentContainer>
-
-        <ContentContainer className="pr-8">
+        <ContentContainer className="md:pr-8 pt-4">
           <SimpleRefCodeDisplayer refCode={movie.staff} />
           <div className="flex flex-row gap-4 mt-4 mb-8">
             <SimpleRefCodeDisplayer
@@ -114,14 +113,14 @@ export default async function Film({ params: { slug } }: Props) {
             />
           </div>
           {movie.festivals && (
-            <>
-              <Typography variant="h2" className="mt-4 mb-1">
+            <Card>
+              <Typography variant="h2" className="mb-1">
                 {i18n.movies.festivals}
               </Typography>
               <Typography className="text-small mdstyle">
                 <MDXRemote source={movie.festivals} />
               </Typography>
-            </>
+            </Card>
           )}
         </ContentContainer>
         {movie.spoiler && (

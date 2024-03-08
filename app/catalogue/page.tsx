@@ -13,8 +13,16 @@ export default async function NosFilms() {
   return (
     <MainContainer>
       <LeftSection>
-        <Typography variant="h1">{i18n.menu.catalog.label}</Typography>
+        <Typography variant="h1" className="border-b-2 border-bl pb-2">
+          {i18n.menu.catalog.label}
+        </Typography>
       </LeftSection>
+      <div className="md:w-1/2">
+        En tant que société de production indépendante, nous accompagnons des
+        films de fiction et documentaires de jeunes auteurices. Vous trouverez
+        ici la liste complète de ces œuvres.
+      </div>
+
       <Photogram movies={movies ?? []} />
     </MainContainer>
   );
