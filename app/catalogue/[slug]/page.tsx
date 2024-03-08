@@ -152,7 +152,7 @@ export default async function Film({ params: { slug } }: Props) {
             />
           </div>
         )}
-        <div className="max-w-full pb-2">
+        <div className="max-w-full pb-2 w-full">
           <PhotoSwiper pictures={movie.pictures} />
         </div>
       </MiddleSection>

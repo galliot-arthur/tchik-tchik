@@ -11,7 +11,7 @@ import {
   XCircle,
   ZoomIn,
 } from "react-bootstrap-icons";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
 import { i18n } from "@/libs/i18n/i18n";
 import { MovieType } from "@/libs/domain/type/movie";
@@ -53,43 +53,31 @@ export default function PhotoSwiper({ pictures = [] }: Props) {
   const [modalUrl, setModalUrl] = useState<string | undefined>();
 
   return (
-    <div>
-      <Typography variant="h2" className="mb-2 md:mb-4">
-        {i18n.movies.photogram}
+    <div className="w-full">
+      <Typography variant="h2" className="mb-2 md:mb-4 w-full">
+        {i18n.movies.photogram(pictures.length > 1)}
       </Typography>
-      <Slider
-        infinite
-        fade
-        speed={800}
-        autoplaySpeed={2000}
-        slidesToShow={1}
-        slidesToScroll={1}
-        arrows
-        nextArrow={<NextArrow />}
-        prevArrow={<PrevArrow />}
-        adaptiveHeight
-        draggable
-      >
-        {pictures.map((item) => {
-          const url = getPicture(item.id);
-          return (
-            <div className="relative aspect-[16/9] w-full h-full" key={item.id}>
-              <Image
-                alt="alt"
-                src={url}
-                fill
-                className={classNames("object-cover")}
-              />
-              <button
-                className={classNames(zoomClasses, buttonCommonClasses)}
-                onClick={() => setModalUrl(url)}
-              >
-                <ZoomIn />
-              </button>
-            </div>
-          );
-        })}
-      </Slider>
+      {pictures.length > 1 ? (
+        <MultiPictures pictures={pictures} setModalUrl={setModalUrl} />
+      ) : (
+        <div
+          className="relative aspect-[16/9] w-full h-full"
+          key={pictures.at(0)?.id}
+        >
+          <Image
+            alt="alt"
+            src={getPicture(pictures.at(0)?.id)}
+            fill
+            className={classNames("object-cover")}
+          />
+          <button
+            className={classNames(zoomClasses, buttonCommonClasses)}
+            onClick={() => setModalUrl(getPicture(pictures.at(0)?.id))}
+          >
+            <ZoomIn />
+          </button>
+        </div>
+      )}
 
       <Modal
         isOpen={!!modalUrl}
@@ -127,3 +115,45 @@ export default function PhotoSwiper({ pictures = [] }: Props) {
     </div>
   );
 }
+
+const MultiPictures = ({
+  pictures,
+  setModalUrl,
+}: {
+  pictures: MovieType["pictures"];
+  setModalUrl: Dispatch<SetStateAction<string | undefined>>;
+}) => (
+  <Slider
+    infinite
+    fade
+    speed={800}
+    autoplaySpeed={2000}
+    slidesToShow={1}
+    slidesToScroll={1}
+    arrows
+    nextArrow={<NextArrow />}
+    prevArrow={<PrevArrow />}
+    adaptiveHeight
+    draggable
+  >
+    {pictures.map((item) => {
+      const url = getPicture(item.id);
+      return (
+        <div className="relative aspect-[16/9] w-full h-full" key={item.id}>
+          <Image
+            alt="alt"
+            src={url}
+            fill
+            className={classNames("object-cover")}
+          />
+          <button
+            className={classNames(zoomClasses, buttonCommonClasses)}
+            onClick={() => setModalUrl(url)}
+          >
+            <ZoomIn />
+          </button>
+        </div>
+      );
+    })}
+  </Slider>
+);

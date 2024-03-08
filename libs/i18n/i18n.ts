@@ -27,7 +27,7 @@ export const i18n = {
     diffusion: "Diffusion",
     press: "Presse",
     festivals: "Participation à des festivals :",
-    photogram: "Photogrammes",
+    photogram: (plurial: boolean) => `Photogramme${plurial ? "s" : ""}`,
     writtenBy: (author?: string | null) =>
       author ? `Écrit par : ${author}` : undefined,
     spoiler: "Bande d'Annonce :",

@@ -16,6 +16,7 @@ import Link from "next/link";
 import DeleteButton from "./components/buttons/DeleteButton";
 import { ressources } from "@/libs/domain/type/ressources";
 import RessourceTableHeader from "./components/alt/RessourceTableHeader";
+import { getPicture } from "@/libs/domain/type/file";
 
 type Props = { movies: MovieType[] };
 
@@ -46,7 +47,10 @@ export default function MovieTable({ movies }: Props) {
                   className="hover:opacity-50"
                 >
                   <User
-                    avatarProps={{ radius: "lg", src: "/quittez-chouchou.jpg" }}
+                    avatarProps={{
+                      radius: "lg",
+                      src: getPicture(movie.pictures.at(0)?.id),
+                    }}
                     name={movie.name}
                     description={movie.director}
                   >
