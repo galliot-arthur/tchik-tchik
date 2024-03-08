@@ -3,7 +3,7 @@ import { Ressources } from "../domain/type/ressources";
 type Error = { message: string };
 
 export async function getData<T>(): Promise<T | undefined> {
-  const res = await fetch("http://localhost:3312/api", {
+  const res = await fetch("/api", {
     cache: "force-cache",
   });
 
@@ -16,11 +16,13 @@ export async function getData<T>(): Promise<T | undefined> {
 
 export async function post<T extends {}>(
   data: T,
-  ressource: Ressources
+  ressource: Ressources,
+  contentType?: string
 ): Promise<T | Error> {
-  const res = await fetch(`http://localhost:3312/api/${ressource}`, {
+  const res = await fetch(`/api/${ressource}`, {
     method: "POST",
     body: JSON.stringify(data),
+    headers: { "Content-Type": contentType ?? "application/json" },
   });
 
   if (!res.ok) {
@@ -35,7 +37,7 @@ export async function put<T extends {}>(
   id: string,
   ressource: Ressources
 ): Promise<T | Error> {
-  const res = await fetch(`http://localhost:3312/api/${ressource}/${id}`, {
+  const res = await fetch(`/api/${ressource}/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   });
@@ -51,7 +53,7 @@ export async function remove<T extends {}>(
   id: string,
   ressource: Ressources
 ): Promise<T | Error> {
-  const res = await fetch(`http://localhost:3312/api/${ressource}/${id}`, {
+  const res = await fetch(`/api/${ressource}/${id}`, {
     method: "DELETE",
   });
 

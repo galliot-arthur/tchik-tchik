@@ -14,8 +14,8 @@ import {
 import { useState } from "react";
 import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
 import { i18n } from "@/libs/i18n/i18n";
-
-const array: string[] = new Array(8).fill(String(Math.random()) + "A");
+import { MovieType } from "@/libs/domain/type/movie";
+import { getPicture } from "@/libs/domain/type/file";
 
 const arrowCommonClasses = "absolute z-20 top-[50%] -translate-y-1/2";
 const zoomClasses = "absolute z-20 bottom-4 left-[50%] -translate-x-1/2";
@@ -45,7 +45,11 @@ const PrevArrow = (props: any) => {
   );
 };
 
-export default function PhotoSwiper() {
+type Props = {
+  pictures: MovieType["pictures"] | undefined;
+};
+
+export default function PhotoSwiper({ pictures = [] }: Props) {
   const [modalUrl, setModalUrl] = useState<string | undefined>();
 
   return (
@@ -66,10 +70,10 @@ export default function PhotoSwiper() {
         adaptiveHeight
         draggable
       >
-        {array.map((item, index) => {
-          const url = `/photogramme/${index}.jpg`;
+        {pictures.map((item) => {
+          const url = getPicture(item.id);
           return (
-            <div className="relative aspect-[16/9] w-full h-full" key={item}>
+            <div className="relative aspect-[16/9] w-full h-full" key={item.id}>
               <Image
                 alt="alt"
                 src={url}

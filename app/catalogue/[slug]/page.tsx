@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { i18n } from "@/libs/i18n/i18n";
 import PhotoSwiper from "@/libs/ui/template/PhotoSwiper";
+import { getPicture } from "@/libs/domain/type/file";
 
 export async function generateStaticParams() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany();
@@ -78,14 +79,16 @@ export default async function Film({ params: { slug } }: Props) {
         />
 
         <ContentContainer>
-          <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
-            <Image
-              radius="none"
-              alt={movie.name}
-              className="object-cover"
-              src={"/quittez-chouchou.jpg"}
-            />
-          </div>
+          {movie.cover && (
+            <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
+              <Image
+                radius="none"
+                alt={movie.name}
+                className="object-cover"
+                src={getPicture(movie.cover)}
+              />
+            </div>
+          )}
           <div className="px-4">
             <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
             <Typography variant="p" className="indent-4">
@@ -139,16 +142,18 @@ export default async function Film({ params: { slug } }: Props) {
         )}
       </LeftSection>
       <MiddleSection fullwidth>
-        <div className="relative w-full aspect-[1080/1349] hidden md:block">
-          <Image
-            radius="none"
-            alt={movie.name}
-            className="object-cover"
-            src={"/quittez-chouchou.jpg"}
-          />
-        </div>
+        {movie.cover && (
+          <div className="relative w-full aspect-[1080/1349] hidden md:block">
+            <Image
+              radius="none"
+              alt={movie.name}
+              className="object-cover"
+              src={getPicture(movie.cover)}
+            />
+          </div>
+        )}
         <div className="max-w-full pb-2">
-          <PhotoSwiper />
+          <PhotoSwiper pictures={movie.pictures} />
         </div>
       </MiddleSection>
     </MainContainer>

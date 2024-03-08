@@ -1,4 +1,5 @@
 import prisma from "@/libs/database/prisma";
+import { getPicture } from "@/libs/domain/type/file";
 import { MovieType } from "@/libs/domain/type/movie";
 import { NewsletterType } from "@/libs/domain/type/newsletter";
 import { i18n } from "@/libs/i18n/i18n";
@@ -65,7 +66,7 @@ export default async function Home() {
               subtitle={lastEntry.director}
               caption2={lastEntry.kind}
               caption={String(lastEntry.releaseYear)}
-              img={{ src: "/quittez-chouchou.jpg", alt: lastEntry.name }}
+              img={{ src: getPicture(lastEntry.cover), alt: lastEntry.name }}
               href={`${i18n.menu.catalog.url}/${lastEntry.slug}`}
             />
           </div>

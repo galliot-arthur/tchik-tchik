@@ -19,7 +19,7 @@ export const movieType = z.object({
   press: z.array(simpleRefCode),
   spoiler: z.string().optional().nullable(),
   cover: z.string().optional().nullable(),
-  pictures: z.string().optional().nullable(),
+  pictures: z.array(z.object({ id: z.string() })).min(1),
   status: z.string().optional().nullable(),
 });
 

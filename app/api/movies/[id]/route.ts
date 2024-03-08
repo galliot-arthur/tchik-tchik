@@ -36,6 +36,7 @@ export async function PUT(
         ...parsedData,
         cover: parsedData.cover ?? "",
         pictures: parsedData.pictures ?? "",
+        status: parsedData.status ?? "",
       },
     });
 

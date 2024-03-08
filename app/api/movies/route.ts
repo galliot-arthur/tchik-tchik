@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
         slug,
         cover: parsedData.cover ?? "",
         pictures: parsedData.pictures ?? "",
+        status: parsedData.status ?? "",
       },
     });
 

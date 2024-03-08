@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MovieType } from "@/libs/domain/type/movie";
 import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 import { i18n } from "@/libs/i18n/i18n";
+import { getPicture } from "@/libs/domain/type/file";
 
 export function Photogram({ movies }: { movies: MovieType[] }) {
   return (
@@ -16,7 +17,7 @@ export function Photogram({ movies }: { movies: MovieType[] }) {
   );
 }
 
-function Item({ movie, index }: { movie: MovieType; index: number }) {
+function Item({ movie }: { movie: MovieType; index: number }) {
   return (
     <Link
       href={`${i18n.menu.catalog.url}/${movie.slug}`}
@@ -44,7 +45,7 @@ function Item({ movie, index }: { movie: MovieType; index: number }) {
           />
         </div>
         <Image
-          src={`/photogramme/${index}.jpg`}
+          src={getPicture(movie.pictures.at(0)?.id)}
           fill
           className={classNames(
             "object-cover",

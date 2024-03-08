@@ -1,12 +1,18 @@
 import { z } from "zod";
 
-export const ressourceStruct = z.enum(["user", "movies", "newsletters"]);
+export const ressourceStruct = z.enum([
+  "user",
+  "movies",
+  "newsletters",
+  "files",
+]);
 export type Ressources = z.infer<typeof ressourceStruct>;
 
 export const ressources: Record<Ressources, Ressources> = {
   user: "user",
   movies: "movies",
   newsletters: "newsletters",
+  files: "files",
 };
 
 export type BaseType = {
