@@ -13,7 +13,7 @@ export default async function Contact() {
   return (
     <MainContainer>
       <LeftSection>
-        <Typography variant="h1" className="border-b-2 border-bl pb-2 mb-2">
+        <Typography variant="h1" className="mb-3">
           {i18n.menu.contact.label}
         </Typography>
         <Card>

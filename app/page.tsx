@@ -44,7 +44,7 @@ export default async function Home() {
     <MainContainer>
       <LeftSection>
         <ContentContainer borderTop={false}>
-          <Typography variant="h1" className="border-b-2 border-bl mb-2 pb-2">
+          <Typography variant="h1" className="mb-3">
             {i18n.menu.homepage.label}
           </Typography>
           <Card>
@@ -59,8 +59,8 @@ export default async function Home() {
             </ContentContainer>
           </Card>
         </ContentContainer>
-        <ContentContainer className="mt-4">
-          <Typography variant="tiny-bold" className="md:mt-6">
+        <ContentContainer className="!mt-6" borderTop={false}>
+          <Typography variant="tiny-bold" className="md:mt-12">
             {i18n.homepage.newsletters}
           </Typography>
           <NewsLetterDisplayer newsletters={newsletters} />
