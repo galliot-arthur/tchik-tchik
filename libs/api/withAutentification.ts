@@ -10,8 +10,9 @@ export default async function withAutentification(
   const isProductionMode = ENV_TYPE === "prod";
 
   if (isProductionMode) {
-    const session = await getSession();
+    console.log(ressource, callBack.name);
 
+    const session = await getSession();
     if (!(session instanceof Session) || !("user" in session)) {
       return forbiddenError(ressource);
     }
