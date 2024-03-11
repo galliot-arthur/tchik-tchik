@@ -23,11 +23,7 @@ export default async function Home() {
   const newsletters = await fetchData<NewsletterType[]>(ressources.newsletters);
   const showed = await fetchData<ShowedType[]>(ressources.showed);
 
-  if (
-    newsletters instanceof Error ||
-    movies instanceof Error ||
-    showed instanceof Error
-  ) {
+  if ("message" in newsletters || "message" in movies || "message" in showed) {
     return notFound();
   }
 

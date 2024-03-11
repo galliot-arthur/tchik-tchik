@@ -28,18 +28,11 @@ export default async function Admin() {
     return redirect("/api/auth/login");
   }
 
-  const movies: MovieType[] | Error = await fetchData(ressources.movies);
-  const newsletters: NewsletterType[] | Error = await fetchData(
-    ressources.newsletters
-  );
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+  const newsletters = await fetchData<NewsletterType[]>(ressources.newsletters);
+  const showed = await fetchData<ShowedType[]>(ressources.showed);
 
-  const showed: ShowedType[] | Error = await fetchData(ressources.showed);
-
-  if (
-    newsletters instanceof Error ||
-    movies instanceof Error ||
-    showed instanceof Error
-  ) {
+  if ("message" in newsletters || "message" in movies || "message" in showed) {
     return notFound();
   }
 

@@ -11,7 +11,7 @@ import { notFound } from "next/navigation";
 export default async function NosFilms() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
-  if (movies instanceof Error) {
+  if ("message" in movies) {
     return notFound();
   }
 

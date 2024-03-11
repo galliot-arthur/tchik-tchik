@@ -2,11 +2,16 @@ import { API_URL } from "@/app/env";
 import { Ressources } from "../domain/type/ressources";
 import { ApiError } from "./error";
 
+const getId = (id?: string) => (id ? `/${id}` : "");
+
 export async function fetchData<T>(
   ressource: Ressources,
   id?: string
 ): Promise<T | ApiError> {
-  const res = await fetch(`${API_URL}/api/${ressource}${id ? `/${id}` : ""}`, {
+  const url = `${API_URL}/api/${ressource}${getId(id)}`;
+  console.log(url);
+
+  const res = await fetch(url, {
     method: "GET",
     next: { tags: [ressource] },
   });
@@ -14,7 +19,7 @@ export async function fetchData<T>(
   if (!res.ok) {
     const err = await res.json();
     return {
-      message: err.message ?? `unkown error from ${ressource}`,
+      message: (err.message ?? `unkown error from ${ressource}`) + " / " + url,
       status: res.status,
     };
   }
