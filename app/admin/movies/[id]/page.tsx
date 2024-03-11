@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
   if ("message" in movies) {
-    notFound();
+    throw new Error(movies.message + " désolé mon movie " + movies.status);
   }
 
   return movies.map((movie) => movie.id);

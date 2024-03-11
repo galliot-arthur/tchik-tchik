@@ -11,7 +11,9 @@ export async function generateStaticParams() {
   const newsLetters = await fetchData<NewsletterType[]>(ressources.newsletters);
 
   if ("message" in newsLetters) {
-    notFound();
+    throw new Error(
+      newsLetters.message + " désolé ma newsLetters " + newsLetters.status
+    );
   }
 
   return newsLetters.map((newsLetter) => newsLetter.id);
