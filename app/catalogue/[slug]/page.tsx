@@ -21,6 +21,8 @@ import { ressources } from "@/libs/domain/type/ressources";
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
+  console.log(movies);
+
   if (movies instanceof Error) {
     return notFound();
   }
