@@ -1,5 +1,6 @@
-import prisma from "@/libs/database/prisma";
+import { fetchData } from "@/libs/api/fetch";
 import { MovieType } from "@/libs/domain/type/movie";
+import { ressources } from "@/libs/domain/type/ressources";
 import Typography from "@/libs/ui/atoms/Typography";
 import AdminTitleContainer from "@/libs/ui/molecule/AdminTitleContainer";
 import MovieForm from "@/libs/ui/template/admin/MovieForm";
@@ -7,10 +8,12 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const movies: MovieType[] | undefined = await prisma.movie.findMany();
-  if (!movies) {
-    return notFound();
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+
+  if ("message" in movies) {
+    notFound();
   }
+
   return movies.map((movie) => movie.id);
 }
 
@@ -21,12 +24,10 @@ type Props = {
 export async function generateMetadata({
   params: { id },
 }: Props): Promise<Metadata> {
-  const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { id },
-  });
+  const movie = await fetchData<MovieType>(ressources.movies, id);
 
-  if (!movie) {
-    return notFound();
+  if ("message" in movie) {
+    notFound();
   }
 
   return {
@@ -39,12 +40,10 @@ export async function generateMetadata({
 }
 
 export default async function EditMovie({ params: { id } }: Props) {
-  const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { id },
-  });
+  const movie = await fetchData<MovieType>(ressources.movies, id);
 
-  if (!movie) {
-    return notFound();
+  if ("message" in movie) {
+    notFound();
   }
 
   return (

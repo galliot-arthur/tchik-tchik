@@ -22,8 +22,8 @@ import { API_URL } from "@/app/env";
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
-  if (movies instanceof Error) {
-    throw movies;
+  if ("message" in movies) {
+    notFound();
   }
 
   return movies.map((movie) => movie.slug);
@@ -38,8 +38,8 @@ export async function generateMetadata({
 }: Props): Promise<Metadata> {
   const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if (movie instanceof Error) {
-    return notFound();
+  if ("message" in movie) {
+    notFound();
   }
 
   return {
@@ -60,8 +60,8 @@ export async function generateMetadata({
 export default async function Film({ params: { slug } }: Props) {
   const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if (movie instanceof Error) {
-    return notFound();
+  if ("message" in movie) {
+    notFound();
   }
 
   return (

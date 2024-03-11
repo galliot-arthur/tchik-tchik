@@ -3,34 +3,44 @@ import { Ressources } from "../domain/type/ressources";
 import { ApiError } from "./error";
 
 export async function fetchData<T>(
-  ressources: Ressources,
+  ressource: Ressources,
   id?: string
-): Promise<T | Error> {
-  const res = await fetch(`${API_URL}/api/${ressources}${id ? `/${id}` : ""}`, {
+): Promise<T | ApiError> {
+  const res = await fetch(`${API_URL}/api/${ressource}${id ? `/${id}` : ""}`, {
     method: "GET",
-    next: { tags: [ressources] },
+    next: { tags: [ressource] },
   });
 
   if (!res.ok) {
-    return res.json().then((err) => new Error(err.message ?? "unknow"));
+    const err = await res.json();
+    return {
+      message: err.message ?? `unkown error from ${ressource}`,
+      status: res.status,
+    };
   }
+
   const data = await res.json();
 
   return data;
 }
 
 export async function fetchFromSlug<T>(
-  ressources: Ressources,
+  ressource: Ressources,
   slug: string
-): Promise<T | Error> {
-  const res = await fetch(`${API_URL}/api/${ressources}/slug/${slug}`, {
+): Promise<T | ApiError> {
+  const res = await fetch(`${API_URL}/api/${ressource}/slug/${slug}`, {
     method: "GET",
-    next: { tags: [ressources] },
+    next: { tags: [ressource] },
   });
 
   if (!res.ok) {
-    return res.json().then((err) => new Error(err.message ?? "unknow"));
+    const err = await res.json();
+    return {
+      message: err.message ?? `unkown error from ${ressource}`,
+      status: res.status,
+    };
   }
+
   const data = await res.json();
 
   return data;
