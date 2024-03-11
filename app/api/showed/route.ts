@@ -1,37 +1,46 @@
-import { badRequestError, forbiddenError } from "@/libs/api/error";
+import { badRequestError, notFoundError } from "@/libs/api/error";
+import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
-
 import { ressources } from "@/libs/domain/type/ressources";
-import { showed } from "@/libs/domain/type/showed";
-
-import { getSession, Session } from "@auth0/nextjs-auth0";
-
+import { showed, ShowedType } from "@/libs/domain/type/showed";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET() {
+  const showed: ShowedType[] | undefined = await prisma.showed.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 3,
+  });
+
+  if (showed === undefined) {
+    return notFoundError(ressources.newsletters);
+  }
+
+  return NextResponse.json(showed, {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function POST(request: NextRequest) {
-  const session = await getSession();
+  return withAutentification(async () => {
+    try {
+      const body = await request.json();
 
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.newsletters);
-  }
+      const parsedData = showed.parse(body);
 
-  try {
-    const body = await request.json();
+      const data = await prisma.showed.create({
+        data: {
+          ...parsedData,
+        },
+      });
 
-    const parsedData = showed.parse(body);
-
-    const data = await prisma.showed.create({
-      data: {
-        ...parsedData,
-      },
-    });
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-    return badRequestError(ressources.newsletters);
-  }
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error(error);
+      return badRequestError(ressources.newsletters);
+    }
+  }, ressources.showed);
 }

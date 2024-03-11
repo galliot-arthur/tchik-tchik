@@ -1,66 +1,55 @@
-import {
-  badRequestError,
-  forbiddenError,
-  notFoundError,
-} from "@/libs/api/error";
+import { badRequestError, notFoundError } from "@/libs/api/error";
 import { getSlug } from "@/libs/api/utils";
+import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { movieType, MovieType } from "@/libs/domain/type/movie";
 import { ressources } from "@/libs/domain/type/ressources";
-
-import { getSession, Session } from "@auth0/nextjs-auth0";
-
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const session = await getSession();
-
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
-  }
-
-  const movies: MovieType[] | undefined = await prisma.movie.findMany();
+  const movies: MovieType[] | undefined = await prisma.movie.findMany({
+    orderBy: { createdAt: "desc" },
+  });
 
   if (movies === undefined) {
     return notFoundError(ressources.movies);
   }
 
-  return NextResponse.json(JSON.stringify(movies), {
+  return NextResponse.json(movies, {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSession();
+  return withAutentification(async () => {
+    try {
+      const body = await request.json();
 
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.movies);
-  }
+      const parsedData = movieType.parse(body);
 
-  try {
-    const body = await request.json();
+      const slug = getSlug(parsedData.name);
 
-    const parsedData = movieType.parse(body);
+      const data = await prisma.movie.create({
+        data: {
+          ...parsedData,
+          slug,
+          cover: parsedData.cover ?? "",
+          pictures: parsedData.pictures ?? "",
+          status: parsedData.status ?? "",
+        },
+      });
 
-    const slug = getSlug(parsedData.name);
+      revalidateTag(ressources.movies);
 
-    const data = await prisma.movie.create({
-      data: {
-        ...parsedData,
-        slug,
-        cover: parsedData.cover ?? "",
-        pictures: parsedData.pictures ?? "",
-        status: parsedData.status ?? "",
-      },
-    });
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-    return badRequestError(ressources.movies);
-  }
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error(error);
+      return badRequestError(ressources.movies);
+    }
+  }, ressources.movies);
 }

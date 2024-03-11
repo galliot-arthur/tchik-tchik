@@ -1,60 +1,50 @@
-import {
-  badRequestError,
-  forbiddenError,
-  notFoundError,
-} from "@/libs/api/error";
+import { badRequestError, notFoundError } from "@/libs/api/error";
+import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { newsletterType, NewsletterType } from "@/libs/domain/type/newsletter";
 import { ressources } from "@/libs/domain/type/ressources";
-
-import { getSession, Session } from "@auth0/nextjs-auth0";
-
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const session = await getSession();
-
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.newsletters);
-  }
-
   const newsLetters: NewsletterType[] | undefined =
-    await prisma.newsLetter.findMany();
+    await prisma.newsLetter.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 10,
+    });
 
   if (newsLetters === undefined) {
     return notFoundError(ressources.newsletters);
   }
 
-  return NextResponse.json(JSON.stringify(newsLetters), {
+  return NextResponse.json(newsLetters, {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSession();
+  return withAutentification(async () => {
+    try {
+      const body = await request.json();
 
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.newsletters);
-  }
+      const parsedData = newsletterType.parse(body);
 
-  try {
-    const body = await request.json();
+      const data = await prisma.newsLetter.create({
+        data: {
+          ...parsedData,
+        },
+      });
 
-    const parsedData = newsletterType.parse(body);
+      revalidateTag(ressources.newsletters);
 
-    const data = await prisma.newsLetter.create({
-      data: {
-        ...parsedData,
-      },
-    });
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-    return badRequestError(ressources.newsletters);
-  }
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error(error);
+      return badRequestError(ressources.newsletters);
+    }
+  }, ressources.newsletters);
 }

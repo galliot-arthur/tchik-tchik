@@ -1,7 +1,8 @@
-import prisma from "@/libs/database/prisma";
+import { fetchData } from "@/libs/api/fetch";
 import { getPicture } from "@/libs/domain/type/file";
 import { MovieType } from "@/libs/domain/type/movie";
 import { NewsletterType } from "@/libs/domain/type/newsletter";
+import { ressources } from "@/libs/domain/type/ressources";
 import { ShowedType } from "@/libs/domain/type/showed";
 import { i18n } from "@/libs/i18n/i18n";
 import Card from "@/libs/ui/atoms/Card";
@@ -18,21 +19,17 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 
 export default async function Home() {
-  const movies: MovieType[] | undefined = await prisma.movie.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-  const newsletters: NewsletterType[] | undefined =
-    await prisma.newsLetter.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 10,
-    });
+  const movies: MovieType[] | Error = await fetchData(ressources.movies);
+  const newsletters: NewsletterType[] | Error = await fetchData(
+    ressources.newsletters
+  );
+  const showed: ShowedType[] | Error = await fetchData(ressources.showed);
 
-  const showed: ShowedType[] | undefined = await prisma.showed.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 1,
-  });
-
-  if (newsletters === undefined || movies === undefined) {
+  if (
+    newsletters instanceof Error ||
+    movies instanceof Error ||
+    showed instanceof Error
+  ) {
     return notFound();
   }
 

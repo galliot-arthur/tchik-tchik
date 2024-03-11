@@ -7,50 +7,50 @@ import { Session, getSession } from "@auth0/nextjs-auth0";
 
 import { notFound, redirect } from "next/navigation";
 import MovieTable from "../../libs/ui/template/admin/MovieTable";
-import prisma from "@/libs/database/prisma";
 import AdminTitleContainer from "@/libs/ui/molecule/AdminTitleContainer";
 import NewsletterTable from "@/libs/ui/template/admin/NewsletterTable";
 import { NewsletterType } from "@/libs/domain/type/newsletter";
 import TabDisplayer from "@/libs/ui/atoms/TabDisplayer";
 import TchikLink from "@/libs/ui/atoms/TchikLink";
-import Showed from "@/libs/ui/template/admin/Showed";
 import { ShowedType } from "@/libs/domain/type/showed";
+import { fetchData } from "@/libs/api/fetch";
+import { ressources } from "@/libs/domain/type/ressources";
+import { ENV_TYPE } from "../env";
+import Showed from "@/libs/ui/template/admin/Showed";
 
 export default async function Admin() {
   const session = await getSession();
 
-  if (!(session instanceof Session) || !("user" in session)) {
+  if (
+    ENV_TYPE === "prod" &&
+    (!(session instanceof Session) || !("user" in session))
+  ) {
     return redirect("/api/auth/login");
   }
 
-  const movies: MovieType[] | undefined = await prisma.movie.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const movies: MovieType[] | Error = await fetchData(ressources.movies);
+  const newsletters: NewsletterType[] | Error = await fetchData(
+    ressources.newsletters
+  );
 
-  const showed: ShowedType | undefined = await prisma.showed.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 1,
-  });
-
-  const newsletters: NewsletterType[] | undefined =
-    await prisma.newsLetter.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+  const showed: ShowedType[] | Error = await fetchData(ressources.showed);
 
   if (
-    movies === undefined ||
-    newsletters === undefined ||
-    showed === undefined
+    newsletters instanceof Error ||
+    movies instanceof Error ||
+    showed instanceof Error
   ) {
     return notFound();
   }
+
+  const lastShowed = showed[0];
 
   return (
     <main className="relative top-16 mb-8">
       <AdminTitleContainer hideGoback>
         <Typography variant="h1">{i18n.menu.admin.label}</Typography>
         <Typography variant="tiny-bold">
-          {i18n.admin.homePage.welcome(session.user.name)}
+          {i18n.admin.homePage.welcome(session?.user.name)}
         </Typography>
         <TchikLink href="/api/auth/logout">
           {i18n.admin.homePage.logout}
@@ -66,7 +66,7 @@ export default async function Admin() {
             },
             {
               title: "A la une",
-              children: <Showed movies={movies} defaultValues={showed} />,
+              children: <Showed movies={movies} defaultValues={lastShowed} />,
             },
           ]}
         />

@@ -36,21 +36,24 @@ export default function Showed({
       <form
         className="rounded-lg py-4 px-6 flex flex-row flex-wrap gap-4"
         onSubmit={async (e) => {
-          e.preventDefault();
-          setIsLoading(true);
-          const data = getValues();
+          try {
+            e.preventDefault();
+            setIsLoading(true);
+            const data = getValues();
 
-          if (data === undefined) {
-            return;
-          }
-          const response = await post(data, ressources.showed);
+            if (data === undefined) {
+              return;
+            }
+            const response = await post(data, ressources.showed);
 
-          if ("showedId" in response) {
+            if ("message" in response) {
+              return;
+            }
+
             return router.push("/admin");
+          } finally {
+            setIsLoading(false);
           }
-
-          console.error(response);
-          setIsLoading(false);
         }}
       >
         <ControlledSelect

@@ -1,77 +1,86 @@
-import {
-  badRequestError,
-  forbiddenError,
-  notFoundError,
-} from "@/libs/api/error";
+import { badRequestError, notFoundError } from "@/libs/api/error";
+import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { newsletterType } from "@/libs/domain/type/newsletter";
 import { ressources } from "@/libs/domain/type/ressources";
-import { Session, getSession } from "@auth0/nextjs-auth0";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(
-  request: NextRequest,
+export async function GET(
+  _: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
-  const session = await getSession();
-
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.newsletters);
-  }
-
   const item = await prisma.newsLetter.findUnique({ where: { id } });
 
   if (item === undefined) {
     return notFoundError(ressources.newsletters);
   }
 
-  try {
-    const body = await request.json();
+  return NextResponse.json(item, {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
-    const parsedData = newsletterType.parse(body);
+export async function PUT(
+  request: NextRequest,
+  { params: { id } }: { params: { id: string } }
+) {
+  return withAutentification(async () => {
+    const item = await prisma.newsLetter.findUnique({ where: { id } });
 
-    const data = await prisma.newsLetter.update({
-      where: { id },
-      data: parsedData,
-    });
+    if (item === undefined) {
+      return notFoundError(ressources.newsletters);
+    }
 
-    return NextResponse.json(data, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-    return badRequestError(ressources.movies);
-  }
+    try {
+      const body = await request.json();
+
+      const parsedData = newsletterType.parse(body);
+
+      const data = await prisma.newsLetter.update({
+        where: { id },
+        data: parsedData,
+      });
+
+      revalidateTag(ressources.newsletters);
+
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error(error);
+      return badRequestError(ressources.movies);
+    }
+  }, ressources.newsletters);
 }
 
 export async function DELETE(
   _: NextRequest,
   { params: { id } }: { params: { id: string } }
 ) {
-  const session = await getSession();
+  return withAutentification(async () => {
+    const item = await prisma.newsLetter.findUnique({ where: { id } });
 
-  if (!(session instanceof Session) || !("user" in session)) {
-    return forbiddenError(ressources.newsletters);
-  }
+    if (item === undefined) {
+      return notFoundError(ressources.newsletters);
+    }
 
-  const item = await prisma.newsLetter.findUnique({ where: { id } });
+    try {
+      const data = await prisma.newsLetter.delete({
+        where: { id },
+      });
 
-  if (item === undefined) {
-    return notFoundError(ressources.newsletters);
-  }
+      revalidateTag(ressources.newsletters);
 
-  try {
-    const data = await prisma.newsLetter.delete({
-      where: { id },
-    });
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-    return badRequestError(ressources.newsletters);
-  }
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error(error);
+      return badRequestError(ressources.newsletters);
+    }
+  }, ressources.newsletters);
 }
