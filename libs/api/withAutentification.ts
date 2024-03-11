@@ -4,7 +4,7 @@ import { forbiddenError } from "./error";
 import { Ressources } from "../domain/type/ressources";
 
 export default async function withAutentification(
-  callBack: () => unknown,
+  callBack: () => Promise<Response>,
   ressource: Ressources
 ) {
   const isProductionMode = ENV_TYPE === "prod";
