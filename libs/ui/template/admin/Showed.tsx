@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { post } from "@/libs/api/fetch";
 import { ShowedType, showed } from "@/libs/domain/type/showed";
 import { ressources } from "@/libs/domain/type/ressources";
+import { i18n } from "@/libs/i18n/i18n";
 
 export default function Showed({
   movies,
@@ -50,7 +51,7 @@ export default function Showed({
               return;
             }
 
-            return router.push("/admin");
+            return router.push(i18n.menu.admin.url);
           } finally {
             setIsLoading(false);
           }
@@ -67,7 +68,7 @@ export default function Showed({
 
         <div className="flex w-full justify-end gap-2">
           <Button
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push(i18n.menu.admin.url)}
             variant="ghost"
             color="default"
           >

@@ -1,5 +1,5 @@
 import { Ressources } from "@/libs/domain/type/ressources";
-
+import { i18n } from "@/libs/i18n/i18n";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { PlusCircle } from "react-bootstrap-icons";
@@ -15,7 +15,7 @@ export default function RessourceTableHeader({ ressource, addLabel }: Props) {
         size="sm"
         variant="bordered"
         as={Link}
-        href={`/admin/${ressource}`}
+        href={`${i18n.menu.admin.url}/${ressource}`}
         className="text-lg cursor-pointer active:opacity-50"
         startContent={<PlusCircle />}
       >

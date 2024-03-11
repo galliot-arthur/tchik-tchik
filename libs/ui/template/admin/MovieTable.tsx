@@ -17,6 +17,7 @@ import DeleteButton from "./components/buttons/DeleteButton";
 import { ressources } from "@/libs/domain/type/ressources";
 import RessourceTableHeader from "./components/alt/RessourceTableHeader";
 import { getPicture } from "@/libs/domain/type/file";
+import { i18n } from "@/libs/i18n/i18n";
 
 type Props = { movies: MovieType[] };
 
@@ -43,7 +44,7 @@ export default function MovieTable({ movies }: Props) {
             <TableRow key={movie.id}>
               <TableCell>
                 <Link
-                  href={`/admin/${ressources.movies}/${movie.id}`}
+                  href={`${i18n.menu.admin.url}/${ressources.movies}/${movie.id}`}
                   className="hover:opacity-50"
                 >
                   <User
@@ -71,7 +72,7 @@ export default function MovieTable({ movies }: Props) {
                       isIconOnly
                       variant="light"
                       as={Link}
-                      href={`/admin/${ressources.movies}/${movie.id}`}
+                      href={`${i18n.menu.admin.url}/${ressources.movies}/${movie.id}`}
                       className="text-lg text-black cursor-pointer active:opacity-50"
                     >
                       <Pencil />

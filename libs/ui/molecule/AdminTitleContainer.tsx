@@ -2,6 +2,7 @@ import { ComponentProps } from "@/libs/domain/type/ui";
 import classNames from "classnames";
 import TchikLink from "../atoms/TchikLink";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
+import { i18n } from "@/libs/i18n/i18n";
 
 export default function AdminTitleContainer({
   children,
@@ -13,7 +14,7 @@ export default function AdminTitleContainer({
       {children}
       {hideGoback === false && (
         <TchikLink
-          href={"/admin"}
+          href={i18n.menu.admin.url}
           variant="red"
           className="inline-flex flex-row items-center gap-1"
         >

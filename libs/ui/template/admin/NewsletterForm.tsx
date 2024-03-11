@@ -12,6 +12,7 @@ import { ressources } from "@/libs/domain/type/ressources";
 import { NewsletterType, newsletterType } from "@/libs/domain/type/newsletter";
 import { useState } from "react";
 import UploadFile from "./UploadFile";
+import { i18n } from "@/libs/i18n/i18n";
 
 type Props = {
   defaultValues?: NewsletterType;
@@ -48,7 +49,7 @@ export default function NewsletterForm({ defaultValues }: Props) {
             : await post(data, ressources.newsletters);
 
           if ("id" in response) {
-            return router.push("/admin");
+            return router.push(i18n.menu.admin.url);
           }
 
           console.error(response);
@@ -84,7 +85,7 @@ export default function NewsletterForm({ defaultValues }: Props) {
 
         <div className="flex w-full justify-end gap-2">
           <Button
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push(i18n.menu.admin.url)}
             variant="ghost"
             color="default"
           >

@@ -13,7 +13,7 @@ export const i18n = {
     homepage: { label: "Accueil", url: "/" },
     catalog: { label: "Catalogue", url: "/catalogue" },
     contact: { label: "Contact", url: "/contact" },
-    admin: { label: "Admin", url: "/admin" },
+    admin: { label: "Admin", url: "/app-admin" },
   },
   homepage: {
     films: "Nos films",

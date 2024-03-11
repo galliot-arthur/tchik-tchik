@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       const fileData = formData.get("file");
 
       if (!isFile(fileData)) {
-        return badRequestError(ressources.files);
+        return badRequestError(ressources.files + "_no file");
       }
 
       const fileName = crypto.randomUUID() + fileData.name;
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     } catch (error) {
       console.error(error);
-      return badRequestError(ressources.files);
+      return badRequestError(JSON.stringify(error));
     }
   }, ressources.files);
 }

@@ -16,6 +16,7 @@ import { ressources } from "@/libs/domain/type/ressources";
 import { useState } from "react";
 import UploadFile from "./UploadFile";
 import { PlusCircle } from "react-bootstrap-icons";
+import { i18n } from "@/libs/i18n/i18n";
 
 type Props = {
   defaultValues?: MovieType;
@@ -64,7 +65,7 @@ export default function MovieForm({ defaultValues }: Props) {
             : await post(data, ressources.movies);
 
           if ("id" in response) {
-            return router.push("/admin");
+            return router.push(i18n.menu.admin.url);
           }
 
           console.error(response);
@@ -199,7 +200,7 @@ export default function MovieForm({ defaultValues }: Props) {
 
         <div className="flex w-full justify-end gap-2">
           <Button
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push(i18n.menu.admin.url)}
             variant="ghost"
             color="default"
           >
