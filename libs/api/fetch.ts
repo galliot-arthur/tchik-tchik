@@ -19,6 +19,22 @@ export async function fetchData<T>(
   return data;
 }
 
+export async function fetchFromSlug<T>(
+  ressources: Ressources,
+  slug: string
+): Promise<T | Error> {
+  const res = await fetch(`${API_URL}/api/${ressources}/slug/${slug}`, {
+    next: { tags: [ressources] },
+  });
+
+  if (!res.ok) {
+    return res.json().then((err) => new Error(err.message ?? "unknow"));
+  }
+  const data = await res.json();
+
+  return data;
+}
+
 export async function post<T extends {}>(
   data: T,
   ressource: Ressources,

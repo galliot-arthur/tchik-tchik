@@ -19,11 +19,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 
 export default async function Home() {
-  const movies: MovieType[] | Error = await fetchData(ressources.movies);
-  const newsletters: NewsletterType[] | Error = await fetchData(
-    ressources.newsletters
-  );
-  const showed: ShowedType[] | Error = await fetchData(ressources.showed);
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+  const newsletters = await fetchData<NewsletterType[]>(ressources.newsletters);
+  const showed = await fetchData<ShowedType[]>(ressources.showed);
 
   if (
     newsletters instanceof Error ||

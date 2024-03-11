@@ -1,15 +1,20 @@
-import prisma from "@/libs/database/prisma";
+import { fetchData } from "@/libs/api/fetch";
 import { MovieType } from "@/libs/domain/type/movie";
+import { ressources } from "@/libs/domain/type/ressources";
 import { i18n } from "@/libs/i18n/i18n";
 import Typography from "@/libs/ui/atoms/Typography";
 import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import { Photogram } from "@/libs/ui/template/Photogram";
+import { notFound } from "next/navigation";
 
 export default async function NosFilms() {
-  const movies: MovieType[] | undefined = await prisma.movie.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+
+  if (movies instanceof Error) {
+    return notFound();
+  }
+
   return (
     <MainContainer>
       <LeftSection>

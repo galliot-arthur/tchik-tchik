@@ -1,4 +1,3 @@
-import prisma from "@/libs/database/prisma";
 import { headerAdapter } from "@/libs/domain/helpers/movies.adapters";
 import { MovieType } from "@/libs/domain/type/movie";
 import Typography from "@/libs/ui/atoms/Typography";
@@ -16,12 +15,16 @@ import { i18n } from "@/libs/i18n/i18n";
 import PhotoSwiper from "@/libs/ui/template/PhotoSwiper";
 import { getPicture } from "@/libs/domain/type/file";
 import Card from "@/libs/ui/atoms/Card";
+import { fetchData, fetchFromSlug } from "@/libs/api/fetch";
+import { ressources } from "@/libs/domain/type/ressources";
 
 export async function generateStaticParams() {
-  const movies: MovieType[] | undefined = await prisma.movie.findMany();
-  if (!movies) {
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+
+  if (movies instanceof Error) {
     return notFound();
   }
+
   return movies.map((movie) => movie.slug);
 }
 
@@ -32,11 +35,9 @@ type Props = {
 export async function generateMetadata({
   params: { slug },
 }: Props): Promise<Metadata> {
-  const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { slug: slug },
-  });
+  const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if (!movie) {
+  if (movie instanceof Error) {
     return notFound();
   }
 
@@ -56,11 +57,9 @@ export async function generateMetadata({
 }
 
 export default async function Film({ params: { slug } }: Props) {
-  const movie: MovieType | undefined = await prisma.movie.findUnique({
-    where: { slug: slug },
-  });
+  const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if (!movie) {
+  if (movie instanceof Error) {
     return notFound();
   }
 
@@ -130,8 +129,11 @@ export default async function Film({ params: { slug } }: Props) {
             </Typography>
             <div className="relative w-full aspect-[16/9]">
               <iframe
+                title="vimeo"
                 src={movie.spoiler}
-                frameBorder="0"
+                frameBorder={0}
+                marginHeight={0}
+                marginWidth={0}
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
                 className="absolute top-0 left-0 w-full h-full"

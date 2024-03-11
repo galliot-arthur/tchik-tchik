@@ -1,4 +1,5 @@
 import { badRequestError, notFoundError } from "@/libs/api/error";
+import { getSlug } from "@/libs/api/utils";
 import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { movieType } from "@/libs/domain/type/movie";
@@ -45,6 +46,7 @@ export async function PUT(
           cover: parsedData.cover ?? "",
           pictures: parsedData.pictures ?? "",
           status: parsedData.status ?? "",
+          slug: getSlug(parsedData.name),
         },
       });
 
