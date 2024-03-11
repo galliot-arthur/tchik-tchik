@@ -31,7 +31,11 @@ export async function POST(request: NextRequest) {
       );
     } catch (error) {
       console.error(error);
-      return badRequestError(JSON.stringify(error));
+      return badRequestError(
+        JSON.stringify(error) +
+          "\n" +
+          path.join(process.cwd(), `public/pictures/`)
+      );
     }
   }, ressources.files);
 }
