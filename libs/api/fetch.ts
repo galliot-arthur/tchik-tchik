@@ -1,13 +1,13 @@
 import { API_URL } from "@/app/env";
 import { Ressources } from "../domain/type/ressources";
-
-type ApiError = { message: string };
+import { ApiError } from "./error";
 
 export async function fetchData<T>(
   ressources: Ressources,
   id?: string
 ): Promise<T | Error> {
   const res = await fetch(`${API_URL}/api/${ressources}${id ? `/${id}` : ""}`, {
+    method: "GET",
     next: { tags: [ressources] },
   });
 
@@ -24,6 +24,7 @@ export async function fetchFromSlug<T>(
   slug: string
 ): Promise<T | Error> {
   const res = await fetch(`${API_URL}/api/${ressources}/slug/${slug}`, {
+    method: "GET",
     next: { tags: [ressources] },
   });
 
@@ -47,7 +48,10 @@ export async function post<T extends {}>(
   });
 
   if (!res.ok) {
-    return { message: `Erreur lors de la création de : ${ressource}` };
+    return {
+      message: `Erreur lors de la création de : ${ressource}`,
+      status: res.status,
+    };
   }
 
   return res.json();
@@ -64,7 +68,10 @@ export async function put<T extends {}>(
   });
 
   if (!res.ok) {
-    return { message: `Erreur lors de la création de : ${ressource}` };
+    return {
+      message: `Erreur lors de la création de : ${ressource}`,
+      status: res.status,
+    };
   }
 
   return res.json();
@@ -79,7 +86,10 @@ export async function remove<T extends {}>(
   });
 
   if (!res.ok) {
-    return { message: `Erreur lors de la suppression de : ${ressource}` };
+    return {
+      message: `Erreur lors de la suppression de : ${ressource}`,
+      status: res.status,
+    };
   }
 
   return res.json();

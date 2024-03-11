@@ -17,6 +17,7 @@ import { getPicture } from "@/libs/domain/type/file";
 import Card from "@/libs/ui/atoms/Card";
 import { fetchData, fetchFromSlug } from "@/libs/api/fetch";
 import { ressources } from "@/libs/domain/type/ressources";
+import { API_URL } from "@/app/env";
 
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
@@ -51,7 +52,7 @@ export async function generateMetadata({
       title: movie.name,
       description: movie.bio,
       type: "website",
-      //images: [API_URL + photo_couverture],
+      images: [`${API_URL}${movie.pictures.at(0)?.id}`],
     },
   };
 }

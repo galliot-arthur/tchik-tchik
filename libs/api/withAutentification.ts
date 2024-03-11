@@ -1,6 +1,3 @@
-//import { ENV_TYPE } from "@/app/env";
-//import { Session, getSession } from "@auth0/nextjs-auth0";
-//import { forbiddenError } from "./error";
 import { Ressources } from "../domain/type/ressources";
 
 export default async function withAutentification(
