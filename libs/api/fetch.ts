@@ -7,11 +7,6 @@ export async function fetchData<T>(
   ressources: Ressources,
   id?: string
 ): Promise<T | Error> {
-  if (API_URL === undefined) {
-    throw new Error("API_URL is undefined");
-  }
-  console.log(API_URL);
-
   const res = await fetch(`${API_URL}/api/${ressources}${id ? `/${id}` : ""}`, {
     next: { tags: [ressources] },
   });

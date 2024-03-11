@@ -24,7 +24,7 @@ export async function generateStaticParams() {
   console.log(movies);
 
   if (movies instanceof Error) {
-    return notFound();
+    throw new Error(JSON.stringify(movies));
   }
 
   return movies.map((movie) => movie.slug);
