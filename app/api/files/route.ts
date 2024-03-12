@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
       const fileName = crypto.randomUUID() + fileData.name;
       const buffer = Buffer.from(await fileData.arrayBuffer());
-      const filePath = path.join(process.cwd(), `public/pictures/${fileName}`);
+      const filePath = path.join(`${__dirname}/public/pictures/${fileName}`);
 
       writeFileSync(filePath, buffer);
 
@@ -32,9 +32,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.error(error);
       return badRequestError(
-        JSON.stringify(error) +
-          "\n" +
-          path.join(process.cwd(), `public/pictures/`)
+        JSON.stringify(error) + "\n" + path.join(__dirname, `public/pictures/`)
       );
     }
   }, ressources.files);
