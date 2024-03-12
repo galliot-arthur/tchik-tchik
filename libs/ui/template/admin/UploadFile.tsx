@@ -2,6 +2,7 @@
 
 import { isAllowedMimeType } from "@/libs/domain/type/file";
 import { Button, Chip } from "@nextui-org/react";
+import { PutBlobResult } from "@vercel/blob";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { Trash3, Upload } from "react-bootstrap-icons";
@@ -23,8 +24,9 @@ export default function UploadFile({ value, onChange }: Props) {
     }
 
     setIsDeleteLoading(true);
-    fetch(`/api/files/${fileName}`, {
+    fetch(`/api/files`, {
       method: "DELETE",
+      body: JSON.stringify({ file: fileName }),
     })
       .then((data) => data.json())
       .then((response) => {
@@ -33,7 +35,7 @@ export default function UploadFile({ value, onChange }: Props) {
           setFileName(undefined);
         }
       })
-      .catch(() => setError("Erreur, merci de rééssayer"))
+      .catch((e) => setError("Erreur, merci de rééssayer" + e.message))
       .finally(() => setIsDeleteLoading(false));
   };
 
@@ -56,15 +58,15 @@ export default function UploadFile({ value, onChange }: Props) {
 
       formData.append("file", file, file.name);
 
-      const res = await fetch(`/api/files`, {
+      const res: PutBlobResult = await fetch(`/api/files`, {
         method: "POST",
         body: formData,
       })
         .then((data) => data.json())
         .catch(() => setError("Erreur, merci de rééssayer"));
 
-      onChange(res.fileName);
-      setFileName(res.fileName);
+      onChange(res.url);
+      setFileName(res.url);
     } finally {
       setIsLoading(false);
     }
@@ -84,12 +86,7 @@ export default function UploadFile({ value, onChange }: Props) {
         >
           <Trash3 />
         </Button>
-        <Image
-          src={`/pictures/${fileName}`}
-          alt="image"
-          fill
-          className="object-cover"
-        />
+        <Image src={fileName} alt="image" fill className="object-cover" />
       </div>
     );
   }

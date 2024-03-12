@@ -30,5 +30,5 @@ export const isFile = (data: FormDataEntryValue | null): data is File => {
   return "name" in maybeFile && "type" in maybeFile;
 };
 
-export const getPicture = (name: string | null | undefined) =>
-  `/pictures/${name}`;
+export const getPicture = (name: string | null | undefined): string =>
+  name?.includes("http") ? name : `/pictures/${name}`;

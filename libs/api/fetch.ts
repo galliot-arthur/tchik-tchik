@@ -9,7 +9,6 @@ export async function fetchData<T>(
   id?: string
 ): Promise<T | ApiError> {
   const url = `${API_URL}/api/${ressource}${getId(id)}`;
-  console.log(url);
 
   const res = await fetch(url, {
     method: "GET",
