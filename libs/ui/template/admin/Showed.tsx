@@ -50,8 +50,6 @@ export default function Showed({
             if ("message" in response) {
               return;
             }
-
-            return router.push(i18n.menu.admin.url);
           } finally {
             setIsLoading(false);
           }

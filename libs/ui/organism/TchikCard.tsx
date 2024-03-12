@@ -1,5 +1,5 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import Link from "next/link";
 import TchikCardHeader from "../molecule/TchikCardHeader";
 import Image from "next/image";
@@ -10,7 +10,7 @@ export default function TchikCard({
   subtitle2,
   caption,
   caption2,
-  hoverText,
+
   img,
   href,
 }: ComponentProps<{
@@ -31,19 +31,15 @@ export default function TchikCard({
   };
   return (
     <Card
-      isFooterBlurred
-      fullWidth
       shadow="none"
-      className="rounded-none bg-transparent"
+      className="rounded-none bg-transparent min-h-0 min-w-0"
       {...(href ? maybeLink : {})}
     >
-      <CardBody className="overflow-hidden p-0">
-        {img && (
-          <div className="relative h-full aspect-[1080/1349]">
-            <Image fill alt={img.alt} className="object-cover" src={img.src} />
-          </div>
-        )}
-      </CardBody>
+      {img && (
+        <div className="relative h-full aspect-[1080/1349]">
+          <Image fill alt={img.alt} className="object-cover" src={img.src} />
+        </div>
+      )}
       <TchikCardHeader
         title={title}
         subtitle={subtitle}
@@ -51,11 +47,6 @@ export default function TchikCard({
         caption={caption}
         caption2={caption2}
       />
-      {hoverText && (
-        <CardFooter className="opacity-0 justify-between overflow-hidden py-1 px-2 absolute bottom-1 z-10 bg-white/50">
-          <p className="">{hoverText}</p>
-        </CardFooter>
-      )}
     </Card>
   );
 }

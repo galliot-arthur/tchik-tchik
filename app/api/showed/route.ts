@@ -3,6 +3,8 @@ import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { ressources } from "@/libs/domain/type/ressources";
 import { showed, ShowedType } from "@/libs/domain/type/showed";
+import { i18n } from "@/libs/i18n/i18n";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -33,6 +35,9 @@ export async function POST(request: NextRequest) {
           ...parsedData,
         },
       });
+      revalidateTag(ressources.showed);
+      revalidatePath(i18n.menu.homepage.url);
+      revalidatePath(i18n.menu.admin.url);
 
       return NextResponse.json(data, {
         status: 200,

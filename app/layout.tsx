@@ -51,7 +51,6 @@ export default function RootLayout({
               <div
                 className={classNames(
                   "grow-0 w-full md:w-[calc(50%-1rem)]",
-                  //"min-h-[5rem] sm:min-h-[4rem]",
                   "flex flex-row justify-start items-center",
                   "text-tiny text-gray-500"
                 )}

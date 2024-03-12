@@ -25,7 +25,7 @@ export default function HeaderLinks() {
           href={i18n.menu.catalog.url}
           className={classNames(
             getStatus(i18n.menu.catalog.url, pathName),
-            "ml-2"
+            "ml-3"
           )}
         >
           {i18n.menu.catalog.label}
@@ -36,7 +36,7 @@ export default function HeaderLinks() {
           href={i18n.menu.contact.url}
           className={classNames(
             getStatus(i18n.menu.contact.url, pathName),
-            "ml-2"
+            "ml-3"
           )}
         >
           {i18n.menu.contact.label}

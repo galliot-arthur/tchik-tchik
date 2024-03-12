@@ -15,7 +15,7 @@ export default function RessourceTableHeader({ ressource, addLabel }: Props) {
         size="sm"
         variant="bordered"
         as={Link}
-        href={`${i18n.menu.admin.url}/${ressource}`}
+        href={`${i18n.menu.admin.url}/${ressource}/create`}
         className="text-lg cursor-pointer active:opacity-50"
         startContent={<PlusCircle />}
       >

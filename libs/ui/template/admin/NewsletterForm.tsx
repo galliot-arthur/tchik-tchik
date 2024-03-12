@@ -53,8 +53,7 @@ export default function NewsletterForm({ defaultValues }: Props) {
             : await post(data, ressources.newsletters);
 
           if ("id" in response) {
-            console.log(response, "response ok");
-            return router.push(i18n.menu.admin.url);
+            return router.push(`${i18n.menu.admin.url}/newsletters`);
           }
 
           console.error(response);

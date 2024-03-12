@@ -26,18 +26,20 @@ export default function NewsLetterDisplayer({
                 {new Date(item.createdAt).toLocaleDateString("fr-FR")}
               </Chip>
             </div>
-            <div className="flex flex-row mt-1">
+            <div className="flex flex-col md:flex-row mt-1">
               <div
                 className={classNames(
-                  item.coverId ? "w-1/2" : "w-full",
+                  item.coverId ? "w-full md:w-1/2" : "w-full",
                   "mdstyle text-sm"
                 )}
               >
                 <MDXRemote source={item.content} />
               </div>
               {item.coverId && (
-                <div className={classNames("w-1/2 ml-4")}>
-                  <div className="relative aspect-[16/9] ">
+                <div
+                  className={classNames("w-full md:w-1/2 mt-4 md:mt-0 md:ml-4")}
+                >
+                  <div className="relative aspect-[16/9]">
                     <Image
                       src={getPicture(item.coverId)}
                       fill

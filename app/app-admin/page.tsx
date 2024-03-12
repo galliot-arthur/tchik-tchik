@@ -55,6 +55,7 @@ export default async function Admin() {
             { title: "Films", children: <MovieTable movies={movies} /> },
             {
               title: "Newsletter",
+
               children: <NewsletterTable newsletters={newsletters} />,
             },
             {

@@ -9,6 +9,8 @@ export const ressourceStruct = z.enum([
 ]);
 export type Ressources = z.infer<typeof ressourceStruct>;
 
+export type AdminRessources = "movies" | "newsletters" | "showed";
+
 export const ressources: Record<Ressources, Ressources> = {
   user: "user",
   movies: "movies",
