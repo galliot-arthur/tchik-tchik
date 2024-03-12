@@ -16,6 +16,7 @@ import DeleteButton from "./components/buttons/DeleteButton";
 import { ressources } from "@/libs/domain/type/ressources";
 import { NewsletterType } from "@/libs/domain/type/newsletter";
 import RessourceTableHeader from "./components/alt/RessourceTableHeader";
+import { i18n } from "@/libs/i18n/i18n";
 
 type Props = { newsletters: NewsletterType[] };
 
@@ -42,7 +43,7 @@ export default function NewsletterTable({ newsletters }: Props) {
             <TableRow key={newsletter.id}>
               <TableCell>
                 <Link
-                  href={`/admin/${ressources.newsletters}/${newsletter.id}`}
+                  href={`${i18n.menu.admin.url}/${ressources.newsletters}/${newsletter.id}`}
                   className="hover:opacity-50"
                 >
                   {newsletter.title}
@@ -61,7 +62,7 @@ export default function NewsletterTable({ newsletters }: Props) {
                       isIconOnly
                       variant="light"
                       as={Link}
-                      href={`/admin/${ressources.newsletters}/${newsletter.id}`}
+                      href={`${i18n.menu.admin.url}/${ressources.newsletters}/${newsletter.id}`}
                       className="text-lg text-black cursor-pointer active:opacity-50"
                     >
                       <Pencil />

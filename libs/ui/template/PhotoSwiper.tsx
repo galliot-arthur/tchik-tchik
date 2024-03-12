@@ -54,7 +54,7 @@ export default function PhotoSwiper({ pictures = [] }: Props) {
 
   return (
     <div className="w-full">
-      <Typography variant="h2" className="mb-2 w-full">
+      <Typography variant="h2" className="mb-1 w-full !text-base text-gray-500">
         {i18n.movies.photogram(pictures.length > 1)}
       </Typography>
       {pictures.length > 1 ? (

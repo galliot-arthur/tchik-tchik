@@ -7,7 +7,7 @@ import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import TchikCardHeader from "@/libs/ui/molecule/TchikCardHeader";
 import SimpleRefCodeDisplayer from "@/libs/ui/template/SimpleRefCodeDisplayer";
-import { Chip, Image } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -18,6 +18,7 @@ import Card from "@/libs/ui/atoms/Card";
 import { fetchData, fetchFromSlug } from "@/libs/api/fetch";
 import { ressources } from "@/libs/domain/type/ressources";
 import { API_URL } from "@/app/env";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
@@ -70,8 +71,8 @@ export default async function Film({ params: { slug } }: Props) {
         {movie.cover && (
           <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
             <Image
-              radius="none"
               alt={movie.name}
+              fill
               className="object-cover"
               src={getPicture(movie.cover)}
             />
@@ -97,8 +98,8 @@ export default async function Film({ params: { slug } }: Props) {
           </div>
         </ContentContainer>
         <ContentContainer className="md:pr-8 pt-4">
-          <SimpleRefCodeDisplayer refCode={movie.staff} />
-          <div className="flex flex-row gap-4 mt-4 mb-8">
+          <SimpleRefCodeDisplayer refCode={movie.staff} className="mx-2" />
+          <div className="flex flex-row gap-4 mt-4 mb-8 mx-2">
             <SimpleRefCodeDisplayer
               refCode={movie.diffusion}
               label={i18n.movies.diffusion}
@@ -114,7 +115,10 @@ export default async function Film({ params: { slug } }: Props) {
           </div>
           {movie.festivals && (
             <Card>
-              <Typography variant="h2" className="mb-1">
+              <Typography
+                variant="h2"
+                className="mb-1 !text-base text-gray-500"
+              >
                 {i18n.movies.festivals}
               </Typography>
               <Typography className="text-small mdstyle">
@@ -125,7 +129,10 @@ export default async function Film({ params: { slug } }: Props) {
         </ContentContainer>
         {movie.spoiler && (
           <div>
-            <Typography variant="h2" className="mt-4 mb-2 md:mb-0">
+            <Typography
+              variant="h2"
+              className="mt-4 mb-2 md:mb-0 !text-base text-gray-500"
+            >
               {i18n.movies.spoiler}
             </Typography>
             <div className="relative w-full aspect-[16/9]">
@@ -147,8 +154,8 @@ export default async function Film({ params: { slug } }: Props) {
         {movie.cover && (
           <div className="relative w-full aspect-[1080/1349] hidden md:block">
             <Image
-              radius="none"
               alt={movie.name}
+              fill
               className="object-cover"
               src={getPicture(movie.cover)}
             />

@@ -3,7 +3,7 @@ import withAutentification from "@/libs/api/withAutentification";
 import { isFile } from "@/libs/domain/type/file";
 import { ressources } from "@/libs/domain/type/ressources";
 import { NextRequest, NextResponse } from "next/server";
-import { del, head, put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
 
 export async function POST(request: NextRequest) {
   return withAutentification(async () => {

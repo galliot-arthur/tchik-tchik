@@ -46,7 +46,9 @@ export default async function Contact() {
       </MiddleSection>
       <RightSection>
         <Card>
-          <Typography variant="h4">{i18n.contact.links.title}</Typography>
+          <Typography variant="h4" className="!text-base">
+            {i18n.contact.links.title}
+          </Typography>
           <li>
             <TchikLink
               href={i18n.contact.links.instagram.url}
