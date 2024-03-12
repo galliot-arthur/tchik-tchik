@@ -4,7 +4,7 @@ import { BaseType } from "./ressources";
 export const newsletterType = z.object({
   title: z.string(),
   content: z.string(),
-  coverId: z.string().optional().nullable(),
+  coverId: z.string().url().optional().nullable(),
 });
 
 export type NewsletterBaseType = z.infer<typeof newsletterType>;

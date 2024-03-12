@@ -15,8 +15,13 @@ import ControlledTipTap from "./components/inputs/ControlledTipTap";
 import { ressources } from "@/libs/domain/type/ressources";
 import { useState } from "react";
 import UploadFile from "./UploadFile";
-import { PlusCircle } from "react-bootstrap-icons";
+import {
+  ArrowLeftCircleFill,
+  ArrowRightCircleFill,
+  PlusCircle,
+} from "react-bootstrap-icons";
 import { i18n } from "@/libs/i18n/i18n";
+import ErrorsHelper from "./components/alt/ErrorHelper";
 
 type Props = {
   defaultValues?: MovieType;
@@ -35,7 +40,8 @@ export default function MovieForm({ defaultValues }: Props) {
   const {
     control,
     getValues,
-    formState: { isValid },
+    trigger,
+    formState: { isValid, errors },
   } = useForm<MovieType>({
     resolver: zodResolver(movieType),
     defaultValues: handlleDefaltValues(defaultValues) as MovieType,
@@ -43,7 +49,7 @@ export default function MovieForm({ defaultValues }: Props) {
     mode: "onBlur",
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove, swap } = useFieldArray({
     control: control,
     name: "pictures",
   });
@@ -54,6 +60,8 @@ export default function MovieForm({ defaultValues }: Props) {
         className="rounded-lg py-4 px-6 flex flex-row flex-wrap gap-4"
         onSubmit={async (e) => {
           e.preventDefault();
+          trigger();
+
           setIsLoading(true);
           const data = getValues();
 
@@ -170,30 +178,59 @@ export default function MovieForm({ defaultValues }: Props) {
           name="spoiler"
         />
 
-        <div className="w-[calc(50%-0.5rem)]">
-          <Typography variant="h2">Affiche</Typography>
+        <Typography variant="h2">Affiche</Typography>
+        <div className="w-full grid grid-cols-4 gap-4">
           <Controller
             control={control}
             name="cover"
-            render={({ field }) => <UploadFile {...field} />}
+            render={({ field }) => (
+              <UploadFile {...field} formError={errors.cover?.message} />
+            )}
           />
         </div>
 
         <Typography variant="h2" className="w-full">
           Photogrammes
         </Typography>
-        <Button onClick={() => append({ id: undefined } as any)}>
+        <Button onClick={() => append({ id: undefined } as any)} size="sm">
           <PlusCircle />
           Add
         </Button>
-        <div className="w-full flex flex-row flex-wrap gap-4 -m-2">
+        <div className="w-full grid grid-cols-4 gap-4">
           {fields.map((field, index) => (
-            <div className="w-[calc(50%-0.5rem)]" key={field.id}>
+            <div className="w-full relative" key={field.id}>
               <Controller
                 control={control}
                 name={`pictures.${index}.id`}
-                render={({ field }) => <UploadFile {...field} />}
+                render={({ field }) => (
+                  <UploadFile
+                    {...field}
+                    removeCallBack={(index) => remove(index)}
+                    index={index}
+                    formError={errors.pictures?.at?.(index)?.message}
+                  />
+                )}
               />
+              {index !== 0 && (
+                <Button
+                  isIconOnly
+                  className="absolute bottom-2 left-2"
+                  size="sm"
+                  onClick={() => swap(index, index - 1)}
+                >
+                  <ArrowLeftCircleFill />
+                </Button>
+              )}
+              {index < fields.length - 1 && (
+                <Button
+                  isIconOnly
+                  className="absolute bottom-2 right-2"
+                  size="sm"
+                  onClick={() => swap(index, index + 1)}
+                >
+                  <ArrowRightCircleFill />
+                </Button>
+              )}
             </div>
           ))}
         </div>
@@ -210,11 +247,11 @@ export default function MovieForm({ defaultValues }: Props) {
             type="submit"
             color={isValid ? "primary" : "default"}
             isLoading={isLoading}
-            disabled={!isValid}
           >
             Valider
           </Button>
         </div>
+        <ErrorsHelper errors={errors} />
       </form>
     </div>
   );

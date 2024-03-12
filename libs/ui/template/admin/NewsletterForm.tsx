@@ -13,6 +13,7 @@ import { NewsletterType, newsletterType } from "@/libs/domain/type/newsletter";
 import { useState } from "react";
 import UploadFile from "./UploadFile";
 import { i18n } from "@/libs/i18n/i18n";
+import ErrorsHelper from "./components/alt/ErrorHelper";
 
 type Props = {
   defaultValues?: NewsletterType;
@@ -24,7 +25,8 @@ export default function NewsletterForm({ defaultValues }: Props) {
   const {
     control,
     getValues,
-    formState: { isValid },
+    trigger,
+    formState: { isValid, errors },
   } = useForm<NewsletterType>({
     resolver: zodResolver(newsletterType),
     defaultValues: defaultValues,
@@ -39,6 +41,8 @@ export default function NewsletterForm({ defaultValues }: Props) {
         onSubmit={async (e) => {
           e.preventDefault();
           setIsLoading(true);
+          trigger();
+
           const data = getValues();
 
           if (data === undefined) {
@@ -49,6 +53,7 @@ export default function NewsletterForm({ defaultValues }: Props) {
             : await post(data, ressources.newsletters);
 
           if ("id" in response) {
+            console.log(response, "response ok");
             return router.push(i18n.menu.admin.url);
           }
 
@@ -74,12 +79,14 @@ export default function NewsletterForm({ defaultValues }: Props) {
           type="complex"
         />
 
-        <div className="w-[calc(50%-0.5rem)]">
-          <Typography variant="h2">Visuel</Typography>
+        <Typography variant="h2">Visuel</Typography>
+        <div className="w-full grid grid-cols-4 gap-4">
           <Controller
             control={control}
             name="coverId"
-            render={({ field }) => <UploadFile {...field} />}
+            render={({ field }) => (
+              <UploadFile {...field} formError={errors.coverId?.message} />
+            )}
           />
         </div>
 
@@ -95,11 +102,11 @@ export default function NewsletterForm({ defaultValues }: Props) {
             type="submit"
             color={isValid ? "primary" : "default"}
             isLoading={isLoading}
-            disabled={!isValid}
           >
             Valider
           </Button>
         </div>
+        <ErrorsHelper errors={errors} />
       </form>
     </div>
   );

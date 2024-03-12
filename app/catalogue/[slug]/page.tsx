@@ -129,10 +129,7 @@ export default async function Film({ params: { slug } }: Props) {
         </ContentContainer>
         {movie.spoiler && (
           <div>
-            <Typography
-              variant="h2"
-              className="mt-4 mb-2 md:mb-0 !text-base text-gray-500"
-            >
+            <Typography className="text-xs mt-6 mb-2 text-gray-500">
               {i18n.movies.spoiler}
             </Typography>
             <div className="relative w-full aspect-[16/9]">

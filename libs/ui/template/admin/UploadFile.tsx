@@ -1,22 +1,35 @@
 "use client";
 
-import { isAllowedMimeType } from "@/libs/domain/type/file";
+import { getPicture, isAllowedMimeType } from "@/libs/domain/type/file";
 import { Button, Chip } from "@nextui-org/react";
 import { PutBlobResult } from "@vercel/blob";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Trash3, Upload } from "react-bootstrap-icons";
 
 type Props = {
   value: string | null | undefined;
   onChange: (value: string | undefined) => void;
+  removeCallBack?: (index: number) => void;
+  index?: number;
+  formError?: string;
 };
 
-export default function UploadFile({ value, onChange }: Props) {
-  const [error, setError] = useState<string | undefined>();
+export default function UploadFile({
+  value,
+  onChange,
+  index,
+  removeCallBack,
+  formError,
+}: Props) {
+  const [error, setError] = useState<string | undefined>(formError);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string | null | undefined>(value);
+
+  useEffect(() => {
+    setError(formError);
+  }, [formError]);
 
   const deleteFile = async () => {
     if (!fileName) {
@@ -33,6 +46,10 @@ export default function UploadFile({ value, onChange }: Props) {
         if (response.message !== undefined) {
           onChange(undefined);
           setFileName(undefined);
+
+          if (index && index > 0 && removeCallBack) {
+            removeCallBack(index);
+          }
         }
       })
       .catch((e) => setError("Erreur, merci de rééssayer" + e.message))
@@ -74,7 +91,7 @@ export default function UploadFile({ value, onChange }: Props) {
 
   if (fileName) {
     return (
-      <div className="relative aspect-square w-1/2 rounded-lg overflow-hidden">
+      <div className="relative aspect-square rounded-lg overflow-hidden">
         <Button
           isIconOnly
           size="sm"
@@ -86,18 +103,35 @@ export default function UploadFile({ value, onChange }: Props) {
         >
           <Trash3 />
         </Button>
-        <Image src={fileName} alt="image" fill className="object-cover" />
+        <Image
+          src={getPicture(fileName)}
+          alt="image"
+          fill
+          className="object-cover"
+        />
       </div>
     );
   }
 
   return (
-    <div className="p-2">
+    <div className="py-2">
       <Button as="label" isLoading={isLoading}>
         <Upload />
         Upload
         <input type="file" hidden name="file" onChange={submitFile} />
       </Button>
+      {removeCallBack && (
+        <Button
+          isIconOnly
+          size="sm"
+          variant="shadow"
+          color="danger"
+          className="absolute top-2 right-2 z-10"
+          onClick={() => index && index > 0 && removeCallBack(index)}
+        >
+          <Trash3 />
+        </Button>
+      )}
       {error && <Chip color="danger">{error}</Chip>}
     </div>
   );

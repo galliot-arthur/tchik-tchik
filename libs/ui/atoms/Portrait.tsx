@@ -18,11 +18,11 @@ export default function Portrait({
         />
       </div>
       <div className="text-end md:ml-4 mr-4 md:mr-0 w-2/3 md:w-1/2">
-        <Typography className="font-bold text-large leading-none my-[0.30rem]">
+        <Typography className="font-bold text-large leading-none">
           {name}
         </Typography>
         {subTitle && (
-          <Typography variant="tiny-bold" color="black">
+          <Typography className="text-xs" color="gray-500">
             {subTitle}
           </Typography>
         )}

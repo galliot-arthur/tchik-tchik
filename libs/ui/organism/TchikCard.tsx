@@ -1,7 +1,8 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Link from "next/link";
 import TchikCardHeader from "../molecule/TchikCardHeader";
+import Image from "next/image";
 
 export default function TchikCard({
   title,
@@ -39,12 +40,7 @@ export default function TchikCard({
       <CardBody className="overflow-hidden p-0">
         {img && (
           <div className="relative h-full aspect-[1080/1349]">
-            <Image
-              radius="none"
-              alt={img.alt}
-              className="object-cover"
-              src={img.src}
-            />
+            <Image fill alt={img.alt} className="object-cover" src={img.src} />
           </div>
         )}
       </CardBody>

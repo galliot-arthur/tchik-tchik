@@ -25,7 +25,9 @@ export default async function Contact() {
                   {item.title}
                 </Typography>
                 {item.content.map((c) => (
-                  <Typography key={c}>{c}</Typography>
+                  <Typography key={c} className="text-sm">
+                    {c}
+                  </Typography>
                 ))}
               </div>
             </div>

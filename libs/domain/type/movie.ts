@@ -18,8 +18,8 @@ export const movieType = z.object({
   festivals: z.string().optional().nullable(),
   press: z.array(simpleRefCode),
   spoiler: z.string().optional().nullable(),
-  cover: z.string().optional().nullable(),
-  pictures: z.array(z.object({ id: z.string() })).min(1),
+  cover: z.string().url().optional().nullable(),
+  pictures: z.array(z.object({ id: z.string().url() })).min(1),
   status: z.string().optional().nullable(),
 });
 

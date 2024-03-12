@@ -3,7 +3,8 @@ import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
 import { newsletterType } from "@/libs/domain/type/newsletter";
 import { ressources } from "@/libs/domain/type/ressources";
-import { revalidateTag } from "next/cache";
+import { i18n } from "@/libs/i18n/i18n";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -44,6 +45,9 @@ export async function PUT(
       });
 
       revalidateTag(ressources.newsletters);
+      revalidatePath(i18n.menu.homepage.url);
+      revalidatePath(i18n.menu.admin.url);
+      revalidatePath(i18n.menu.admin.url + "/newsletters/" + id);
 
       return NextResponse.json(data, {
         status: 200,
