@@ -73,7 +73,7 @@ export default function MovieForm({ defaultValues }: Props) {
             : await post(data, ressources.movies);
 
           if ("id" in response) {
-            return router.push(`${i18n.menu.admin.url}/movies`);
+            return router.push(`${i18n.menu.admin.url}`);
           }
 
           console.error(response);

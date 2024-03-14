@@ -33,6 +33,11 @@ export const i18n = {
     spoiler: "Bande d'Annonce :",
   },
   contact: {
+    logo: {
+      title: "Besoin de notre logo ?",
+      url: "/tchik_tchik_logo.png",
+      tooltip: "Ouvrir dans une autre fenêtre",
+    },
     portrait: {
       title:
         "Fondée par Adèle Galliot et Florian Séjourné, deux ancien.ne.s élèves de la CinéFabrique de Lyon, Tchik Tchik Production est une société de productions de cinéma basée en Nouvelle Aquitaine",
@@ -75,5 +80,11 @@ export const i18n = {
       welcome: (name: string) => `Bienvenue ${name}`,
       logout: "Déconnexion",
     },
+  },
+  notFound: {
+    title: "404",
+    content:
+      "Oups, mince, flûte, ou que sais-je. La page que vous venez de demande n'existe pas.",
+    goBack: "Cliquez ici pour retourner à l'accueil",
   },
 };

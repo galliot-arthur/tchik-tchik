@@ -59,7 +59,7 @@ export default async function Home() {
       </LeftSection>
       <MiddleSection>
         {movieShowed && (
-          <div>
+          <div className="w-full relative">
             <Typography
               variant="tiny-bold"
               className="mb-4 md:mb-2"

@@ -1,8 +1,8 @@
 import { ComponentProps } from "@/libs/domain/type/ui";
-import { Card } from "@nextui-org/react";
 import Link from "next/link";
 import TchikCardHeader from "../molecule/TchikCardHeader";
 import Image from "next/image";
+import classNames from "classnames";
 
 export default function TchikCard({
   title,
@@ -21,22 +21,19 @@ export default function TchikCard({
   caption2?: string;
   hoverText?: string;
   img?: { src: string; alt: string };
-  href?: string;
+  href: string;
 }>) {
-  const maybeLink = {
-    isPressable: true,
-    disableRipple: true,
-    as: Link,
-    href: href,
-  };
   return (
-    <Card
-      shadow="none"
-      className="rounded-none bg-transparent min-h-0 min-w-0"
-      {...(href ? maybeLink : {})}
+    <Link
+      href={href}
+      className={classNames(
+        "block w-full relative z-20 ",
+        "hover:scale-[101%] hover:opacity-90",
+        "transition ease-in-out duration-300"
+      )}
     >
       {img && (
-        <div className="relative h-full aspect-[1080/1349]">
+        <div className="relative w-full h-full aspect-[1080/1349]">
           <Image fill alt={img.alt} className="object-cover" src={img.src} />
         </div>
       )}
@@ -47,6 +44,6 @@ export default function TchikCard({
         caption={caption}
         caption2={caption2}
       />
-    </Card>
+    </Link>
   );
 }

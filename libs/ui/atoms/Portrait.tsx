@@ -14,7 +14,7 @@ export default function Portrait({
           src={imgsrc}
           alt={`${name} - ${subTitle ?? ""}`}
           fill
-          className="object-cover"
+          className="object-cover grayscale-[10%]"
         />
       </div>
       <div className="text-end md:ml-4 mr-4 md:mr-0 w-2/3 md:w-1/2">

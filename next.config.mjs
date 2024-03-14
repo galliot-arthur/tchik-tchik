@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "qk7jyk9hxvqv5tsr.public.blob.vercel-storage.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "drive.internxt.com",
+        port: "",
+      },
     ],
   },
 };

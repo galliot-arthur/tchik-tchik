@@ -7,6 +7,9 @@ import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
+import { Tooltip } from "@nextui-org/react";
+import classNames from "classnames";
+import Image from "next/image";
 import { Instagram } from "react-bootstrap-icons";
 
 export default async function Contact() {
@@ -33,6 +36,32 @@ export default async function Contact() {
             </div>
           ))}
         </Card>
+        <div className="mt-8">
+          <Typography variant="tiny-bold" color="black" className="my-2">
+            {i18n.contact.logo.title}
+          </Typography>
+          <div
+            className={classNames(
+              "relative w-full md:w-1/6 aspect-[18/9]",
+              "hover:opacity-50",
+              "transition ease-in-out duration-300"
+            )}
+          >
+            <Tooltip
+              content={i18n.contact.logo.tooltip}
+              placement="top"
+              className="bg-white tchik-shadow"
+            >
+              <a href={i18n.contact.logo.url} target="_blank">
+                <Image
+                  src={i18n.contact.logo.url}
+                  fill
+                  alt="tchik tchik productions logo"
+                />
+              </a>
+            </Tooltip>
+          </div>
+        </div>
       </LeftSection>
       <MiddleSection>
         <Portrait
