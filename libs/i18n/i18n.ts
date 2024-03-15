@@ -46,7 +46,7 @@ export const i18n = {
       title: "Liens",
       instagram: {
         label: "Instagram",
-        url: "http://www.google.com",
+        url: "https://www.instagram.com/tchik_tchik_productions",
       },
     },
     address: [

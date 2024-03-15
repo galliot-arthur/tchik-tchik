@@ -36,7 +36,7 @@ export default async function Contact() {
             </div>
           ))}
         </Card>
-        <div className="mt-8">
+        <div className="mt-8 hidden md:block">
           <Typography variant="tiny-bold" color="black" className="my-2">
             {i18n.contact.logo.title}
           </Typography>
@@ -63,7 +63,7 @@ export default async function Contact() {
           </div>
         </div>
       </LeftSection>
-      <MiddleSection>
+      <MiddleSection className="mt-4 md:mt-0">
         <Portrait
           name="Adèle Galliot"
           imgsrc="/adele.jpg"
@@ -75,9 +75,9 @@ export default async function Contact() {
           subTitle="Producteur"
         />
       </MiddleSection>
-      <RightSection>
+      <RightSection className="!text-start md:!text-end">
         <Card>
-          <Typography variant="h4" className="!text-base">
+          <Typography variant="h4" className="!text-sm md:!text-base">
             {i18n.contact.links.title}
           </Typography>
           <li>
@@ -87,12 +87,12 @@ export default async function Contact() {
               target="_blank"
               className="inline-flex flex-row justify-end text-salmon"
             >
-              <Instagram size="1rem" className="mr-1.5 mt-1" />
+              <Instagram className="mr-1.5 mt-1" />
               {i18n.contact.links.instagram.label}
             </TchikLink>
           </li>
         </Card>
-        <Typography className="my-2 text-sm">
+        <Typography className="mb-2 mt-6 md:mt-2 text-sm">
           {i18n.contact.portrait.title}
         </Typography>
       </RightSection>

@@ -1,21 +1,20 @@
+import { ENV_TYPE } from "@/app/env";
 import { Ressources } from "../domain/type/ressources";
+import { Session, getSession } from "@auth0/nextjs-auth0";
+import { forbiddenError } from "./error";
 
 export default async function withAutentification(
   callBack: () => Promise<Response>,
-  _: Ressources
+  ressource: Ressources
 ) {
-  return callBack();
-}
-
-/*   const isProductionMode = false; // ENV_TYPE === "prod";
+  const isProductionMode = ENV_TYPE === "prod"; //
 
   if (isProductionMode) {
-    console.log(ressource, callBack.name);
-
     const session = await getSession();
     if (!(session instanceof Session) || !("user" in session)) {
       return forbiddenError(ressource);
     }
+  }
 
-    return callBack();
-  } */
+  return callBack();
+}

@@ -19,7 +19,10 @@ export default function NewsLetterDisplayer({
         <div className="relative w-full pt-2 border-t-2" key={item.id}>
           <div>
             <div className="flex justify-between">
-              <Typography variant="h4" className="!text-sm mb-0">
+              <Typography
+                variant="h4"
+                className="!text-sm mb-0 w-full md:w-1/2 "
+              >
                 {item.title}
               </Typography>
               <Chip size="sm" className="bg-gradient">

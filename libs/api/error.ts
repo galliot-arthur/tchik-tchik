@@ -50,8 +50,8 @@ export const badRequestError = (element: string) =>
     { status: 400, headers: { "Content-Type": "application/json" } }
   );
 
-/* export const forbiddenError = (element: string) =>
+export const forbiddenError = (element: string) =>
   NextResponse.json(
     { message: `${element}_forbidden`, status: 403 },
     { status: 403, headers: { "Content-Type": "application/json" } }
-  ); */
+  );

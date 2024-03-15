@@ -57,7 +57,7 @@ function Item({ movie }: { movie: MovieType; index: number }) {
       </div>
       <TchikCardHeader
         {...headerAdapter(movie, true)}
-        className="bg-white/80 px-3 py-2 block md:hidden"
+        className="bg-white/80 md:px-3 max-w-full py-2 block md:hidden"
       />
     </Link>
   );
