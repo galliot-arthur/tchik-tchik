@@ -10,10 +10,8 @@ import { notFound } from "next/navigation";
 export async function generateStaticParams() {
   const newsLetters = await fetchData<NewsletterType[]>(ressources.newsletters);
 
-  if ("message" in newsLetters) {
-    throw new Error(
-      newsLetters.message + " désolé ma newsLetters " + newsLetters.status
-    );
+  if (!newsLetters || "message" in newsLetters) {
+    notFound();
   }
 
   return newsLetters.map((newsLetter) => newsLetter.id);
@@ -31,7 +29,7 @@ export async function generateMetadata({
     id
   );
 
-  if ("message" in newsLetter) {
+  if (!newsLetter || "message" in newsLetter) {
     notFound();
   }
 
@@ -50,7 +48,7 @@ export default async function EditMovie({ params: { id } }: Props) {
     id
   );
 
-  if ("message" in newsLetter) {
+  if (!newsLetter || "message" in newsLetter) {
     notFound();
   }
 

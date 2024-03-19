@@ -1,7 +1,7 @@
 "use client";
 
 import { MovieType, movieKind, movieType } from "@/libs/domain/type/movie";
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import ControlledInput from "./components/inputs/ControlledInput";
 import ControlledSelect from "./components/inputs/ControlledSelect";
@@ -19,6 +19,7 @@ import {
   ArrowLeftCircleFill,
   ArrowRightCircleFill,
   PlusCircle,
+  QuestionCircleFill,
 } from "react-bootstrap-icons";
 import { i18n } from "@/libs/i18n/i18n";
 import ErrorsHelper from "./components/alt/ErrorHelper";
@@ -176,7 +177,18 @@ export default function MovieForm({ defaultValues }: Props) {
           label="Bande annonce"
           control={control}
           name="spoiler"
+          className="w-[calc(90%-0.5rem)]"
+          //
         />
+        <div className="w-[calc(10%-0.5rem)] flex items-center">
+          <Tooltip
+            content={
+              "https://player.vimeo.com/video/920969365?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            }
+          >
+            <QuestionCircleFill />
+          </Tooltip>
+        </div>
 
         <Typography variant="h2">Affiche</Typography>
         <div className="w-full grid grid-cols-4 gap-4">

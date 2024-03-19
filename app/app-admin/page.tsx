@@ -32,7 +32,14 @@ export default async function Admin() {
   const newsletters = await fetchData<NewsletterType[]>(ressources.newsletters);
   const showed = await fetchData<ShowedType[]>(ressources.showed);
 
-  if ("message" in newsletters || "message" in movies || "message" in showed) {
+  if (
+    !newsletters ||
+    !movies ||
+    !showed ||
+    "message" in newsletters ||
+    "message" in movies ||
+    "message" in showed
+  ) {
     return notFound();
   }
 

@@ -7,7 +7,7 @@ const getId = (id?: string) => (id ? `/${id}` : "");
 export async function fetchData<T>(
   ressource: Ressources,
   id?: string
-): Promise<T | ApiError> {
+): Promise<T | ApiError | null> {
   const url = `${API_URL}/api/${ressource}${getId(id)}`;
 
   const res = await fetch(url, {
@@ -31,7 +31,7 @@ export async function fetchData<T>(
 export async function fetchFromSlug<T>(
   ressource: Ressources,
   slug: string
-): Promise<T | ApiError> {
+): Promise<T | ApiError | null> {
   const res = await fetch(`${API_URL}/api/${ressource}/slug/${slug}`, {
     method: "GET",
     next: { tags: [ressource] },
@@ -52,7 +52,7 @@ export async function fetchFromSlug<T>(
 
 export async function post<T extends {}>(
   data: T,
-  ressource: Ressources,
+  ressource: Ressources | "movies/order",
   contentType?: string
 ): Promise<T | ApiError> {
   const res = await fetch(`/api/${ressource}`, {

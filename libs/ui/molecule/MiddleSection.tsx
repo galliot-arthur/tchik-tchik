@@ -10,8 +10,8 @@ export default function MiddleSection({
     <section
       className={classNames(
         "w-full",
-        fullwidth ? "md:w-1/2" : "md:w-1/4",
-        "flex flex-col items-start md:gap-4",
+        fullwidth ? "md:w-2/5" : "md:w-1/4",
+        "flex flex-col items-start gap-2 md:gap-4",
         className
       )}
     >

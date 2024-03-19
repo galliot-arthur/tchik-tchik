@@ -10,8 +10,8 @@ import { notFound } from "next/navigation";
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
-  if ("message" in movies) {
-    throw new Error(movies.message + " désolé mon movie " + movies.status);
+  if (!movies || "message" in movies) {
+    notFound();
   }
 
   return movies.map((movie) => movie.id);
@@ -26,7 +26,7 @@ export async function generateMetadata({
 }: Props): Promise<Metadata> {
   const movie = await fetchData<MovieType>(ressources.movies, id);
 
-  if ("message" in movie) {
+  if (!movie || "message" in movie) {
     notFound();
   }
 
@@ -42,7 +42,7 @@ export async function generateMetadata({
 export default async function EditMovie({ params: { id } }: Props) {
   const movie = await fetchData<MovieType>(ressources.movies, id);
 
-  if ("message" in movie) {
+  if (!movie || "message" in movie) {
     notFound();
   }
 

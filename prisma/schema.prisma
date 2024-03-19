@@ -41,6 +41,7 @@ model Movie {
     cover        String?
     pictures     Json
     status       String?  @default("")
+    index        Int      @default(0)
 
     @@map(name: "movies")
 }

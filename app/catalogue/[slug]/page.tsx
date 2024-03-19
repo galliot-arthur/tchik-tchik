@@ -23,8 +23,8 @@ import Image from "next/image";
 export async function generateStaticParams() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
 
-  if ("message" in movies) {
-    throw new Error(movies.message + " zut " + movies.status);
+  if (!movies || "message" in movies) {
+    notFound();
   }
 
   return movies.map((movie) => movie.slug);
@@ -39,7 +39,7 @@ export async function generateMetadata({
 }: Props): Promise<Metadata> {
   const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if ("message" in movie) {
+  if (!movie || "message" in movie) {
     notFound();
   }
 
@@ -61,23 +61,13 @@ export async function generateMetadata({
 export default async function Film({ params: { slug } }: Props) {
   const movie = await fetchFromSlug<MovieType>(ressources.movies, slug);
 
-  if ("message" in movie) {
+  if (!movie || "message" in movie) {
     notFound();
   }
 
   return (
     <MainContainer>
-      <LeftSection>
-        {movie.cover && (
-          <div className="relative w-full pb-2 aspect-[1080/1349] block md:hidden">
-            <Image
-              alt={movie.name}
-              fill
-              className="object-cover"
-              src={getPicture(movie.cover)}
-            />
-          </div>
-        )}
+      <LeftSection dividedBy3>
         <Card>
           <Typography variant="h1">{movie.name}</Typography>
           {movie.status && (
@@ -91,6 +81,16 @@ export default async function Film({ params: { slug } }: Props) {
             subtitle3={i18n.movies.writtenBy(movie.writtenBy)}
           />
         </Card>
+        {movie.cover && (
+          <div className="relative w-full mt-4 aspect-[480/679] block md:hidden">
+            <Image
+              alt={movie.name}
+              fill
+              className="object-cover"
+              src={getPicture(movie.cover)}
+            />
+          </div>
+        )}
         <ContentContainer borderTop={false} className="pt-4">
           <div className="px-4">
             <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
@@ -99,7 +99,7 @@ export default async function Film({ params: { slug } }: Props) {
         </ContentContainer>
         <ContentContainer className="md:pr-8 pt-4">
           <SimpleRefCodeDisplayer refCode={movie.staff} className="mx-2" />
-          <div className="flex flex-row gap-4 mt-4 mb-8 mx-2">
+          <div className="flex flex-row gap-4 mt-2 md:mt-4 mb-4 md:mb-8 mx-2">
             <SimpleRefCodeDisplayer
               refCode={movie.diffusion}
               label={i18n.movies.diffusion}
@@ -127,9 +127,28 @@ export default async function Film({ params: { slug } }: Props) {
             </Card>
           )}
         </ContentContainer>
+      </LeftSection>
+      <MiddleSection fullwidth>
+        {movie.cover && (
+          <a
+            className="relative w-full aspect-[480/679] hidden md:block"
+            href={getPicture(movie.cover)}
+            target="_blank"
+          >
+            <Image
+              alt={movie.name}
+              fill
+              className="object-cover"
+              src={getPicture(movie.cover)}
+            />
+          </a>
+        )}
+        <div className="max-w-full w-full my-2 md:my-0">
+          <PhotoSwiper pictures={movie.pictures} />
+        </div>
         {movie.spoiler && (
-          <div>
-            <Typography className="text-xs mt-6 mb-2 text-gray-500">
+          <div className="w-full mt-2 md:mt-0 mb-4">
+            <Typography className="text-xs mb-2 md:mb-1 text-gray-500">
               {i18n.movies.spoiler}
             </Typography>
             <div className="relative w-full aspect-[16/9]">
@@ -146,21 +165,6 @@ export default async function Film({ params: { slug } }: Props) {
             </div>
           </div>
         )}
-      </LeftSection>
-      <MiddleSection fullwidth>
-        {movie.cover && (
-          <div className="relative w-full aspect-[1080/1349] hidden md:block">
-            <Image
-              alt={movie.name}
-              fill
-              className="object-cover"
-              src={getPicture(movie.cover)}
-            />
-          </div>
-        )}
-        <div className="max-w-full pb-2 w-full">
-          <PhotoSwiper pictures={movie.pictures} />
-        </div>
       </MiddleSection>
     </MainContainer>
   );

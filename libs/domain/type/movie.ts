@@ -17,12 +17,20 @@ export const movieType = z.object({
   diffusion: z.array(simpleRefCode),
   festivals: z.string().optional().nullable(),
   press: z.array(simpleRefCode),
-  spoiler: z.string().optional().nullable(),
+  spoiler: z.string().url().optional().nullable(),
   cover: z.string().url().optional().nullable(),
   pictures: z.array(z.object({ id: z.string().url() })).min(1),
   status: z.string().optional().nullable(),
+  index: z.number(),
 });
 
 export type MovieBaseType = z.infer<typeof movieType>;
 
 export type MovieType = BaseType & MovieBaseType;
+
+export const movieOrder = z.object({
+  current: z.string(),
+  next: z.string(),
+});
+
+export type MovieOrder = z.infer<typeof movieOrder>;

@@ -34,7 +34,7 @@ export default function SimpleRefCodeDisplayer({
               <TchikLink
                 href={ref.value}
                 target="_blank"
-                className="text-salmon"
+                className="text-salmon !text-sm"
               >
                 {ref.label}
               </TchikLink>

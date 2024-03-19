@@ -23,7 +23,14 @@ export default async function Home() {
   const newsletters = await fetchData<NewsletterType[]>(ressources.newsletters);
   const showed = await fetchData<ShowedType[]>(ressources.showed);
 
-  if ("message" in newsletters || "message" in movies || "message" in showed) {
+  if (
+    !newsletters ||
+    !movies ||
+    !showed ||
+    "message" in newsletters ||
+    "message" in movies ||
+    "message" in showed
+  ) {
     return notFound();
   }
 
@@ -81,20 +88,22 @@ export default async function Home() {
           </div>
         )}
       </MiddleSection>
-      <RightSection hideOnPhone className="max-h-[16rem] overflow-auto">
+      <RightSection hideOnPhone>
         <Card>
           <Typography variant="h2">{i18n.homepage.films}</Typography>
-          {movies.map((movie) => (
-            <li key={movie.id}>
-              <TchikLink
-                href={`${i18n.menu.catalog.url}/${movie.slug}`}
-                variant="red"
-                className="text-sm"
-              >
-                {movie.name}
-              </TchikLink>
-            </li>
-          ))}
+          {movies
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((movie) => (
+              <li key={movie.id}>
+                <TchikLink
+                  href={`${i18n.menu.catalog.url}/${movie.slug}`}
+                  variant="red"
+                  className="text-sm"
+                >
+                  {movie.name}
+                </TchikLink>
+              </li>
+            ))}
         </Card>
       </RightSection>
     </MainContainer>
