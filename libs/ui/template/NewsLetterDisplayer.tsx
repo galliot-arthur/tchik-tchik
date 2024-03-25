@@ -42,7 +42,7 @@ export default function NewsLetterDisplayer({
                 <div
                   className={classNames("w-full md:w-1/2 mt-4 md:mt-0 md:ml-4")}
                 >
-                  <div className="relative aspect-[16/9]">
+                  <div className="relative aspect-[16/9] tchik-shadow">
                     <Image
                       src={getPicture(item.coverId)}
                       fill

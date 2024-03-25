@@ -67,7 +67,9 @@ export default async function Film({ params: { slug } }: Props) {
 
   return (
     <MainContainer>
-      <LeftSection dividedBy3>
+      <LeftSection
+      //dividedBy3
+      >
         <Card>
           <Typography variant="h1">{movie.name}</Typography>
           {movie.status && (
@@ -82,7 +84,7 @@ export default async function Film({ params: { slug } }: Props) {
           />
         </Card>
         {movie.cover && (
-          <div className="relative w-full mt-4 aspect-[480/679] block md:hidden">
+          <div className="relative w-full mt-4 aspect-[480/679] block md:hidden tchik-shadow">
             <Image
               alt={movie.name}
               fill
@@ -128,10 +130,10 @@ export default async function Film({ params: { slug } }: Props) {
           )}
         </ContentContainer>
       </LeftSection>
-      <MiddleSection fullwidth>
+      <MiddleSection fullwidth className="ml-auto">
         {movie.cover && (
           <a
-            className="relative w-full aspect-[480/679] hidden md:block"
+            className="relative w-full aspect-[480/679] hidden md:block tchik-shadow"
             href={getPicture(movie.cover)}
             target="_blank"
           >

@@ -61,7 +61,7 @@ export default function PhotoSwiper({ pictures = [] }: Props) {
         <MultiPictures pictures={pictures} setModalUrl={setModalUrl} />
       ) : (
         <div
-          className="relative aspect-[16/9] w-full h-full"
+          className="relative aspect-[16/9] w-full h-full tchik-shadow"
           key={pictures.at(0)?.id}
         >
           <Image
@@ -139,7 +139,10 @@ const MultiPictures = ({
     {pictures.map((item) => {
       const url = getPicture(item.id);
       return (
-        <div className="relative aspect-[16/9] w-full h-full" key={item.id}>
+        <div
+          className="relative aspect-[16/9] w-full h-full tchik-shadow"
+          key={item.id}
+        >
           <Image
             alt="alt"
             src={url}

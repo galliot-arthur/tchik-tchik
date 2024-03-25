@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="fr" className="bg-white">
       <UserProvider>
-        <body className={`${inter.className} max-w-[1200px] m-auto`}>
+        <body className={`${inter.className} max-w-[1000px] m-auto`}>
           <header
             className={classNames(
-              "fixed max-w-[1200px]",
+              "fixed max-w-[1000px]",
               "flex justify-between items-center",
               "min-h-[5rem] sm:min-h-[4rem] w-screen",
               "px-4",
@@ -43,7 +43,7 @@ export default function RootLayout({
           {children}
           <footer
             className={classNames(
-              "max-w-[1200px] relative top-[3rem]",
+              "max-w-[1000px] relative top-[3rem]",
               "px-4 pt-4 sm:pt-0"
             )}
           >

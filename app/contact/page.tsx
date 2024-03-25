@@ -22,9 +22,12 @@ export default async function Contact() {
         <Card>
           {i18n.contact.address.map((item) => (
             <div key={item.title} className="mb-4 flex items-center gap-4">
-              <item.icon size="1.5rem" className="hidden md:block" />
+              <item.icon
+                size="1.25rem"
+                className="hidden md:block text-gray-500"
+              />
               <div>
-                <Typography variant="tiny-bold" className="my-2">
+                <Typography variant="tiny-bold" className="mt-2">
                   {item.title}
                 </Typography>
                 {item.content.map((c) => (

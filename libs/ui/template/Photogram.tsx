@@ -9,7 +9,12 @@ import { getPicture } from "@/libs/domain/type/file";
 
 export function Photogram({ movies }: { movies: MovieType[] }) {
   return (
-    <div className={classNames("flex flex-row flex-wrap", "w-full mb-4")}>
+    <div
+      className={classNames(
+        "flex flex-row flex-wrap",
+        "w-full mb-4 tchik-shadow"
+      )}
+    >
       {movies.map((movie, index) => (
         <Item key={movie.id} movie={movie} index={index} />
       ))}
