@@ -33,7 +33,7 @@ export default function TchikCard({
       )}
     >
       {img && (
-        <div className="relative w-full h-full aspect-[1080/1349] tchik-shadow">
+        <div className="relative w-full h-full aspect-[480/679] tchik-shadow">
           <Image fill alt={img.alt} className="object-cover" src={img.src} />
         </div>
       )}

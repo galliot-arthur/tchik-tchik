@@ -36,7 +36,9 @@ export default function NewsLetterDisplayer({
                   "mdstyle text-sm"
                 )}
               >
-                <MDXRemote source={item.content} />
+                <Typography>
+                  <MDXRemote source={item.content} />
+                </Typography>
               </div>
               {item.coverId && (
                 <div

@@ -80,7 +80,9 @@ export default async function Home() {
               caption2={movieShowed.kind}
               caption={String(movieShowed.releaseYear)}
               img={{
-                src: getPicture(movieShowed.pictures.at(0)?.id),
+                src: getPicture(
+                  movieShowed.cover || movieShowed.pictures.at(0)?.id
+                ),
                 alt: movieShowed.name,
               }}
               href={`${i18n.menu.catalog.url}/${movieShowed.slug}`}
