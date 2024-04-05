@@ -52,7 +52,7 @@ export async function generateMetadata({
       title: movie.name,
       description: movie.bio,
       type: "website",
-      images: [getPicture(movie.cover)],
+      images: [getPicture(movie.cover ?? movie.pictures.at(0)?.id)],
     },
   };
 
