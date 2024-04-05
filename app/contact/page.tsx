@@ -9,8 +9,21 @@ import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
 import { Tooltip } from "@nextui-org/react";
 import classNames from "classnames";
+import { Metadata } from "next";
 import Image from "next/image";
 import { Instagram } from "react-bootstrap-icons";
+
+export const metadata: Metadata = {
+  title: i18n.menu.contact.label,
+  description: i18n.contact.portrait.title,
+  robots: {
+    index: true,
+  },
+  openGraph: {
+    title: i18n.menu.contact.label,
+    description: i18n.contact.portrait.title,
+  },
+};
 
 export default async function Contact() {
   return (

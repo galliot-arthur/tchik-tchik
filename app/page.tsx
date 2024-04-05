@@ -15,8 +15,33 @@ import MiddleSection from "@/libs/ui/molecule/MiddleSection";
 import RightSection from "@/libs/ui/molecule/RightSection";
 import TchikCard from "@/libs/ui/organism/TchikCard";
 import NewsLetterDisplayer from "@/libs/ui/template/NewsLetterDisplayer";
+import { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const movies = await fetchData<MovieType[]>(ressources.movies);
+  const showed = await fetchData<ShowedType[]>(ressources.showed);
+
+  if (!movies || !showed || "message" in movies || "message" in showed) {
+    notFound();
+  }
+
+  const movieShowed = movies?.find((m) => {
+    return m.id === showed?.at(0)?.showedId;
+  });
+
+  return {
+    robots: {
+      index: true,
+    },
+    openGraph: {
+      images: [
+        getPicture(movieShowed?.cover ?? movieShowed?.pictures.at(0)?.id),
+      ],
+    },
+  };
+}
 
 export default async function Home() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
@@ -81,7 +106,7 @@ export default async function Home() {
               caption={String(movieShowed.releaseYear)}
               img={{
                 src: getPicture(
-                  movieShowed.cover || movieShowed.pictures.at(0)?.id
+                  movieShowed.cover ?? movieShowed.pictures.at(0)?.id
                 ),
                 alt: movieShowed.name,
               }}

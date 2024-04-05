@@ -17,7 +17,6 @@ import { getPicture } from "@/libs/domain/type/file";
 import Card from "@/libs/ui/atoms/Card";
 import { fetchData, fetchFromSlug } from "@/libs/api/fetch";
 import { ressources } from "@/libs/domain/type/ressources";
-import { API_URL } from "@/app/env";
 import Image from "next/image";
 
 export async function generateStaticParams() {
@@ -43,7 +42,7 @@ export async function generateMetadata({
     notFound();
   }
 
-  return {
+  const meta: Metadata = {
     title: movie.name,
     description: movie.bio,
     robots: {
@@ -53,9 +52,11 @@ export async function generateMetadata({
       title: movie.name,
       description: movie.bio,
       type: "website",
-      images: [`${API_URL}${movie.pictures.at(0)?.id}`],
+      images: [getPicture(movie.cover)],
     },
   };
+
+  return meta;
 }
 
 export default async function Film({ params: { slug } }: Props) {
@@ -67,9 +68,7 @@ export default async function Film({ params: { slug } }: Props) {
 
   return (
     <MainContainer>
-      <LeftSection
-      //dividedBy3
-      >
+      <LeftSection>
         <Card>
           <Typography variant="h1">{movie.name}</Typography>
           {movie.status && (

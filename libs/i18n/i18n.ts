@@ -11,7 +11,11 @@ export const i18n = {
   },
   menu: {
     homepage: { label: "Accueil", url: "/" },
-    catalog: { label: "Catalogue", url: "/catalogue" },
+    catalog: {
+      label: "Catalogue",
+      url: "/catalogue",
+      desc: "En tant que société de production indépendante, nous accompagnons des films de fiction et documentaires de jeunes auteurices. Vous trouverez ici la liste complète de ces œuvres.",
+    },
     contact: { label: "Contact", url: "/contact" },
     admin: { label: "Admin", url: "/app-admin" },
   },

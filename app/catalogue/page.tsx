@@ -6,7 +6,20 @@ import Typography from "@/libs/ui/atoms/Typography";
 import LeftSection from "@/libs/ui/molecule/LeftSection";
 import MainContainer from "@/libs/ui/molecule/MainContainer";
 import { Photogram } from "@/libs/ui/template/Photogram";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: i18n.menu.catalog.label,
+  description: i18n.menu.catalog.desc,
+  robots: {
+    index: true,
+  },
+  openGraph: {
+    title: i18n.menu.catalog.label,
+    description: i18n.menu.catalog.desc,
+  },
+};
 
 export default async function NosFilms() {
   const movies = await fetchData<MovieType[]>(ressources.movies);
@@ -23,9 +36,7 @@ export default async function NosFilms() {
         </Typography>
       </LeftSection>
       <div className="md:w-1/2 text-sm hidden md:block">
-        En tant que société de production indépendante, nous accompagnons des
-        films de fiction et documentaires de jeunes auteurices. Vous trouverez
-        ici la liste complète de ces œuvres.
+        {i18n.menu.catalog.desc}
       </div>
 
       <Photogram movies={movies ?? []} />
