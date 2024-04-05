@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       images: [
-        getPicture(movieShowed?.cover ?? movieShowed?.pictures.at(0)?.id),
+        getPicture(movieShowed?.cover || movieShowed?.pictures.at(0)?.id),
       ],
     },
   };
@@ -106,7 +106,7 @@ export default async function Home() {
               caption={String(movieShowed.releaseYear)}
               img={{
                 src: getPicture(
-                  movieShowed.cover ?? movieShowed.pictures.at(0)?.id
+                  movieShowed.cover || movieShowed.pictures.at(0)?.id
                 ),
                 alt: movieShowed.name,
               }}
