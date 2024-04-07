@@ -93,14 +93,14 @@ export default async function Film({ params: { slug } }: Props) {
           </div>
         )}
         <ContentContainer borderTop={false} className="pt-4">
-          <div className="px-4">
+          <div className="md:px-2">
             <Typography variant="tiny-bold">{i18n.movies.bio}</Typography>
             <Typography variant="p">{movie.bio}</Typography>
           </div>
         </ContentContainer>
         <ContentContainer className="md:pr-8 pt-4">
-          <SimpleRefCodeDisplayer refCode={movie.staff} className="mx-2" />
-          <div className="flex flex-row gap-4 mt-2 md:mt-4 mb-4 md:mb-8 mx-2">
+          <SimpleRefCodeDisplayer refCode={movie.staff} className="md:mx-2" />
+          <div className="flex flex-row gap-4 mt-2 md:mt-4 mb-4 md:mb-8 md:mx-2">
             <SimpleRefCodeDisplayer
               refCode={movie.diffusion}
               label={i18n.movies.diffusion}

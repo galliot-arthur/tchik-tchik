@@ -14,6 +14,7 @@ import {
   PlusCircle,
   Trash,
 } from "react-bootstrap-icons";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type Props<T extends FieldValues> = {
   control: Control<T>;
@@ -28,6 +29,7 @@ export default function ControlledFieldArray<T extends FieldValues>({
   label,
   className,
 }: Props<T>) {
+  const [parent] = useAutoAnimate();
   const { fields, remove, move, append } = useFieldArray({
     control: control,
     name: name,
@@ -40,7 +42,7 @@ export default function ControlledFieldArray<T extends FieldValues>({
         <div className="flex flex-row gap-4 justify-between">
           <Typography variant="h2">{label.block}</Typography>
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3" ref={parent}>
           {fields.map((field, index) => (
             <div className="flex gap-4" key={field.id}>
               <ControlledInput
@@ -61,6 +63,7 @@ export default function ControlledFieldArray<T extends FieldValues>({
                     isIconOnly
                     onClick={() => move(index, index + 1)}
                     className="text-lg active:opacity-50"
+                    isDisabled={index == fields.length - 1}
                   >
                     <ArrowDownShort />
                   </Button>
@@ -72,6 +75,7 @@ export default function ControlledFieldArray<T extends FieldValues>({
                     isIconOnly
                     onClick={() => move(index, index - 1)}
                     className="text-lg active:opacity-50"
+                    isDisabled={index === 0}
                   >
                     <ArrowUpShort />
                   </Button>

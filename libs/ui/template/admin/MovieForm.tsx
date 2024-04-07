@@ -23,6 +23,7 @@ import {
 } from "react-bootstrap-icons";
 import { i18n } from "@/libs/i18n/i18n";
 import ErrorsHelper from "./components/alt/ErrorHelper";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type Props = {
   defaultValues?: MovieType;
@@ -35,6 +36,7 @@ const handlleDefaltValues = (defaultValues?: MovieType) => {
 };
 
 export default function MovieForm({ defaultValues }: Props) {
+  const [parent] = useAutoAnimate();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -183,7 +185,20 @@ export default function MovieForm({ defaultValues }: Props) {
         <div className="w-[calc(10%-0.5rem)] flex items-center">
           <Tooltip
             content={
-              "https://player.vimeo.com/video/920969365?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              <code>
+                Ne placer ici que le lien, par exemple ici en gras :
+                <br />
+                <span className="text-default-500">
+                  &lt;iframe title=&quot;vimeo-player&quot; src=&quot;
+                </span>
+                <span className="font-bold">
+                  https://player.vimeo.com/video/892728295?h=5adfa164ae
+                </span>
+                <span className="text-default-500">
+                  &quot; width=&quot;640&quot; height=&quot;360&quot;
+                  &gt;&lt;/iframe&gt;
+                </span>
+              </code>
             }
           >
             <QuestionCircleFill />
@@ -208,7 +223,7 @@ export default function MovieForm({ defaultValues }: Props) {
           <PlusCircle />
           Add
         </Button>
-        <div className="w-full grid grid-cols-4 gap-4">
+        <div className="w-full grid grid-cols-4 gap-4" ref={parent}>
           {fields.map((field, index) => (
             <div className="w-full relative" key={field.id}>
               <Controller

@@ -54,7 +54,7 @@ function Item({ movie }: { movie: MovieType; index: number }) {
           fill
           className={classNames(
             "object-cover",
-            "md:hover:blur-sm hover:scale-[103%] hover:opacity-95",
+            "md:hover:blur-sm hover:scale-[110%] hover:opacity-95",
             "transition ease-in-out duration-300"
           )}
           alt="tap"

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.tchiktchikproductions.fr/"),
   title: {
     default: i18n.website,
-    template: `%s | ${i18n.website}`,
+    template: `%s - ${i18n.website}`,
   },
   description: i18n.bio.bio,
   robots: {

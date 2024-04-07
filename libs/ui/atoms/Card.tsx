@@ -6,7 +6,7 @@ export default function Card({ children, className }: ComponentProps<{}>) {
     <div
       className={classNames(
         className,
-        "bg-gradient md:rounded-sm tchik-shadow px-3 py-2 -mx-4 md:mx-0"
+        "bg-gradient md:rounded-sm tchik-shadow px-4 py-2 md:px-2 md:py-[0.33rem] -mx-4 md:mx-0"
       )}
     >
       {children}

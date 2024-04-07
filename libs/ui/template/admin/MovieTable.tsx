@@ -21,6 +21,7 @@ import { i18n } from "@/libs/i18n/i18n";
 import { useFieldArray, useForm } from "react-hook-form";
 import { post } from "@/libs/api/fetch";
 import { useEffect, useState } from "react";
+import classNames from "classnames";
 
 type Props = { movies: MovieType[] };
 
@@ -90,7 +91,10 @@ export default function MovieTable({ movies }: Props) {
           <TableColumn>Actions</TableColumn>
           <TableColumn>Index</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={isLoading}
+          className={classNames(isLoading && "animate-pulse")}
+        >
           {fields.map((movie, index) => (
             <TableRow key={movie.id}>
               <TableCell>
