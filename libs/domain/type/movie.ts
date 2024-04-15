@@ -3,7 +3,7 @@ import { BaseType, simpleRefCode } from "./ressources";
 
 export const movieKind = ["Documentaire", "Fiction", "Film d'atelier"] as const;
 
-export const movieType = z.object({
+export const createMovie = z.object({
   name: z.string(),
   director: z.string(),
   writtenBy: z.string().optional().nullable(),
@@ -17,12 +17,17 @@ export const movieType = z.object({
   diffusion: z.array(simpleRefCode),
   festivals: z.string().optional().nullable(),
   press: z.array(simpleRefCode),
-  spoiler: z.string().url().or(z.literal("")),
-  cover: z.string().url().or(z.literal("")),
+  spoiler: z.string().url().or(z.literal("")).optional(),
+  cover: z.string().url().or(z.literal("").optional()).optional(),
   pictures: z.array(z.object({ id: z.string().url() })).min(1),
   status: z.string().optional().nullable(),
+});
+
+export const withIndex = z.object({
   index: z.number(),
 });
+
+export const movieType = createMovie.merge(withIndex);
 
 export type MovieBaseType = z.infer<typeof movieType>;
 

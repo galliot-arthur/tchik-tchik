@@ -18,7 +18,6 @@ const config: Config = {
       },
       colors: {
         salmon: "#F24C00",
-        //salmon: "#F86868",
         black: "#212121",
         white: "#FAFAFA",
         "gray-500": "#545454",

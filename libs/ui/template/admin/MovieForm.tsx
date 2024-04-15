@@ -1,6 +1,6 @@
 "use client";
 
-import { MovieType, movieKind, movieType } from "@/libs/domain/type/movie";
+import { MovieType, createMovie, movieKind } from "@/libs/domain/type/movie";
 import { Button, Tooltip } from "@nextui-org/react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import ControlledInput from "./components/inputs/ControlledInput";
@@ -29,10 +29,12 @@ type Props = {
   defaultValues?: MovieType;
 };
 
-const handlleDefaltValues = (defaultValues?: MovieType) => {
-  return defaultValues?.pictures.length && defaultValues?.pictures.length > 0
-    ? defaultValues
-    : { ...defaultValues, pictures: { id: undefined } };
+const handlleDefaltValues = (defaultValues?: MovieType): MovieType => {
+  if (defaultValues?.pictures.length && defaultValues?.pictures.length > 0) {
+    return defaultValues;
+  }
+  //@ts-ignore
+  return { ...defaultValues, pictures: [{ id: undefined }] };
 };
 
 export default function MovieForm({ defaultValues }: Props) {
@@ -46,8 +48,8 @@ export default function MovieForm({ defaultValues }: Props) {
     trigger,
     formState: { isValid, errors },
   } = useForm<MovieType>({
-    resolver: zodResolver(movieType),
-    defaultValues: handlleDefaltValues(defaultValues) as MovieType,
+    resolver: zodResolver(createMovie),
+    defaultValues: handlleDefaltValues(defaultValues),
     reValidateMode: "onBlur",
     mode: "onBlur",
   });

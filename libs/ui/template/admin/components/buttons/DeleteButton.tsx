@@ -17,6 +17,7 @@ type Props = {
 };
 export default function DeleteButton({ ressource, title, id }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Popover isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -40,6 +41,7 @@ export default function DeleteButton({ ressource, title, id }: Props) {
               <Button
                 variant="light"
                 className="text-lg cursor-pointer active:opacity-50"
+                disabled={isLoading}
               >
                 Annuler
               </Button>
@@ -47,11 +49,15 @@ export default function DeleteButton({ ressource, title, id }: Props) {
             <Button
               color="danger"
               className="text-lg cursor-pointer active:opacity-50"
-              onClick={() =>
+              isLoading={isLoading}
+              onClick={() => {
+                setIsLoading(true);
                 remove(id, ressource).then(() => {
+                  setIsLoading(false);
                   setIsOpen(false);
-                })
-              }
+                  window.location.reload();
+                });
+              }}
             >
               <Trash />
               Supprimer

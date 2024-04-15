@@ -139,7 +139,7 @@ export default function MovieTable({ movies }: Props) {
                   </Tooltip>
                   <DeleteButton
                     ressource={ressources.movies}
-                    id={movie.id}
+                    id={movies.at(index)?.id ?? ""}
                     title={movie.name}
                   />
                 </div>

@@ -2,7 +2,7 @@ import { badRequestError, notFoundError } from "@/libs/api/error";
 import { getSlug } from "@/libs/api/utils";
 import withAutentification from "@/libs/api/withAutentification";
 import prisma from "@/libs/database/prisma";
-import { movieType } from "@/libs/domain/type/movie";
+import { MovieType, movieType } from "@/libs/domain/type/movie";
 import { ressources } from "@/libs/domain/type/ressources";
 import { i18n } from "@/libs/i18n/i18n";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -74,16 +74,36 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } }
 ) {
   return withAutentification(async () => {
-    const item = await prisma.movie.findUnique({ where: { id } });
+    const item: MovieType = await prisma.movie.findUnique({ where: { id } });
 
     if (item === undefined) {
       return notFoundError(ressources.movies);
     }
 
+    /* if (item.name !== "test") {
+      return NextResponse.json(item, {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    } */
+
     try {
-      const data = await prisma.movie.delete({
+      const data: MovieType = await prisma.movie.delete({
         where: { id },
       });
+
+      const movies: MovieType[] = await prisma.movie.findMany();
+
+      const filteredMovie = movies.filter((movie) => movie.index > item.index);
+
+      await Promise.all(
+        filteredMovie.map(async (movie: MovieType) =>
+          prisma.movie.update({
+            where: { id: movie.id },
+            data: { ...movie, index: movie.index - 1 },
+          })
+        )
+      );
 
       revalidateTag(ressources.movies);
       revalidatePath(i18n.menu.homepage.url);

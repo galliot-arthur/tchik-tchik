@@ -114,11 +114,17 @@ export default function UploadFile({
   }
 
   return (
-    <div className="py-2">
+    <div className="p-2 relative aspect-square rounded-lg tchik-shadow">
       <Button as="label" isLoading={isLoading}>
         <Upload />
         Upload
-        <input type="file" hidden name="file" onChange={submitFile} />
+        <input
+          type="file"
+          hidden
+          name="file"
+          accept=".jpg, .jpeg"
+          onChange={submitFile}
+        />
       </Button>
       {removeCallBack && (
         <Button
