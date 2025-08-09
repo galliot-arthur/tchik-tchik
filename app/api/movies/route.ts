@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   const movies: MovieType[] | undefined = await prisma.movie.findMany({
-    orderBy: { index: "asc" },
+    orderBy: { index: "desc" },
   });
 
   if (movies === undefined) {
@@ -33,19 +33,10 @@ export async function POST(request: NextRequest) {
 
       const movies = await prisma.movie.findMany();
 
-      await Promise.all(
-        movies.map(async (movie: MovieType) =>
-          prisma.movie.update({
-            where: { id: movie.id },
-            data: { ...movie, index: movie.index + 1 },
-          })
-        )
-      );
-
       const data = await prisma.movie.create({
         data: {
           ...parsedData,
-          index: 1,
+          index: movies.length + 1,
           slug,
           cover: parsedData.cover ?? "",
           pictures: parsedData.pictures ?? "",

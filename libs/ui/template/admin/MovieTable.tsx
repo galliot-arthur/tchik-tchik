@@ -30,7 +30,7 @@ export default function MovieTable({ movies }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { control, getValues, reset } = useForm<{ movies: MovieType[] }>({
-    defaultValues: { movies: movies.sort((a, b) => a.index - b.index) },
+    defaultValues: { movies },
   });
 
   const { fields } = useFieldArray({
